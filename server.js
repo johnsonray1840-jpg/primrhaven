@@ -49,8 +49,8 @@ function generateAccountNumber() {
   return Math.floor(1000 + Math.random() * 9000).toString();
 }
 
-// Helper: Background Email Dispatcher (Never blocks HTTP response)
-function dispatchEmailAsync({ userId, to, templateResult, eventType = 'general', customSubject, customBody }) {
+// Helper: Email Dispatcher (Awaits on Vercel/Serverless so function does not freeze before network finishes)
+async function dispatchEmailAsync({ userId, to, templateResult, eventType = 'general', customSubject, customBody }) {
   let subject = customSubject;
   let html = '';
   let text = customBody || '';
@@ -64,25 +64,29 @@ function dispatchEmailAsync({ userId, to, templateResult, eventType = 'general',
     html = tmpl.html;
   }
 
-  // Non-blocking fire-and-forget in background
-  emailService.sendMail({
-    userId,
-    to,
-    subject,
-    html,
-    text,
-    eventType
-  }).then(mailRecord => {
-    db.logEmail({
+  try {
+    const mailRecord = await emailService.sendMail({
       userId,
       to,
       subject,
       html,
+      text,
       eventType
-    }).catch(() => {});
-  }).catch(err => {
-    console.error('[Email Dispatch Background Warning]', err.message);
-  });
+    });
+    if (db && db.logEmail) {
+      await db.logEmail({
+        userId,
+        to,
+        subject,
+        html,
+        eventType
+      }).catch(() => {});
+    }
+    return mailRecord;
+  } catch (err) {
+    console.error('[Email Dispatch Warning]', err.message);
+    return null;
+  }
 }
 
 // ==========================================
@@ -260,7 +264,7 @@ async function requestHandler(req, res) {
       }
 
       const template = emailService.EmailTemplates.verificationCode(user.full_name, verificationCode);
-      dispatchEmailAsync({
+      await dispatchEmailAsync({
         userId: user.id,
         to: cleanEmail,
         templateResult: template,
@@ -325,7 +329,7 @@ async function requestHandler(req, res) {
       await db.updateUser(user.id, { verification_code: verificationCode });
 
       const template = emailService.EmailTemplates.verificationCode(user.full_name, verificationCode);
-      dispatchEmailAsync({
+      await dispatchEmailAsync({
         userId: user.id,
         to: cleanEmail,
         templateResult: template,
@@ -367,7 +371,7 @@ async function requestHandler(req, res) {
         await db.updateUser(user.id, { verification_code: verificationCode });
 
         const template = emailService.EmailTemplates.verificationCode(user.full_name, verificationCode);
-        dispatchEmailAsync({
+        await dispatchEmailAsync({
           userId: user.id,
           to: user.email,
           templateResult: template,
@@ -416,7 +420,7 @@ async function requestHandler(req, res) {
       await db.updateUser(user.id, { verification_code: code });
 
       const template = emailService.EmailTemplates.passwordReset(user.full_name, code);
-      dispatchEmailAsync({
+      await dispatchEmailAsync({
         userId: user.id,
         to: cleanEmail,
         templateResult: template,
