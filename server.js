@@ -304,7 +304,7 @@ async function requestHandler(req, res) {
         updatedUser.full_name,
         updatedUser.account_number
       );
-      dispatchEmailAsync({
+      await dispatchEmailAsync({
         userId: updatedUser.id,
         to: updatedUser.email,
         templateResult: template,
@@ -498,7 +498,7 @@ async function requestHandler(req, res) {
       });
 
       const template = emailService.EmailTemplates.depositPending(user.full_name, newTx.amount, newTx.asset, newTx.tx_hash);
-      dispatchEmailAsync({
+      await dispatchEmailAsync({
         userId: user.id,
         to: user.email,
         templateResult: template,
@@ -543,7 +543,7 @@ async function requestHandler(req, res) {
       });
 
       const template = emailService.EmailTemplates.withdrawalRequested(user.full_name, parsedAmount, newTx.asset, newTx.destination_address);
-      dispatchEmailAsync({
+      await dispatchEmailAsync({
         userId: user.id,
         to: user.email,
         templateResult: template,
@@ -621,7 +621,7 @@ async function requestHandler(req, res) {
       });
 
       const template = emailService.EmailTemplates.otcCapitalAllocated(user.full_name, parsedAmount, trancheTitle, roiRate, duration);
-      dispatchEmailAsync({
+      await dispatchEmailAsync({
         userId: user.id,
         to: user.email,
         templateResult: template,
@@ -750,7 +750,7 @@ async function requestHandler(req, res) {
 
       if (user && updatedWallet) {
         const template = emailService.EmailTemplates.depositApproved(user.full_name, tx.amount, tx.asset, updatedWallet.exchange_balance);
-        dispatchEmailAsync({
+        await dispatchEmailAsync({
           userId: user.id,
           to: user.email,
           templateResult: template,
@@ -776,7 +776,7 @@ async function requestHandler(req, res) {
       const user = await db.findUserById(tx.user_id);
       if (user) {
         const template = emailService.EmailTemplates.withdrawalApproved(user.full_name, tx.amount, tx.asset, tx.destination_address, updatedTx.tx_hash);
-        dispatchEmailAsync({
+        await dispatchEmailAsync({
           userId: user.id,
           to: user.email,
           templateResult: template,
@@ -806,7 +806,7 @@ async function requestHandler(req, res) {
 
       for (const target of targetUsers) {
         const template = emailService.EmailTemplates.customMessage(target.full_name, subject, message);
-        dispatchEmailAsync({
+        await dispatchEmailAsync({
           userId: target.id,
           to: target.email,
           templateResult: template,
@@ -854,7 +854,7 @@ async function requestHandler(req, res) {
       });
 
       const template = emailService.EmailTemplates.otcProfitCredited(user.full_name, parsedProfit, updatedWallet.accrued_profit);
-      dispatchEmailAsync({
+      await dispatchEmailAsync({
         userId: user.id,
         to: user.email,
         templateResult: template,
