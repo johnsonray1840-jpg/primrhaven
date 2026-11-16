@@ -56,11 +56,11 @@
 
     <!-- Quick Workspace Navigation Pills -->
     <nav aria-label="Workspace Navigation" class="hidden lg:flex items-center gap-1 bg-slate-100/80 dark:bg-[#101726] p-1 rounded-xl border border-slate-200 dark:border-gray-800 text-xs font-bold">
-      <a href="dashboard.html" class="px-3.5 py-1.5 rounded-lg text-slate-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Overview</a>
-      <a href="invest-otc.html" class="px-3.5 py-1.5 rounded-lg text-slate-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Invest OTC</a>
-      <a href="deposit.html" class="px-3.5 py-1.5 rounded-lg text-slate-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Deposit</a>
-      <a href="withdrawal.html" class="px-3.5 py-1.5 rounded-lg text-slate-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Withdraw</a>
-      <a href="transactions.html" class="px-3.5 py-1.5 rounded-lg text-slate-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Ledger</a>
+      <a href="dashboard.html" class="vx-nav-link px-3.5 py-1.5 rounded-lg text-slate-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Overview</a>
+      <a href="invest-otc.html" class="vx-nav-link px-3.5 py-1.5 rounded-lg text-slate-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Invest OTC</a>
+      <a href="deposit.html" class="vx-nav-link px-3.5 py-1.5 rounded-lg text-slate-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Deposit</a>
+      <a href="withdrawal.html" class="vx-nav-link px-3.5 py-1.5 rounded-lg text-slate-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Withdraw</a>
+      <a href="transactions.html" class="vx-nav-link px-3.5 py-1.5 rounded-lg text-slate-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Ledger</a>
     </nav>
 
     <!-- User Profile & Controls -->
@@ -152,7 +152,8 @@
       </div>
 
       <div class="flex flex-col sm:flex-row gap-3">
-        <input type="text" id="partner-link-input" readonly value="https://vertexcapitals.com/register.html?ref=..." class="flex-1 bg-slate-100 dark:bg-[#070A11] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-3 text-slate-700 dark:text-gray-200 font-mono text-xs sm:text-sm outline-none focus:border-primary">
+        <label for="partner-link-input" class="sr-only">Institutional Referral Link</label>
+        <input type="text" id="partner-link-input" readonly value="https://vertexcapitals.com/register.html?ref=..." class="vx-input flex-1 px-4 py-3 font-mono text-xs sm:text-sm">
         <button onclick="copyPartnerLink()" class="vx-btn-primary px-6 py-3 rounded-xl font-bold text-xs sm:text-sm inline-flex items-center justify-center gap-2 shrink-0">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
           <span id="partner-btn-text">Copy Partner Link</span>
@@ -220,7 +221,7 @@
         <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-gray-500">Real-Time Attribution</span>
       </div>
       <div class="vx-table-wrap" tabindex="0" role="region" aria-label="Partner Commission Ledger">
-        <table class="w-full text-left border-collapse text-sm min-w-[540px]">
+        <table class="vx-table-responsive w-full text-left border-collapse text-sm min-w-[540px]">
           <thead class="text-slate-500 dark:text-gray-400 text-[11px] font-bold uppercase border-b border-slate-200 dark:border-gray-800">
             <tr>
               <th class="px-6 py-3.5">Date</th>
@@ -231,9 +232,15 @@
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-100 dark:divide-gray-800/60">
-            <tr>
-              <td colspan="5" class="px-6 py-12 text-center text-slate-500 dark:text-gray-400 text-xs">
-                No partner payouts recorded yet. Share your tracking link above to begin earning institutional rebates.
+            <tr class="vx-empty-row">
+              <td colspan="5" class="p-6">
+                <div class="vx-empty-state">
+                  <div class="vx-empty-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  </div>
+                  <p class="vx-empty-title">No partner payouts recorded yet</p>
+                  <p class="vx-empty-desc">Share your tracking link above to begin earning institutional rebates.</p>
+                </div>
               </td>
             </tr>
           </tbody>

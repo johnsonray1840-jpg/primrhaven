@@ -53,11 +53,11 @@
 
     <!-- Quick Workspace Navigation Pills -->
     <nav aria-label="Workspace Navigation" class="hidden lg:flex items-center gap-1 bg-slate-100/80 dark:bg-[#101726] p-1 rounded-xl border border-slate-200 dark:border-gray-800 text-xs font-bold">
-      <a href="dashboard.html" class="px-3.5 py-1.5 rounded-lg text-slate-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Overview</a>
-      <a href="invest-otc.html" class="px-3.5 py-1.5 rounded-lg text-slate-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Invest OTC</a>
-      <a href="deposit.html" class="px-3.5 py-1.5 rounded-lg text-slate-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Deposit</a>
-      <a href="withdrawal.html" class="px-3.5 py-1.5 rounded-lg text-slate-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Withdraw</a>
-      <a href="transactions.html" class="px-3.5 py-1.5 rounded-lg bg-primary text-white shadow-sm">Ledger</a>
+      <a href="dashboard.html" class="vx-nav-link px-3.5 py-1.5 rounded-lg text-slate-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Overview</a>
+      <a href="invest-otc.html" class="vx-nav-link px-3.5 py-1.5 rounded-lg text-slate-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Invest OTC</a>
+      <a href="deposit.html" class="vx-nav-link px-3.5 py-1.5 rounded-lg text-slate-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Deposit</a>
+      <a href="withdrawal.html" class="vx-nav-link px-3.5 py-1.5 rounded-lg text-slate-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Withdraw</a>
+      <a href="transactions.html" aria-current="page" class="vx-nav-link px-3.5 py-1.5 rounded-lg font-bold">Ledger</a>
     </nav>
 
     <div class="flex items-center gap-2.5 sm:gap-3">
@@ -95,18 +95,18 @@
     </div>
 
     <!-- Filter Buttons -->
-    <div class="flex flex-wrap gap-2">
-      <button onclick="filterTxs('all')" id="btn-filter-all" class="px-4 py-2 rounded-xl text-xs font-bold transition-all bg-primary text-white shadow-md shadow-primary/20">All Records</button>
-      <button onclick="filterTxs('deposit')" id="btn-filter-deposit" class="px-4 py-2 rounded-xl text-xs font-bold transition-all bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white shadow-sm">Deposits</button>
-      <button onclick="filterTxs('withdrawal')" id="btn-filter-withdrawal" class="px-4 py-2 rounded-xl text-xs font-bold transition-all bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white shadow-sm">Withdrawals</button>
-      <button onclick="filterTxs('otc_profit')" id="btn-filter-otc_profit" class="px-4 py-2 rounded-xl text-xs font-bold transition-all bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white shadow-sm">OTC Returns</button>
-      <button onclick="filterTxs('invest_otc')" id="btn-filter-invest_otc" class="px-4 py-2 rounded-xl text-xs font-bold transition-all bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white shadow-sm">OTC Allocations</button>
+    <div class="flex flex-wrap gap-2" role="group" aria-label="Filter transactions by category">
+      <button onclick="filterTxs('all')" id="btn-filter-all" aria-pressed="true" class="vx-admin-pill active">All Records</button>
+      <button onclick="filterTxs('deposit')" id="btn-filter-deposit" aria-pressed="false" class="vx-admin-pill">Deposits</button>
+      <button onclick="filterTxs('withdrawal')" id="btn-filter-withdrawal" aria-pressed="false" class="vx-admin-pill">Withdrawals</button>
+      <button onclick="filterTxs('otc_profit')" id="btn-filter-otc_profit" aria-pressed="false" class="vx-admin-pill">OTC Returns</button>
+      <button onclick="filterTxs('invest_otc')" id="btn-filter-invest_otc" aria-pressed="false" class="vx-admin-pill">OTC Allocations</button>
     </div>
 
     <!-- Table -->
     <div class="vx-card overflow-hidden">
       <div class="vx-table-wrap" tabindex="0" role="region" aria-label="Transactions History">
-        <table class="w-full text-left text-xs min-w-[680px]">
+        <table class="vx-table-responsive w-full text-left text-xs min-w-[680px]">
           <thead>
             <tr class="text-slate-500 dark:text-gray-400 uppercase tracking-wider border-b border-slate-200 dark:border-gray-800">
               <th class="py-4 px-6">Reference</th>
@@ -119,8 +119,23 @@
             </tr>
           </thead>
           <tbody id="transactions-ledger-body" class="divide-y divide-slate-100 dark:divide-gray-800/60 font-medium">
-            <tr>
-              <td colspan="7" class="py-8 text-center text-slate-400 dark:text-gray-500">Loading audit ledger...</td>
+            <tr class="vx-skeleton-row" aria-hidden="true">
+              <td class="py-4 px-6"><span class="vx-skeleton vx-skeleton-line w-20"></span></td>
+              <td class="py-4 px-6"><span class="vx-skeleton vx-skeleton-line w-24"></span></td>
+              <td class="py-4 px-6"><span class="vx-skeleton vx-skeleton-line w-16"></span></td>
+              <td class="py-4 px-6"><span class="vx-skeleton vx-skeleton-line w-20"></span></td>
+              <td class="py-4 px-6"><span class="vx-skeleton vx-skeleton-line w-16"></span></td>
+              <td class="py-4 px-6"><span class="vx-skeleton vx-skeleton-line w-32"></span></td>
+              <td class="py-4 px-6"><span class="vx-skeleton vx-skeleton-line w-20 ml-auto"></span></td>
+            </tr>
+            <tr class="vx-skeleton-row" aria-hidden="true">
+              <td class="py-4 px-6"><span class="vx-skeleton vx-skeleton-line w-20"></span></td>
+              <td class="py-4 px-6"><span class="vx-skeleton vx-skeleton-line w-24"></span></td>
+              <td class="py-4 px-6"><span class="vx-skeleton vx-skeleton-line w-16"></span></td>
+              <td class="py-4 px-6"><span class="vx-skeleton vx-skeleton-line w-20"></span></td>
+              <td class="py-4 px-6"><span class="vx-skeleton vx-skeleton-line w-16"></span></td>
+              <td class="py-4 px-6"><span class="vx-skeleton vx-skeleton-line w-32"></span></td>
+              <td class="py-4 px-6"><span class="vx-skeleton vx-skeleton-line w-20 ml-auto"></span></td>
             </tr>
           </tbody>
         </table>
@@ -137,11 +152,9 @@
       ['all', 'deposit', 'withdrawal', 'otc_profit', 'invest_otc'].forEach(cat => {
         const btn = document.getElementById(`btn-filter-${cat}`);
         if (btn) {
-          if (cat === category) {
-            btn.className = 'px-4 py-2 rounded-xl text-xs font-bold transition-all bg-primary text-white shadow-md shadow-primary/20';
-          } else {
-            btn.className = 'px-4 py-2 rounded-xl text-xs font-bold transition-all bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white shadow-sm';
-          }
+          const isActive = cat === category;
+          btn.className = isActive ? 'vx-admin-pill active' : 'vx-admin-pill';
+          btn.setAttribute('aria-pressed', String(isActive));
         }
       });
       renderLedger();
@@ -151,6 +164,11 @@
       if (!VertexApp.currentUser) {
         window.location.href = 'login.html';
         return;
+      }
+
+      const tbody = document.getElementById('transactions-ledger-body');
+      if (tbody && VertexApp.renderTableSkeleton) {
+        tbody.innerHTML = VertexApp.renderTableSkeleton(4, 7);
       }
 
       const summary = await VertexApp.getSummary();
@@ -175,13 +193,14 @@
       }
 
       if (filtered.length === 0) {
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="7" class="py-12 text-center text-slate-400 dark:text-gray-500">
-              No transactions recorded for this category.
-            </td>
-          </tr>
-        `;
+        const emptyHtml = VertexApp.renderEmptyState
+          ? VertexApp.renderEmptyState({
+              title: 'No transactions recorded',
+              description: 'No audit records match this category yet.',
+              actionHtml: '<a href="deposit.html" class="vx-btn-primary px-4 py-2 text-xs rounded-xl">Make a Deposit</a>'
+            })
+          : 'No transactions recorded for this category.';
+        tbody.innerHTML = `<tr class="vx-empty-row"><td colspan="7" class="p-6">${emptyHtml}</td></tr>`;
         return;
       }
 
@@ -205,13 +224,13 @@
 
         return `
           <tr class="hover:bg-slate-50/80 dark:hover:bg-gray-800/30 transition-colors">
-            <td class="py-4 px-6 font-bold text-slate-700 dark:text-gray-200">${tx.tx_ref}</td>
-            <td class="py-4 px-6 uppercase text-[11px] font-semibold text-primary">${typeLabel}</td>
-            <td class="py-4 px-6 text-slate-600 dark:text-gray-300 font-medium">${tx.asset}</td>
-            <td class="py-4 px-6 font-bold ${amountColor}">${amountPrefix}$${parseFloat(tx.amount).toLocaleString(undefined, { minimumFractionDigits: 2 })}</td>
-            <td class="py-4 px-6">${statusBadge}</td>
-            <td class="py-4 px-6 text-[11px] text-slate-400 dark:text-gray-400 truncate max-w-xs">${tx.tx_hash || tx.destination_address || 'Internal'}</td>
-            <td class="py-4 px-6 text-right text-slate-400 dark:text-gray-400 ">${dateStr}</td>
+            <td data-label="Reference" class="py-4 px-6 font-bold text-slate-700 dark:text-gray-200">${tx.tx_ref}</td>
+            <td data-label="Type" class="py-4 px-6 uppercase text-[11px] font-semibold text-primary">${typeLabel}</td>
+            <td data-label="Asset" class="py-4 px-6 text-slate-600 dark:text-gray-300 font-medium">${tx.asset}</td>
+            <td data-label="Amount" class="py-4 px-6 font-bold tabular-nums ${amountColor}">${amountPrefix}$${parseFloat(tx.amount).toLocaleString(undefined, { minimumFractionDigits: 2 })}</td>
+            <td data-label="Status" class="py-4 px-6">${statusBadge}</td>
+            <td data-label="Destination" class="py-4 px-6 text-[11px] text-slate-400 dark:text-gray-400 truncate max-w-xs">${tx.tx_hash || tx.destination_address || 'Internal'}</td>
+            <td data-label="Date" class="py-4 px-6 text-right text-slate-400 dark:text-gray-400">${dateStr}</td>
           </tr>
         `;
       }).join('');

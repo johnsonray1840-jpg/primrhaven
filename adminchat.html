@@ -63,10 +63,10 @@
   </header>
 
   <!-- Chat Container -->
-  <main class="flex-1 flex overflow-hidden max-w-6xl w-full mx-auto p-4 sm:p-6 gap-6">
+  <main class="flex-1 flex flex-col md:flex-row overflow-x-clip max-w-6xl w-full mx-auto p-4 sm:p-6 gap-6">
     
     <!-- Sidebar Active Investor Threads -->
-    <div class="w-full md:w-80 vx-card flex flex-col overflow-hidden">
+    <div class="w-full md:w-80 vx-card flex flex-col overflow-hidden max-h-72 md:max-h-none">
       <div class="p-4 border-b border-slate-200 dark:border-gray-800/80">
         <h3 class="text-sm font-extrabold text-slate-900 dark:text-white">Active Investor Inquiries</h3>
       </div>
@@ -96,7 +96,7 @@
     </div>
 
     <!-- Live Conversation Thread -->
-    <div class="hidden md:flex flex-1 vx-card flex-col overflow-hidden">
+    <div class="flex flex-1 min-h-[24rem] vx-card flex-col overflow-hidden">
       <!-- Chat Head -->
       <div class="p-4 bg-slate-50/80 dark:bg-[#0B111E] border-b border-slate-200 dark:border-gray-800/80 flex justify-between items-center">
         <div class="flex items-center gap-3">
@@ -106,11 +106,11 @@
             <p class="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">● Active Session</p>
           </div>
         </div>
-        <span class="px-3 py-1 bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 rounded-full text-[10px] font-bold">Verified Account</span>
+        <span class="vx-badge vx-badge-emerald">Verified Account</span>
       </div>
 
       <!-- Messages Area -->
-      <div class="flex-1 p-6 overflow-y-auto space-y-4 text-xs" id="chat-messages-container">
+      <div class="flex-1 p-4 sm:p-6 overflow-y-auto space-y-4 text-xs" id="chat-messages-container">
         <div class="flex items-start gap-2.5">
           <div class="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-[10px]">AW</div>
           <div class="bg-slate-100 dark:bg-gray-800 border border-slate-200 dark:border-gray-700 p-3.5 rounded-2xl rounded-tl-none max-w-md text-slate-800 dark:text-gray-200 leading-relaxed shadow-sm">
@@ -127,9 +127,10 @@
       </div>
 
       <!-- Input Bar -->
-      <form onsubmit="handleSendReply(event)" class="p-4 bg-slate-50 dark:bg-gray-950/80 border-t border-slate-200 dark:border-gray-800 flex gap-2">
-        <input type="text" id="admin-chat-input" placeholder="Type response to investor..." class="flex-1 bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-2xl px-4 py-3 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-primary">
-        <button type="submit" class="px-6 py-3 bg-primary hover:bg-[#1332c9] text-white font-bold text-xs rounded-2xl shadow-lg transition-all">
+      <form onsubmit="handleSendReply(event)" class="p-4 bg-slate-50 dark:bg-gray-950/80 border-t border-slate-200 dark:border-gray-800 flex flex-col sm:flex-row gap-2">
+        <label for="admin-chat-input" class="sr-only">Message to investor</label>
+        <input type="text" id="admin-chat-input" placeholder="Type response to investor..." class="vx-input flex-1 px-4 py-3 text-xs">
+        <button type="submit" class="vx-btn-primary px-6 py-3 font-bold text-xs rounded-2xl">
           Send Reply
         </button>
       </form>
