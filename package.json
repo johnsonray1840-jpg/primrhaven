@@ -1,7 +1,7 @@
 {
   "name": "vertexcapitals-platform",
   "version": "1.0.0",
-  "description": "VertexCapitals OTC Investment & Asset Management Platform",
+  "description": "PrimeHavenCapital OTC Investment & Asset Management Platform",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

@@ -1,5 +1,5 @@
 /**
- * VertexCapitals Email Service Engine (Resend API First-Class Integration)
+ * PrimeHavenCapital Email Service Engine (Resend API First-Class Integration)
  * Standard Premium Soothing Template Suite
  * Dispatches live emails via Resend HTTP API (https://api.resend.com/emails), SMTP, or Local Fallback.
  */
@@ -58,7 +58,7 @@ function getTransporter() {
         auth: { user, pass },
         tls: { rejectUnauthorized: false }
       });
-      console.log(`[VertexCapitals Email] SMTP transporter configured: ${host}`);
+      console.log(`[PrimeHavenCapital Email] SMTP transporter configured: ${host}`);
     } catch (err) {
       transporter = null;
     }
@@ -194,7 +194,7 @@ function wrapHtmlEmail(title, preheader, contentHtml) {
                 <path d="M2 12L12 17L22 12" stroke="#38BDF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
-            <h1 class="brand-title">Vertex<span class="brand-accent">Capitals</span></h1>
+            <h1 class="brand-title">PrimeHaven<span class="brand-accent">Capital</span></h1>
             <div class="brand-subtitle">Institutional OTC & Asset Management</div>
           </div>
 
@@ -202,22 +202,22 @@ function wrapHtmlEmail(title, preheader, contentHtml) {
             ${contentHtml}
 
             <div class="security-notice">
-              <strong>Security Protocol:</strong> VertexCapitals will never ask for your password or 6-digit codes. Verify you are on <span style="color: #38bdf8;">https://VertexCapitals.ltd</span>.
+              <strong>Security Protocol:</strong> PrimeHavenCapital will never ask for your password or 6-digit codes. Verify you are on <span style="color: #38bdf8;">https://primehavencapital.ltd</span>.
             </div>
           </div>
 
           <div class="footer">
             <p class="footer-text">
-              VertexCapitals Ltd &bull; 100 Bishopsgate, London EC2N 4AG, United Kingdom<br>
+              PrimeHavenCapital Ltd &bull; 100 Bishopsgate, London EC2N 4AG, United Kingdom<br>
               Authorized Institutional Custody & Asset Management
             </p>
             <div class="footer-links" style="font-size: 12px;">
-              <a href="https://VertexCapitals.ltd">Official Portal</a> &nbsp;&bull;&nbsp; 
-              <a href="mailto:support@vertexcapitals.ltd">Support Desk</a> &nbsp;&bull;&nbsp; 
-              <a href="https://VertexCapitals.ltd/dashboard.html">Client Dashboard</a>
+              <a href="https://primehavencapital.ltd">Official Portal</a> &nbsp;&bull;&nbsp; 
+              <a href="mailto:support@primehavencapital.ltd">Support Desk</a> &nbsp;&bull;&nbsp; 
+              <a href="https://primehavencapital.ltd/dashboard.html">Client Dashboard</a>
             </div>
             <p class="footer-disclaimer">
-              &copy; ${new Date().getFullYear()} VertexCapitals.ltd. All rights reserved. Confidential transmission intended solely for the registered recipient.
+              &copy; ${new Date().getFullYear()} primehavencapital.ltd. All rights reserved. Confidential transmission intended solely for the registered recipient.
             </p>
           </div>
         </div>
@@ -234,7 +234,7 @@ function wrapHtmlEmail(title, preheader, contentHtml) {
 async function sendMail({ userId, to, subject, html, text, eventType = 'general' }) {
   let from = process.env.EMAIL_FROM || process.env.RESEND_FROM;
   if (!from) {
-    const fromName = process.env.EMAIL_FROM_NAME || process.env.SMTP_FROM_NAME || 'VertexCapitals Security Desk';
+    const fromName = process.env.EMAIL_FROM_NAME || process.env.SMTP_FROM_NAME || 'PrimeHavenCapital Security Desk';
     const fromEmail = process.env.SMTP_FROM || 'onboarding@resend.dev';
     from = `"${fromName}" <${fromEmail}>`;
   }
@@ -264,12 +264,12 @@ async function sendMail({ userId, to, subject, html, text, eventType = 'general'
         html,
         text: mailRecord.body
       });
-      console.log(`[VertexCapitals Resend] Successfully sent live email to ${to} (ID: ${resendResult.id})`);
+      console.log(`[PrimeHavenCapital Resend] Successfully sent live email to ${to} (ID: ${resendResult.id})`);
       mailRecord.delivery_status = 'delivered_resend';
       mailRecord.provider_id = resendResult.id;
       return mailRecord;
     } catch (err) {
-      console.error(`\n❌ [VertexCapitals Resend Error] Could not dispatch email to: ${to}`);
+      console.error(`\n❌ [PrimeHavenCapital Resend Error] Could not dispatch email to: ${to}`);
       console.error(`   Details: ${err.message}`);
       if (err.message.includes('not verified') || err.message.includes('domain')) {
         console.error(`   💡 TIP: Make sure "${from}" is a verified domain in your Resend Dashboard (https://resend.com/domains).`);
@@ -285,22 +285,22 @@ async function sendMail({ userId, to, subject, html, text, eventType = 'general'
   if (activeTransporter) {
     try {
       const info = await activeTransporter.sendMail({
-        from: `"${process.env.EMAIL_FROM_NAME || 'VertexCapitals Desk'}" <${process.env.SMTP_FROM || 'support@vertexcapitals.ltd'}>`,
+        from: `"${process.env.EMAIL_FROM_NAME || 'PrimeHavenCapital Desk'}" <${process.env.SMTP_FROM || 'support@primehavencapital.ltd'}>`,
         to,
         subject,
         text: mailRecord.body,
         html: html
       });
-      console.log(`[VertexCapitals SMTP] Delivered live email to ${to} (MessageID: ${info.messageId})`);
+      console.log(`[PrimeHavenCapital SMTP] Delivered live email to ${to} (MessageID: ${info.messageId})`);
       mailRecord.delivery_status = 'delivered_smtp';
       return mailRecord;
     } catch (err) {
-      console.error(`[VertexCapitals SMTP Error]`, err.message);
+      console.error(`[PrimeHavenCapital SMTP Error]`, err.message);
     }
   }
 
   // 3. In-memory log fallback
-  console.log(`[VertexCapitals Email Service] (Local Log Fallback) Dispatched to: ${to} | Subject: ${subject}`);
+  console.log(`[PrimeHavenCapital Email Service] (Local Log Fallback) Dispatched to: ${to} | Subject: ${subject}`);
   mailRecord.delivery_status = 'logged_in_memory';
   return mailRecord;
 }
@@ -313,12 +313,12 @@ async function sendMail({ userId, to, subject, html, text, eventType = 'general'
 const EmailTemplates = {
   // 1. Account Verification Code (6-digit)
   verificationCode: (name, code) => {
-    const title = 'Your VertexCapitals Verification Code';
+    const title = 'Your PrimeHavenCapital Verification Code';
     const preheader = `Your 6-digit verification code is ${code}. Valid for 15 minutes.`;
     const content = `
       <h2 class="headline">Verify Your Email Address</h2>
       <p class="text-p">Hello <strong style="color: #f8fafc;">${name || 'Investor'}</strong>,</p>
-      <p class="text-p">Thank you for opening an account with VertexCapitals. Please enter the one-time 6-digit authorization code below in your registration window to verify your email and activate your account:</p>
+      <p class="text-p">Thank you for opening an account with PrimeHavenCapital. Please enter the one-time 6-digit authorization code below in your registration window to verify your email and activate your account:</p>
       
       <div class="code-wrapper">
         <div class="code-label">One-Time Security Code</div>
@@ -328,15 +328,15 @@ const EmailTemplates = {
 
       <p class="text-p" style="font-size: 13.5px; margin-bottom: 0;">If you did not request this verification code, please disregard this transmission.</p>
     `;
-    return { subject: `[VertexCapitals] Your 6-Digit Verification Code: ${code}`, html: wrapHtmlEmail(title, preheader, content) };
+    return { subject: `[PrimeHavenCapital] Your 6-Digit Verification Code: ${code}`, html: wrapHtmlEmail(title, preheader, content) };
   },
 
   // 2. Welcome & Account Activated
   welcomeAccount: (name, accountNum) => {
-    const title = 'Welcome to VertexCapitals - Account Activated';
+    const title = 'Welcome to PrimeHavenCapital - Account Activated';
     const preheader = `Your institutional account #${accountNum} is now active and ready.`;
     const content = `
-      <h2 class="headline" style="color: #34d399;">Welcome to VertexCapitals</h2>
+      <h2 class="headline" style="color: #34d399;">Welcome to PrimeHavenCapital</h2>
       <p class="text-p">Hello <strong style="color: #f8fafc;">${name || 'Investor'}</strong>,</p>
       <p class="text-p">Your email address has been verified and your institutional OTC investment account has been activated.</p>
       
@@ -351,20 +351,20 @@ const EmailTemplates = {
       <p class="text-p">You can now fund your liquid Exchange Wallet with cryptocurrency to participate in weekly OTC investment cycles.</p>
 
       <div class="btn-container">
-        <a href="https://VertexCapitals.ltd/dashboard.html" class="btn-primary">Access Investor Dashboard</a>
+        <a href="https://primehavencapital.ltd/dashboard.html" class="btn-primary">Access Investor Dashboard</a>
       </div>
     `;
-    return { subject: `[VertexCapitals] Welcome! Your Account #${accountNum} is Active`, html: wrapHtmlEmail(title, preheader, content) };
+    return { subject: `[PrimeHavenCapital] Welcome! Your Account #${accountNum} is Active`, html: wrapHtmlEmail(title, preheader, content) };
   },
 
   // 3. Password Reset Code
   passwordReset: (name, code) => {
-    const title = 'VertexCapitals Password Reset';
+    const title = 'PrimeHavenCapital Password Reset';
     const preheader = `Your password recovery authorization code is ${code}`;
     const content = `
       <h2 class="headline">Reset Account Password</h2>
       <p class="text-p">Hello <strong style="color: #f8fafc;">${name || 'Investor'}</strong>,</p>
-      <p class="text-p">We received a request to reset the password for your VertexCapitals account. Enter the verification code below:</p>
+      <p class="text-p">We received a request to reset the password for your PrimeHavenCapital account. Enter the verification code below:</p>
       
       <div class="code-wrapper">
         <div class="code-label">Password Recovery Code</div>
@@ -372,7 +372,7 @@ const EmailTemplates = {
         <div class="code-expiry">⏱ Expires in 15 minutes &bull; Confidential</div>
       </div>
 
-      <p class="text-p" style="font-size: 13.5px; margin-bottom: 0;">If you did not request this, please notify support@vertexcapitals.ltd immediately.</p>
+      <p class="text-p" style="font-size: 13.5px; margin-bottom: 0;">If you did not request this, please notify support@primehavencapital.ltd immediately.</p>
     `;
     return { subject: `[Security Alert] Password Reset Code: ${code}`, html: wrapHtmlEmail(title, preheader, content) };
   },
@@ -397,7 +397,7 @@ const EmailTemplates = {
 
       <p class="text-p" style="font-size: 13.5px; margin-bottom: 0;">Your Exchange Wallet balance will update automatically as soon as settlement is confirmed.</p>
     `;
-    return { subject: `[VertexCapitals] Deposit Pending: $${parseFloat(amount).toLocaleString()} (${asset})`, html: wrapHtmlEmail(title, preheader, content) };
+    return { subject: `[PrimeHavenCapital] Deposit Pending: $${parseFloat(amount).toLocaleString()} (${asset})`, html: wrapHtmlEmail(title, preheader, content) };
   },
 
   // 5. Deposit Approved & Balance Credited
@@ -419,7 +419,7 @@ const EmailTemplates = {
       </div>
 
       <div class="btn-container">
-        <a href="https://VertexCapitals.ltd/dashboard.html" class="btn-primary">Access Dashboard & Allocate Capital</a>
+        <a href="https://primehavencapital.ltd/dashboard.html" class="btn-primary">Access Dashboard & Allocate Capital</a>
       </div>
     `;
     return { subject: `[Confirmed] Deposit Credited: +$${parseFloat(amount).toLocaleString()} USD`, html: wrapHtmlEmail(title, preheader, content) };
@@ -444,7 +444,7 @@ const EmailTemplates = {
         </table>
       </div>
     `;
-    return { subject: `[VertexCapitals] Payout Request Submitted: $${parseFloat(amount).toLocaleString()}`, html: wrapHtmlEmail(title, preheader, content) };
+    return { subject: `[PrimeHavenCapital] Payout Request Submitted: $${parseFloat(amount).toLocaleString()}`, html: wrapHtmlEmail(title, preheader, content) };
   },
 
   // 7. Withdrawal Approved & Paid
@@ -477,7 +477,7 @@ const EmailTemplates = {
     const content = `
       <h2 class="headline" style="color: #34d399;">OTC Capital Allocation Confirmed</h2>
       <p class="text-p">Hello <strong style="color: #f8fafc;">${name || 'Investor'}</strong>,</p>
-      <p class="text-p">Your capital allocation from your liquid Exchange Wallet to the VertexCapitals Institutional OTC desk has been executed and is now generating weekly yield.</p>
+      <p class="text-p">Your capital allocation from your liquid Exchange Wallet to the PrimeHavenCapital Institutional OTC desk has been executed and is now generating weekly yield.</p>
       
       <div class="data-card">
         <table class="data-table">
@@ -491,7 +491,7 @@ const EmailTemplates = {
       </div>
 
       <div class="btn-container">
-        <a href="https://VertexCapitals.ltd/invest-otc.html" class="btn-primary">View Active Contract & Yield Progress</a>
+        <a href="https://primehavencapital.ltd/invest-otc.html" class="btn-primary">View Active Contract & Yield Progress</a>
       </div>
     `;
     return { subject: `[Confirmed] $${parseFloat(amount).toLocaleString()} Allocated to OTC Trading`, html: wrapHtmlEmail(title, preheader, content) };
@@ -504,7 +504,7 @@ const EmailTemplates = {
     const content = `
       <h2 class="headline" style="color: #fbbf24;">Institutional OTC Yield Credited</h2>
       <p class="text-p">Hello <strong style="color: #f8fafc;">${name || 'Investor'}</strong>,</p>
-      <p class="text-p">Your allocated capital in the VertexCapitals OTC trading cycle has accrued its scheduled weekly return.</p>
+      <p class="text-p">Your allocated capital in the PrimeHavenCapital OTC trading cycle has accrued its scheduled weekly return.</p>
       
       <div class="data-card">
         <table class="data-table">
@@ -516,7 +516,7 @@ const EmailTemplates = {
       </div>
 
       <div class="btn-container">
-        <a href="https://VertexCapitals.ltd/dashboard.html" class="btn-primary">View Portfolio & Transfer to Exchange</a>
+        <a href="https://primehavencapital.ltd/dashboard.html" class="btn-primary">View Portfolio & Transfer to Exchange</a>
       </div>
     `;
     return { subject: `[OTC Yield] +$${parseFloat(profitAmount).toLocaleString()} Profit Credited`, html: wrapHtmlEmail(title, preheader, content) };
@@ -524,7 +524,7 @@ const EmailTemplates = {
 
   // 9. Custom Admin Broadcast
   customMessage: (name, subject, customBody) => {
-    const title = subject || 'Official Communication from VertexCapitals';
+    const title = subject || 'Official Communication from PrimeHavenCapital';
     const preheader = subject;
     const content = `
       <h2 class="headline">${subject}</h2>

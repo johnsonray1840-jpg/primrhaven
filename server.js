@@ -1,5 +1,5 @@
 /**
- * VertexCapitals Platform Server (Node.js)
+ * PrimeHavenCapital Platform Server (Node.js)
  * Full MySQL-Backed REST API Engine with safe async dispatch, non-blocking email notifications, and bulletproof request streaming.
  */
 
@@ -1740,7 +1740,7 @@ if (!process.env.VERCEL) {
     // Binds directly to Passenger socket on cPanel
     server.listen(rawPort, () => {
       console.log(`====================================================`);
-      console.log(`🚀 VertexCapitals Platform Server is active via Passenger (${rawPort})!`);
+      console.log(`🚀 PrimeHavenCapital Platform Server is active via Passenger (${rawPort})!`);
       console.log(`====================================================`);
     });
   } else {
@@ -1750,16 +1750,16 @@ if (!process.env.VERCEL) {
     server.on('error', (err) => {
       if (err.code === 'EADDRINUSE') {
         port++;
-        console.warn(`[VertexCapitals Server] Port in use, trying next port ${port}...`);
+        console.warn(`[PrimeHavenCapital Server] Port in use, trying next port ${port}...`);
         setTimeout(() => server.listen(port), 100);
       } else {
-        console.error('[VertexCapitals Server Error]', err);
+        console.error('[PrimeHavenCapital Server Error]', err);
       }
     });
 
     server.listen(port, () => {
       console.log(`====================================================`);
-      console.log(`🚀 VertexCapitals Platform Server is active!`);
+      console.log(`🚀 PrimeHavenCapital Platform Server is active!`);
       console.log(`🌐 Local URL: http://localhost:${port}`);
       console.log(`💳 User Dashboard: http://localhost:${port}/dashboard.html`);
       console.log(`🛡️ Admin Portal: http://localhost:${port}/admin.html`);
