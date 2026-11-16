@@ -204,16 +204,15 @@
     }
 
     // ==========================================
-    // ADMIN SESSION TOKEN (sessionStorage — cleared on tab close)
+    // ADMIN SESSION TOKEN (sessionStorage + localStorage sync)
     // ==========================================
     getAdminToken() {
       try {
-        const token = sessionStorage.getItem(ADMIN_TOKEN_KEY);
-        const expiry = sessionStorage.getItem(ADMIN_TOKEN_EXPIRY_KEY);
+        const token = sessionStorage.getItem(ADMIN_TOKEN_KEY) || localStorage.getItem('vertexcapitals_admin_token');
+        const expiry = sessionStorage.getItem(ADMIN_TOKEN_EXPIRY_KEY) || localStorage.getItem(ADMIN_TOKEN_EXPIRY_KEY);
         if (!token || !expiry) return null;
         if (Date.now() > parseInt(expiry, 10)) {
-          sessionStorage.removeItem(ADMIN_TOKEN_KEY);
-          sessionStorage.removeItem(ADMIN_TOKEN_EXPIRY_KEY);
+          this.clearAdminToken();
           return null;
         }
         return token;
@@ -224,6 +223,8 @@
       try {
         sessionStorage.setItem(ADMIN_TOKEN_KEY, token);
         sessionStorage.setItem(ADMIN_TOKEN_EXPIRY_KEY, String(expiresAt));
+        localStorage.setItem('vertexcapitals_admin_token', token);
+        localStorage.setItem(ADMIN_TOKEN_EXPIRY_KEY, String(expiresAt));
       } catch (e) {}
     }
 
@@ -231,6 +232,8 @@
       try {
         sessionStorage.removeItem(ADMIN_TOKEN_KEY);
         sessionStorage.removeItem(ADMIN_TOKEN_EXPIRY_KEY);
+        localStorage.removeItem('vertexcapitals_admin_token');
+        localStorage.removeItem(ADMIN_TOKEN_EXPIRY_KEY);
       } catch (e) {}
     }
 

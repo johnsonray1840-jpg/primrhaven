@@ -373,14 +373,22 @@
 
     async function loadPublicCatalogPlans() {
       try {
-        const res = await fetch('/api/plans/active');
+        const res = await fetch('/api/plans/active', { cache: 'no-store' });
         const data = await res.json();
         if (data.success && Array.isArray(data.plans)) {
           loadedCatalogPlans = data.plans;
           renderPublicPlans();
           if (loadedCatalogPlans.length > 0) {
-            const first = loadedCatalogPlans[0];
-            selectTranche(first.name, first.roi_percentage, first.min_amount, first.max_amount, first.duration_days, first.id);
+            const params = new URLSearchParams(window.location.search);
+            const requestedPlanId = parseInt(params.get('plan_id'), 10);
+            const matchedPlan = !isNaN(requestedPlanId)
+              ? loadedCatalogPlans.find(p => p.id === requestedPlanId)
+              : null;
+            const initialPlan = matchedPlan || loadedCatalogPlans[0];
+            if (matchedPlan && matchedPlan.category) {
+              setCategoryTab(matchedPlan.category);
+            }
+            selectTranche(initialPlan.name, initialPlan.roi_percentage, initialPlan.min_amount, initialPlan.max_amount, initialPlan.duration_days, initialPlan.id);
           }
         }
       } catch (err) {

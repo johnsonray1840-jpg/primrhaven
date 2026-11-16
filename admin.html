@@ -1199,6 +1199,11 @@
       renderMasterLedger();
       renderEmailLogs();
       populateUserDropdowns();
+      if (Array.isArray(data.investmentPlans)) {
+        cachedCatalogPlans = data.investmentPlans;
+        renderCatalogPlans(cachedCatalogPlans);
+        populateTrancheSelect();
+      }
       loadCatalogPlans();
     }
 
@@ -1629,15 +1634,31 @@
       });
     }
 
+    function populateTrancheSelect() {
+      const sel = document.getElementById('otc-target-tranche');
+      if (!sel || !Array.isArray(cachedCatalogPlans) || cachedCatalogPlans.length === 0) return;
+      sel.innerHTML = cachedCatalogPlans.map(p =>
+        `<option value="${p.name.replace(/"/g, '&quot;')}">${p.name} (${p.category} • +${p.roi_percentage}% • ${p.duration_days} Days)</option>`
+      ).join('');
+      if (cachedCatalogPlans[0]) {
+        updateTrancheFormDefaults(cachedCatalogPlans[0].name);
+      }
+    }
+
     async function loadCatalogPlans() {
       try {
         const res = await fetch('/api/admin/plans/list', {
-          headers: { 'Authorization': `Bearer ${localStorage.getItem('vertexcapitals_admin_token')}` }
+          headers: { ...VertexApp.adminAuthHeaders() }
         });
+        if (res.status === 401) {
+          showAdminLoginGate('Admin session expired. Please authenticate again.');
+          return;
+        }
         const data = await res.json();
         if (data.success && Array.isArray(data.plans)) {
           cachedCatalogPlans = data.plans;
           renderCatalogPlans(cachedCatalogPlans);
+          populateTrancheSelect();
         }
       } catch (err) {
         console.error('Failed to load plan catalogue:', err);
@@ -1763,10 +1784,14 @@
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('vertexcapitals_admin_token')}`
+            ...VertexApp.adminAuthHeaders()
           },
           body: JSON.stringify(payload)
         });
+        if (res.status === 401) {
+          showAdminLoginGate('Admin session expired. Please authenticate again.');
+          return;
+        }
         const data = await res.json();
         if (data.success) {
           VertexApp.showToast(data.message, 'success');
@@ -1786,14 +1811,20 @@
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('vertexcapitals_admin_token')}`
+            ...VertexApp.adminAuthHeaders()
           },
           body: JSON.stringify({ plan_id: id, status: newStatus })
         });
+        if (res.status === 401) {
+          showAdminLoginGate('Admin session expired. Please authenticate again.');
+          return;
+        }
         const data = await res.json();
         if (data.success) {
           VertexApp.showToast(`Plan marked as ${newStatus}.`, 'success');
           await loadCatalogPlans();
+        } else {
+          VertexApp.showToast(data.message || 'Failed to update status.', 'error');
         }
       } catch (err) {
         VertexApp.showToast('Failed to update status.', 'error');
@@ -1807,10 +1838,14 @@
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('vertexcapitals_admin_token')}`
+            ...VertexApp.adminAuthHeaders()
           },
           body: JSON.stringify({ plan_id: id })
         });
+        if (res.status === 401) {
+          showAdminLoginGate('Admin session expired. Please authenticate again.');
+          return;
+        }
         const data = await res.json();
         if (data.success) {
           VertexApp.showToast(data.message, 'success');
@@ -1994,6 +2029,13 @@
     }
 
     function updateTrancheFormDefaults(tranche) {
+      const matched = Array.isArray(cachedCatalogPlans) ? cachedCatalogPlans.find(p => p.name === tranche) : null;
+      if (matched) {
+        document.getElementById('otc-target-amount').value = matched.min_amount;
+        document.getElementById('otc-target-roi').value = matched.roi_percentage;
+        document.getElementById('otc-target-duration').value = matched.duration_days;
+        return;
+      }
       if (tranche.includes('Starter')) {
         document.getElementById('otc-target-amount').value = 1000;
         document.getElementById('otc-target-roi').value = 5.0;

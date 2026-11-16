@@ -186,20 +186,51 @@ async function initDB() {
           updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
         );
 
+        CREATE TABLE IF NOT EXISTS investment_plans (
+          id SERIAL PRIMARY KEY,
+          name VARCHAR(150) NOT NULL,
+          description TEXT DEFAULT NULL,
+          category VARCHAR(30) NOT NULL CHECK (category IN ('Short-Term', 'Long-Term')),
+          min_amount NUMERIC(18, 2) NOT NULL DEFAULT 100.00,
+          max_amount NUMERIC(18, 2) NOT NULL DEFAULT 100000.00,
+          roi_percentage NUMERIC(8, 2) NOT NULL,
+          duration_days INT NOT NULL,
+          status VARCHAR(20) NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'inactive', 'archived')),
+          is_active BOOLEAN NOT NULL DEFAULT true,
+          display_icon VARCHAR(100) DEFAULT NULL,
+          created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+          updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+        );
+
+        ALTER TABLE investment_plans ADD COLUMN IF NOT EXISTS is_active BOOLEAN NOT NULL DEFAULT true;
+
         CREATE TABLE IF NOT EXISTS otc_plans (
           id SERIAL PRIMARY KEY,
           user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+          plan_id INT REFERENCES investment_plans(id) ON DELETE SET NULL,
           tranche_name VARCHAR(150) DEFAULT 'Executive Multi-Asset Tranche',
           amount NUMERIC(18, 2) NOT NULL,
           weekly_roi_percent NUMERIC(6, 2) DEFAULT 7.50,
+          total_roi_percent NUMERIC(8, 2) DEFAULT NULL,
+          total_expected_profit NUMERIC(18, 2) DEFAULT NULL,
           duration_days INT DEFAULT 30,
           days_elapsed INT DEFAULT 0,
           profit_accrued NUMERIC(18, 2) DEFAULT 0.00,
           status VARCHAR(20) DEFAULT 'active',
           created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
           start_date TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-          next_payout_date TIMESTAMPTZ DEFAULT NULL
+          end_date TIMESTAMPTZ DEFAULT NULL,
+          next_payout_date TIMESTAMPTZ DEFAULT NULL,
+          maturity_payout_ref VARCHAR(50) UNIQUE DEFAULT NULL,
+          matured_at TIMESTAMPTZ DEFAULT NULL
         );
+
+        ALTER TABLE otc_plans ADD COLUMN IF NOT EXISTS plan_id INT REFERENCES investment_plans(id) ON DELETE SET NULL;
+        ALTER TABLE otc_plans ADD COLUMN IF NOT EXISTS total_roi_percent NUMERIC(8, 2) DEFAULT NULL;
+        ALTER TABLE otc_plans ADD COLUMN IF NOT EXISTS total_expected_profit NUMERIC(18, 2) DEFAULT NULL;
+        ALTER TABLE otc_plans ADD COLUMN IF NOT EXISTS end_date TIMESTAMPTZ DEFAULT NULL;
+        ALTER TABLE otc_plans ADD COLUMN IF NOT EXISTS maturity_payout_ref VARCHAR(50) DEFAULT NULL;
+        ALTER TABLE otc_plans ADD COLUMN IF NOT EXISTS matured_at TIMESTAMPTZ DEFAULT NULL;
 
         CREATE TABLE IF NOT EXISTS transactions (
           id SERIAL PRIMARY KEY,
@@ -309,8 +340,12 @@ function formatWallet(row) {
 // Helper: Format Investment Plan Catalog
 function formatInvestmentPlan(row) {
   if (!row) return null;
+  const resolvedIsActive = row.is_active !== undefined && row.is_active !== null
+    ? Boolean(row.is_active)
+    : row.status === 'active';
   return {
     ...row,
+    is_active: resolvedIsActive,
     min_amount: parseFloat(row.min_amount || 0),
     max_amount: parseFloat(row.max_amount || 0),
     roi_percentage: parseFloat(row.roi_percentage || 0),
@@ -842,7 +877,7 @@ async function getAllInvestmentPlans(includeInactive = false) {
       LEFT JOIN otc_plans o ON o.plan_id = p.id
     `;
     if (!includeInactive) {
-      sql += ` WHERE p.status = 'active' `;
+      sql += ` WHERE p.status = 'active' AND COALESCE(p.is_active, true) = true `;
     } else {
       sql += ` WHERE p.status != 'archived' `;
     }
@@ -856,7 +891,7 @@ async function getAllInvestmentPlans(includeInactive = false) {
     store.investment_plans = [];
   }
   return store.investment_plans
-    .filter(p => includeInactive ? p.status !== 'archived' : p.status === 'active')
+    .filter(p => includeInactive ? p.status !== 'archived' : (p.status === 'active' && p.is_active !== false))
     .map(formatInvestmentPlan);
 }
 
@@ -887,7 +922,9 @@ async function createInvestmentPlan(data, client = null) {
   const maxAmount = parseFloat(data.max_amount || 100000);
   const roiPercentage = parseFloat(data.roi_percentage || 10);
   const durationDays = parseInt(data.duration_days || 30, 10);
-  const status = data.status === 'inactive' ? 'inactive' : 'active';
+  const isInactive = data.is_active === false || data.status === 'inactive' || data.status === 'archived';
+  const status = data.status === 'archived' ? 'archived' : (isInactive ? 'inactive' : 'active');
+  const isActive = !isInactive && status === 'active';
   const displayIcon = data.display_icon || (category === 'Short-Term' ? 'zap' : 'shield');
   const dbExecutor = client || pool;
 
@@ -895,10 +932,10 @@ async function createInvestmentPlan(data, client = null) {
     const res = await dbExecutor.query(`
       INSERT INTO investment_plans (
         name, description, category, min_amount, max_amount,
-        roi_percentage, duration_days, status, display_icon
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+        roi_percentage, duration_days, status, is_active, display_icon
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
       RETURNING *;
-    `, [name, description, category, minAmount, maxAmount, roiPercentage, durationDays, status, displayIcon]);
+    `, [name, description, category, minAmount, maxAmount, roiPercentage, durationDays, status, isActive, displayIcon]);
     return formatInvestmentPlan(res.rows[0]);
   }
 
@@ -913,6 +950,7 @@ async function createInvestmentPlan(data, client = null) {
     roi_percentage: roiPercentage,
     duration_days: durationDays,
     status,
+    is_active: isActive,
     display_icon: displayIcon,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
@@ -925,9 +963,16 @@ async function createInvestmentPlan(data, client = null) {
 async function updateInvestmentPlan(id, updates, client = null) {
   const numId = parseInt(id, 10);
   const dbExecutor = client || pool;
+  const normalizedUpdates = { ...updates };
+  if (normalizedUpdates.status !== undefined && normalizedUpdates.is_active === undefined) {
+    normalizedUpdates.is_active = normalizedUpdates.status === 'active';
+  } else if (normalizedUpdates.is_active !== undefined && normalizedUpdates.status === undefined) {
+    normalizedUpdates.status = normalizedUpdates.is_active ? 'active' : 'inactive';
+  }
+
   if (usePostgres) {
-    const allowed = ['name', 'description', 'category', 'min_amount', 'max_amount', 'roi_percentage', 'duration_days', 'status', 'display_icon'];
-    const keys = Object.keys(updates).filter(k => allowed.includes(k));
+    const allowed = ['name', 'description', 'category', 'min_amount', 'max_amount', 'roi_percentage', 'duration_days', 'status', 'is_active', 'display_icon'];
+    const keys = Object.keys(normalizedUpdates).filter(k => allowed.includes(k));
     if (keys.length === 0) return getInvestmentPlanById(numId);
 
     const setClauses = [];
@@ -936,7 +981,7 @@ async function updateInvestmentPlan(id, updates, client = null) {
 
     for (const key of keys) {
       setClauses.push(`${key} = $${idx}`);
-      values.push(updates[key]);
+      values.push(normalizedUpdates[key]);
       idx++;
     }
     setClauses.push(`updated_at = NOW()`);
@@ -955,7 +1000,7 @@ async function updateInvestmentPlan(id, updates, client = null) {
   if (!store.investment_plans) store.investment_plans = [];
   const plan = store.investment_plans.find(p => p.id === numId);
   if (plan) {
-    Object.assign(plan, updates, { updated_at: new Date().toISOString() });
+    Object.assign(plan, normalizedUpdates, { updated_at: new Date().toISOString() });
     saveDatabaseSync();
     return plan;
   }
@@ -971,7 +1016,7 @@ async function deleteInvestmentPlan(id) {
 
     if (attachedCount > 0) {
       // Non-destructive: archive/deactivate plan to protect existing customer contract terms
-      await pool.query("UPDATE investment_plans SET status = 'archived', updated_at = NOW() WHERE id = $1", [numId]);
+      await pool.query("UPDATE investment_plans SET status = 'archived', is_active = false, updated_at = NOW() WHERE id = $1", [numId]);
       return { archived: true, message: 'Plan has active investments and was safely archived rather than deleted.' };
     }
 

@@ -31,6 +31,230 @@
     <link as="script" rel="prefetch" href="js/ee8b1517-41836ea1957abb0c.js">
     <link as="script" rel="prefetch" href="js/354-0ed56a64c758e02c.js">
     <link as="script" rel="prefetch" href="js/dashboard-f02b8d7367ff5d5d.js">
+    <style id="vx-homepage-plans-css">
+      #homepage-plans-section {
+        max-width: 1280px;
+        margin: 5rem auto 3rem auto;
+        padding: 0 1.5rem;
+        box-sizing: border-box;
+      }
+      #homepage-plans-section *, #homepage-plans-section *::before, #homepage-plans-section *::after {
+        box-sizing: border-box;
+      }
+      #homepage-plans-section .vx-plans-header {
+        text-align: center;
+        max-width: 42rem;
+        margin: 0 auto 2rem auto;
+      }
+      #homepage-plans-section .vx-plans-badge {
+        display: inline-block;
+        padding: 0.35rem 0.9rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        background: rgba(24, 62, 250, 0.1);
+        color: #183EFA;
+        border: 1px solid rgba(24, 62, 250, 0.25);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      #homepage-plans-section .vx-plans-title {
+        font-size: 1.75rem;
+        line-height: 1.2;
+        font-weight: 700;
+        color: #0f172a;
+        margin: 0.75rem 0 0 0;
+      }
+      @media (min-width: 768px) {
+        #homepage-plans-section .vx-plans-title {
+          font-size: 2.5rem;
+        }
+      }
+      #homepage-plans-section .vx-plans-subtitle {
+        color: #475569;
+        font-size: 0.9375rem;
+        line-height: 1.6;
+        margin: 0.75rem 0 0 0;
+      }
+      #homepage-plans-section .vx-plans-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 2.5rem;
+      }
+      #homepage-plans-section .vx-plan-tab {
+        padding: 0.55rem 1.25rem;
+        border-radius: 9999px;
+        font-size: 0.8125rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        background: #f1f5f9;
+        color: #475569;
+        border: 1px solid #e2e8f0;
+      }
+      #homepage-plans-section .vx-plan-tab:hover {
+        color: #0f172a;
+        border-color: #cbd5e1;
+      }
+      #homepage-plans-section .vx-plan-tab.active {
+        background: #183EFA;
+        color: #ffffff;
+        border-color: #183EFA;
+        box-shadow: 0 6px 16px -4px rgba(24, 62, 250, 0.35);
+      }
+      #homepage-plans-container.vx-plans-grid {
+        display: grid;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        gap: 1.5rem;
+      }
+      @media (min-width: 768px) {
+        #homepage-plans-container.vx-plans-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (min-width: 1024px) {
+        #homepage-plans-container.vx-plans-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+      #homepage-plans-section .vx-plan-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 1.5rem;
+        padding: 1.75rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: 0 12px 30px -8px rgba(15, 23, 42, 0.08);
+        transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        text-align: left;
+      }
+      #homepage-plans-section .vx-plan-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(24, 62, 250, 0.45);
+        box-shadow: 0 18px 36px -10px rgba(24, 62, 250, 0.16);
+      }
+      #homepage-plans-section .vx-plan-card-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      #homepage-plans-section .vx-plan-cat-badge {
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.6875rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+      #homepage-plans-section .vx-plan-cat-short {
+        background: #fef3c7;
+        color: #92400e;
+        border: 1px solid #fcd34d;
+      }
+      #homepage-plans-section .vx-plan-cat-long {
+        background: #dbeafe;
+        color: #1e40af;
+        border: 1px solid #93c5fd;
+      }
+      #homepage-plans-section .vx-plan-cycle {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #64748b;
+      }
+      #homepage-plans-section .vx-plan-name {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin: 1rem 0 0 0;
+      }
+      #homepage-plans-section .vx-plan-desc {
+        font-size: 0.8125rem;
+        color: #475569;
+        margin: 0.5rem 0 0 0;
+        line-height: 1.5;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      #homepage-plans-section .vx-plan-roi-box {
+        margin-top: 1rem;
+        padding: 1rem;
+        background: #f8fafc;
+        border: 1px solid #f1f5f9;
+        border-radius: 1rem;
+        text-align: center;
+      }
+      #homepage-plans-section .vx-plan-roi-label {
+        display: block;
+        font-size: 0.6875rem;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: #64748b;
+        letter-spacing: 0.06em;
+      }
+      #homepage-plans-section .vx-plan-roi-value {
+        font-size: 2rem;
+        font-weight: 900;
+        color: #059669;
+        margin: 0.2rem 0;
+      }
+      #homepage-plans-section .vx-plan-roi-note {
+        font-size: 0.6875rem;
+        color: #64748b;
+        font-weight: 500;
+        margin: 0;
+      }
+      #homepage-plans-section .vx-plan-specs {
+        margin-top: 1rem;
+        font-size: 0.8125rem;
+        color: #475569;
+      }
+      #homepage-plans-section .vx-plan-spec-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.45rem 0;
+        border-bottom: 1px solid #f1f5f9;
+      }
+      #homepage-plans-section .vx-plan-spec-row:last-child {
+        border-bottom: none;
+      }
+      #homepage-plans-section .vx-plan-spec-row strong {
+        color: #0f172a;
+        font-weight: 700;
+      }
+      #homepage-plans-section .vx-plan-cta {
+        display: block;
+        width: 100%;
+        margin-top: 1.5rem;
+        text-align: center;
+        padding: 0.85rem 1rem;
+        background: #183EFA;
+        color: #ffffff;
+        font-size: 0.8125rem;
+        font-weight: 800;
+        border-radius: 0.75rem;
+        text-decoration: none;
+        box-shadow: 0 8px 20px -4px rgba(24, 62, 250, 0.35);
+        transition: background 0.2s ease, transform 0.2s ease;
+      }
+      #homepage-plans-section .vx-plan-cta:hover {
+        background: #1332c9;
+      }
+      #homepage-plans-section .vx-plans-empty {
+        grid-column: 1 / -1;
+        padding: 2rem;
+        text-align: center;
+        color: #64748b;
+        font-weight: 500;
+      }
+    </style>
 </head>
 
 <body>
@@ -462,26 +686,26 @@
                         </div>
 
                         <!-- Public Investment Plans Section (Dynamically Loaded from Neon PostgreSQL) -->
-                        <div class="mt-16 container mx-auto px-4 md:px-8">
-                            <div class="text-center max-w-2xl mx-auto mb-8">
-                                <span class="px-3.5 py-1 rounded-full text-xs font-black bg-primary/10 text-primary border border-primary/20 uppercase tracking-widest">Audited Investment Plans</span>
-                                <h2 class="md:text-[40px] text-[24px] font-gilmermedium font-semibold text-slate-900 mt-2">Choose Your Investment Tier</h2>
-                                <p class="text-slate-600 font-gilmerregular text-sm md:text-base mt-2">
+                        <section id="homepage-plans-section" class="mt-16 container mx-auto px-4 md:px-8">
+                            <div class="vx-plans-header text-center max-w-2xl mx-auto mb-8">
+                                <span class="vx-plans-badge">Audited Investment Plans</span>
+                                <h2 class="vx-plans-title font-gilmermedium">Choose Your Investment Tier</h2>
+                                <p class="vx-plans-subtitle font-gilmerregular">
                                     Guaranteed capital growth backed by institutional market liquidity. Explore our Short-Term and Long-Term investment opportunities starting from $500 and $1,000+.
                                 </p>
                             </div>
 
                             <!-- Category Switcher Tabs -->
-                            <div class="flex justify-center items-center gap-2 mb-10">
-                                <button onclick="switchHomepageCategory('ALL')" id="home-cat-all" class="px-5 py-2 rounded-full text-xs font-bold transition-all bg-primary text-white shadow-md shadow-primary/25">All Plans</button>
-                                <button onclick="switchHomepageCategory('Short-Term')" id="home-cat-short" class="px-5 py-2 rounded-full text-xs font-bold transition-all bg-slate-100 text-slate-600 hover:text-slate-900 border border-slate-200">Short-Term Plans</button>
-                                <button onclick="switchHomepageCategory('Long-Term')" id="home-cat-long" class="px-5 py-2 rounded-full text-xs font-bold transition-all bg-slate-100 text-slate-600 hover:text-slate-900 border border-slate-200">Long-Term Plans</button>
+                            <div class="vx-plans-tabs">
+                                <button type="button" onclick="switchHomepageCategory('ALL')" id="home-cat-all" class="vx-plan-tab active">All Plans</button>
+                                <button type="button" onclick="switchHomepageCategory('Short-Term')" id="home-cat-short" class="vx-plan-tab">Short-Term Plans</button>
+                                <button type="button" onclick="switchHomepageCategory('Long-Term')" id="home-cat-long" class="vx-plan-tab">Long-Term Plans</button>
                             </div>
 
-                            <div id="homepage-plans-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                <div class="col-span-full py-8 text-center text-slate-400 font-medium">Loading active investment plans...</div>
+                            <div id="homepage-plans-container" class="vx-plans-grid">
+                                <div class="vx-plans-empty">Loading active investment plans...</div>
                             </div>
-                        </div>
+                        </section>
 
                         <div class="mt-12 text-center">
                             <h2 class="md:text-[40px] text-[20px]  font-gilmermedium font-semibold mb-4">Testimonials
@@ -674,22 +898,87 @@
     <script src="js/354-0ed56a64c758e02c.js"></script>
     <script src="js/dashboard-f02b8d7367ff5d5d.js"></script>
     <script>
-      // Dynamically load active public investment plans from Neon PostgreSQL
+      // Dynamically load active public investment plans from Neon PostgreSQL and survive Next.js React hydration
       let homepagePlans = [];
+      let homepagePlansLoaded = false;
+      let homepagePlansError = null;
       let currentHomepageCategory = 'ALL';
+
+      function escapePlanHtml(str) {
+        return String(str == null ? '' : str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function buildHomepagePlansSectionElement() {
+        const section = document.createElement('section');
+        section.id = 'homepage-plans-section';
+        section.className = 'mt-16 container mx-auto px-4 md:px-8';
+        section.innerHTML = `
+          <div class="vx-plans-header text-center max-w-2xl mx-auto mb-8">
+            <span class="vx-plans-badge">Audited Investment Plans</span>
+            <h2 class="vx-plans-title font-gilmermedium">Choose Your Investment Tier</h2>
+            <p class="vx-plans-subtitle font-gilmerregular">
+              Guaranteed capital growth backed by institutional market liquidity. Explore our Short-Term and Long-Term investment opportunities starting from $500 and $1,000+.
+            </p>
+          </div>
+          <div class="vx-plans-tabs">
+            <button type="button" onclick="switchHomepageCategory('ALL')" id="home-cat-all" class="vx-plan-tab ${currentHomepageCategory === 'ALL' ? 'active' : ''}">All Plans</button>
+            <button type="button" onclick="switchHomepageCategory('Short-Term')" id="home-cat-short" class="vx-plan-tab ${currentHomepageCategory === 'Short-Term' ? 'active' : ''}">Short-Term Plans</button>
+            <button type="button" onclick="switchHomepageCategory('Long-Term')" id="home-cat-long" class="vx-plan-tab ${currentHomepageCategory === 'Long-Term' ? 'active' : ''}">Long-Term Plans</button>
+          </div>
+          <div id="homepage-plans-container" class="vx-plans-grid">
+            <div class="vx-plans-empty">Loading active investment plans...</div>
+          </div>
+        `;
+        return section;
+      }
+
+      function ensureHomepagePlansSection() {
+        const mainEl = document.querySelector('#__next main') || document.querySelector('main');
+        if (!mainEl) return false;
+
+        const existing = document.getElementById('homepage-plans-section');
+        if (existing && mainEl.contains(existing)) {
+          return true;
+        }
+
+        // Find the Testimonials block inside <main> so we anchor directly above it
+        let testimonialsBlock = null;
+        const headings = mainEl.querySelectorAll('h2');
+        for (const h2 of headings) {
+          if (h2.textContent && h2.textContent.trim().toLowerCase() === 'testimonials') {
+            testimonialsBlock = h2.closest('div');
+            break;
+          }
+        }
+
+        const section = existing || buildHomepagePlansSectionElement();
+        if (testimonialsBlock && testimonialsBlock.parentNode) {
+          testimonialsBlock.parentNode.insertBefore(section, testimonialsBlock);
+        } else {
+          mainEl.appendChild(section);
+        }
+
+        renderHomepagePlans();
+        return true;
+      }
 
       function switchHomepageCategory(category) {
         currentHomepageCategory = category;
         ['all', 'short', 'long'].forEach(c => {
           const btn = document.getElementById(`home-cat-${c}`);
           if (!btn) return;
-          btn.className = 'px-5 py-2 rounded-full text-xs font-bold transition-all bg-slate-100 text-slate-600 hover:text-slate-900 border border-slate-200';
+          btn.className = 'vx-plan-tab';
         });
 
         const activeId = category === 'ALL' ? 'home-cat-all' : category === 'Short-Term' ? 'home-cat-short' : 'home-cat-long';
         const activeBtn = document.getElementById(activeId);
         if (activeBtn) {
-          activeBtn.className = 'px-5 py-2 rounded-full text-xs font-bold transition-all bg-primary text-white shadow-md shadow-primary/25';
+          activeBtn.className = 'vx-plan-tab active';
         }
         renderHomepagePlans();
       }
@@ -698,55 +987,68 @@
         const container = document.getElementById('homepage-plans-container');
         if (!container) return;
 
-        const filtered = currentHomepageCategory === 'ALL' 
-          ? homepagePlans 
+        if (!homepagePlansLoaded) {
+          if (homepagePlansError) {
+            container.innerHTML = `<div class="vx-plans-empty">${escapePlanHtml(homepagePlansError)}</div>`;
+          } else {
+            container.innerHTML = '<div class="vx-plans-empty">Loading active investment plans...</div>';
+          }
+          return;
+        }
+
+        const filtered = currentHomepageCategory === 'ALL'
+          ? homepagePlans
           : homepagePlans.filter(p => p.category === currentHomepageCategory);
 
         if (filtered.length === 0) {
-          container.innerHTML = '<div class="col-span-full py-8 text-center text-slate-400 font-medium">No active investment plans in this category.</div>';
+          container.innerHTML = '<div class="vx-plans-empty">No active investment plans in this category.</div>';
           return;
         }
 
         container.innerHTML = filtered.map(p => {
           const isShort = p.category === 'Short-Term';
+          const minAmt = Number(p.min_amount || 0);
+          const maxAmt = Number(p.max_amount || 0);
+          const roiPct = Number(p.roi_percentage || 0);
+          const days = parseInt(p.duration_days || 0, 10);
           return `
-            <div class="bg-white border border-slate-200 hover:border-primary/50 rounded-3xl p-7 flex flex-col justify-between shadow-xl transition-all duration-300 hover:scale-[1.02] text-left">
-              <div class="space-y-4">
-                <div class="flex justify-between items-center">
-                  <span class="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider ${isShort ? 'bg-amber-100 text-amber-800 border border-amber-300' : 'bg-blue-100 text-blue-800 border border-blue-300'}">
-                    ${p.category}
+            <div class="vx-plan-card">
+              <div>
+                <div class="vx-plan-card-top">
+                  <span class="vx-plan-cat-badge ${isShort ? 'vx-plan-cat-short' : 'vx-plan-cat-long'}">
+                    ${escapePlanHtml(p.category)}
                   </span>
-                  <span class="text-xs font-bold text-slate-500">${p.duration_days} Days Cycle</span>
+                  <span class="vx-plan-cycle">${days} Days Cycle</span>
                 </div>
 
                 <div>
-                  <h3 class="text-xl font-extrabold text-slate-900">${p.name}</h3>
-                  <p class="text-xs text-slate-600 mt-1.5 leading-relaxed line-clamp-2">${p.description || 'Institutional investment tier with guaranteed maturity settlement.'}</p>
+                  <h3 class="vx-plan-name">${escapePlanHtml(p.name)}</h3>
+                  <p class="vx-plan-desc">${escapePlanHtml(p.description || 'Institutional investment tier with guaranteed maturity settlement.')}</p>
                 </div>
 
-                <div class="p-4 bg-slate-50 border border-slate-100 rounded-2xl text-center space-y-0.5 shadow-inner">
-                  <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Fixed Total Payout</span>
-                  <div class="text-3xl font-black text-emerald-600">+${p.roi_percentage}%</div>
-                  <p class="text-[10px] text-slate-500 font-medium">Simple Interest Paid at Maturity</p>
+                <div class="vx-plan-roi-box">
+                  <span class="vx-plan-roi-label">Fixed Total Payout</span>
+                  <div class="vx-plan-roi-value">+${roiPct}%</div>
+                  <p class="vx-plan-roi-note">Simple Interest Paid at Maturity</p>
                 </div>
 
-                <div class="space-y-2 text-xs text-slate-600 font-medium pt-2">
-                  <div class="flex justify-between border-b border-slate-100 pb-1.5">
+                <div class="vx-plan-specs">
+                  <div class="vx-plan-spec-row">
                     <span>Minimum Capital:</span>
-                    <strong class="text-slate-900">$${p.min_amount.toLocaleString()} USD</strong>
+                    <strong>$${minAmt.toLocaleString()} USD</strong>
                   </div>
-                  <div class="flex justify-between border-b border-slate-100 pb-1.5">
+                  <div class="vx-plan-spec-row">
                     <span>Maximum Capital:</span>
-                    <strong class="text-slate-900">$${p.max_amount.toLocaleString()} USD</strong>
+                    <strong>$${maxAmt.toLocaleString()} USD</strong>
                   </div>
-                  <div class="flex justify-between pb-1">
+                  <div class="vx-plan-spec-row">
                     <span>Duration Lifecycle:</span>
-                    <strong class="text-slate-900">${p.duration_days} Calendar Days</strong>
+                    <strong>${days} Calendar Days</strong>
                   </div>
                 </div>
               </div>
 
-              <a href="invest-otc.html" class="block w-full mt-6 text-center py-3 bg-primary hover:bg-[#1332c9] text-white text-xs font-black rounded-xl shadow-lg shadow-primary/25 transition-all">
+              <a href="invest-otc.html?plan_id=${encodeURIComponent(p.id)}" class="vx-plan-cta">
                 Invest Now
               </a>
             </div>
@@ -754,20 +1056,64 @@
         }).join('');
       }
 
-      document.addEventListener('DOMContentLoaded', async () => {
+      async function fetchHomepagePlans() {
         try {
-          const res = await fetch('/api/plans/active');
+          const res = await fetch('/api/plans/active', { cache: 'no-store' });
           const data = await res.json();
-          if (data.success && Array.isArray(data.plans) && data.plans.length > 0) {
+          homepagePlansLoaded = true;
+          if (data.success && Array.isArray(data.plans)) {
             homepagePlans = data.plans;
-            renderHomepagePlans();
+            homepagePlansError = null;
           } else {
-            const container = document.getElementById('homepage-plans-container');
-            if (container) container.innerHTML = '<div class="col-span-full py-6 text-center text-slate-400 font-medium">No public investment plans available at the moment.</div>';
+            homepagePlans = [];
+            homepagePlansError = data.message || 'Unable to load public investment plans.';
           }
         } catch (err) {
           console.error('Error fetching homepage plans:', err);
+          homepagePlansLoaded = true;
+          homepagePlansError = 'Unable to connect to investment catalogue.';
         }
+        ensureHomepagePlansSection();
+        renderHomepagePlans();
+      }
+
+      // Preserve query params (?plan_id=) when clicking Invest Now despite nav-fix link normalization
+      window.addEventListener('click', function(e) {
+        const cta = e.target && e.target.closest && e.target.closest('a.vx-plan-cta');
+        if (cta) {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          window.location.href = cta.getAttribute('href');
+        }
+      }, true);
+
+      // Watch #__next so if Next.js hydration clears our section, it is immediately re-attached
+      (function initHomepagePlansObserver() {
+        const nextRoot = document.getElementById('__next');
+        if (nextRoot && typeof MutationObserver !== 'undefined') {
+          let pending = false;
+          const observer = new MutationObserver(() => {
+            if (pending) return;
+            if (!document.getElementById('homepage-plans-section')) {
+              pending = true;
+              requestAnimationFrame(() => {
+                pending = false;
+                ensureHomepagePlansSection();
+              });
+            }
+          });
+          observer.observe(nextRoot, { childList: true, subtree: true });
+        }
+      })();
+
+      document.addEventListener('DOMContentLoaded', () => {
+        ensureHomepagePlansSection();
+        fetchHomepagePlans();
+      });
+
+      window.addEventListener('load', () => {
+        ensureHomepagePlansSection();
+        renderHomepagePlans();
       });
     </script>
 </body>

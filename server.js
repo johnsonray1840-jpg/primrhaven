@@ -7,6 +7,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
+const crypto = require('crypto');
 
 // Built-in zero-dependency .env loader
 function loadEnv() {
@@ -90,50 +91,74 @@ async function dispatchEmailAsync({ userId, to, templateResult, eventType = 'gen
 }
 
 // ==========================================
-// ADMIN SESSION TOKEN STORE
+// ADMIN SESSION TOKEN STORE (Stateless HMAC-SHA256 for Vercel Serverless + Revocation Set)
 // ==========================================
-const adminSessions = new Map();
+const revokedAdminTokens = new Set();
 const ADMIN_SESSION_TTL_MS = 8 * 60 * 60 * 1000;
 
-function generateAdminToken() {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let t = '';
-  for (let i = 0; i < 64; i++) t += chars.charAt(Math.floor(Math.random() * chars.length));
-  return `vx_adm_${t}`;
+function getAdminSigningSecret() {
+  return process.env.ADMIN_SESSION_SECRET || process.env.CRON_SECRET || process.env.DATABASE_URL || 'vertexcapitals-master-admin-secret';
 }
 
 function createAdminSession(user) {
-  const token = generateAdminToken();
   const now = Date.now();
-  adminSessions.set(token, {
+  const payload = {
     userId: user.id,
     email: user.email,
     full_name: user.full_name,
+    role: user.role || 'admin',
     createdAt: now,
     expiresAt: now + ADMIN_SESSION_TTL_MS
-  });
-  return token;
+  };
+  const encodedPayload = Buffer.from(JSON.stringify(payload), 'utf8').toString('base64url');
+  const signature = crypto
+    .createHmac('sha256', getAdminSigningSecret())
+    .update(encodedPayload)
+    .digest('hex');
+  return `vx_adm_${encodedPayload}.${signature}`;
 }
 
 function validateAdminToken(req) {
   const authHeader = req.headers['authorization'] || '';
   const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7).trim() : null;
-  if (!token) return null;
-  const session = adminSessions.get(token);
-  if (!session) return null;
-  if (Date.now() > session.expiresAt) {
-    adminSessions.delete(token);
+  if (!token || revokedAdminTokens.has(token)) return null;
+  if (!token.startsWith('vx_adm_')) return null;
+
+  const rawToken = token.slice(7);
+  const dotIdx = rawToken.indexOf('.');
+  if (dotIdx === -1) return null;
+
+  const encodedPayload = rawToken.slice(0, dotIdx);
+  const signature = rawToken.slice(dotIdx + 1);
+  if (!encodedPayload || !signature) return null;
+
+  const expectedSignature = crypto
+    .createHmac('sha256', getAdminSigningSecret())
+    .update(encodedPayload)
+    .digest('hex');
+
+  const sigBuf = Buffer.from(signature, 'utf8');
+  const expectedBuf = Buffer.from(expectedSignature, 'utf8');
+  if (sigBuf.length !== expectedBuf.length || !crypto.timingSafeEqual(sigBuf, expectedBuf)) {
     return null;
   }
-  return session;
+
+  try {
+    const payload = JSON.parse(Buffer.from(encodedPayload, 'base64url').toString('utf8'));
+    if (!payload || !payload.expiresAt || Date.now() > payload.expiresAt) {
+      return null;
+    }
+    return payload;
+  } catch (e) {
+    return null;
+  }
 }
 
 setInterval(() => {
-  const now = Date.now();
-  for (const [token, session] of adminSessions.entries()) {
-    if (now > session.expiresAt) adminSessions.delete(token);
+  if (revokedAdminTokens.size > 1000) {
+    revokedAdminTokens.clear();
   }
-}, 30 * 60 * 1000);
+}, 30 * 60 * 1000).unref();
 
 // MIME types for static assets
 const MIME_TYPES = {
@@ -193,6 +218,7 @@ function sendJSON(res, data, statusCode = 200) {
   if (res.writableEnded) return;
   res.writeHead(statusCode, {
     'Content-Type': 'application/json',
+    'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization'
@@ -796,7 +822,7 @@ async function requestHandler(req, res) {
     if (method === 'POST' && pathname === '/api/admin/logout') {
       const authHeader = req.headers['authorization'] || '';
       const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7).trim() : null;
-      if (token) adminSessions.delete(token);
+      if (token) revokedAdminTokens.add(token);
       return sendJSON(res, { success: true, message: 'Admin session terminated.' });
     }
 
@@ -823,12 +849,13 @@ async function requestHandler(req, res) {
       if (!session) {
         return sendJSON(res, { success: false, message: 'Unauthorized. Valid admin session required.' }, 401);
       }
-      const [users, wallets, transactions, companyWallets, otcPlans, emailLogs] = await Promise.all([
+      const [users, wallets, transactions, companyWallets, otcPlans, investmentPlans, emailLogs] = await Promise.all([
         db.getAllUsers(),
         db.getAllWallets(),
         db.getAllTransactions(),
         db.getCompanyWallets(),
         db.getAllOtcPlans(),
+        db.getAllInvestmentPlans(true),
         db.getEmailLogs()
       ]);
       return sendJSON(res, {
@@ -838,6 +865,7 @@ async function requestHandler(req, res) {
         transactions,
         companyWallets,
         otcPlans,
+        investmentPlans,
         emailLogs
       });
     }
@@ -1416,11 +1444,14 @@ async function requestHandler(req, res) {
 
     if (method === 'POST' && pathname === '/api/admin/plans/create') {
       const body = await parseBody(req);
-      const { name, description, category, min_amount, max_amount, roi_percentage, duration_days, status, display_icon } = body;
+      const { name, description, category, min_amount, max_amount, roi_percentage, duration_days, status, is_active, display_icon } = body;
 
       if (!name || !roi_percentage || !duration_days) {
         return sendJSON(res, { success: false, message: 'Plan name, total ROI percentage, and duration days are required.' }, 400);
       }
+
+      const resolvedIsActive = is_active !== undefined ? Boolean(is_active) : (status !== 'inactive' && status !== 'archived');
+      const resolvedStatus = status || (resolvedIsActive ? 'active' : 'inactive');
 
       const plan = await db.createInvestmentPlan({
         name,
@@ -1430,7 +1461,8 @@ async function requestHandler(req, res) {
         max_amount: parseFloat(max_amount) || 100000,
         roi_percentage: parseFloat(roi_percentage),
         duration_days: parseInt(duration_days, 10),
-        status: status === 'inactive' ? 'inactive' : 'active',
+        status: resolvedStatus === 'inactive' ? 'inactive' : 'active',
+        is_active: resolvedStatus !== 'inactive' && resolvedIsActive,
         display_icon: display_icon || (category === 'Long-Term' ? 'shield' : 'zap')
       });
 
@@ -1439,7 +1471,7 @@ async function requestHandler(req, res) {
 
     if (method === 'POST' && pathname === '/api/admin/plans/update') {
       const body = await parseBody(req);
-      const { plan_id, name, description, category, min_amount, max_amount, roi_percentage, duration_days, status, display_icon } = body;
+      const { plan_id, name, description, category, min_amount, max_amount, roi_percentage, duration_days, status, is_active, display_icon } = body;
       const planId = parseInt(plan_id, 10);
 
       const updates = {};
@@ -1450,7 +1482,16 @@ async function requestHandler(req, res) {
       if (max_amount !== undefined) updates.max_amount = parseFloat(max_amount);
       if (roi_percentage !== undefined) updates.roi_percentage = parseFloat(roi_percentage);
       if (duration_days !== undefined) updates.duration_days = parseInt(duration_days, 10);
-      if (status) updates.status = status;
+      if (status !== undefined) {
+        updates.status = status;
+        updates.is_active = status === 'active';
+      }
+      if (is_active !== undefined) {
+        updates.is_active = Boolean(is_active);
+        if (status === undefined) {
+          updates.status = updates.is_active ? 'active' : 'inactive';
+        }
+      }
       if (display_icon) updates.display_icon = display_icon;
 
       const updated = await db.updateInvestmentPlan(planId, updates);
