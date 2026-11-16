@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
-  <title>VertexCapitals — Sign In</title>
+  <title>VertexCapitals — Institutional Sign In</title>
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
   <!-- Theme Early Initializer to prevent flash of wrong theme (FOUC) -->
   <script>
@@ -41,111 +41,243 @@
   <script src="js/nav-fix.js"></script>
   <script src="js/app-store.js"></script>
 </head>
-<body class="bg-[#F8FAFC] dark:bg-[#070A11] text-slate-900 dark:text-gray-100 min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 font-sans antialiased transition-colors duration-300 relative overflow-x-hidden">
-  
+<body class="bg-[#F8FAFC] dark:bg-[#070A11] text-slate-900 dark:text-gray-100 min-h-screen flex flex-col justify-between p-4 sm:p-6 font-sans antialiased transition-colors duration-300 relative overflow-x-hidden">
+
   <!-- Subtle Institutional Ambient Glow -->
-  <div class="pointer-events-none fixed inset-0 overflow-hidden -z-10">
-    <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[540px] h-[300px] rounded-full bg-primary/15 dark:bg-primary/20 blur-[110px]"></div>
+  <div class="pointer-events-none fixed inset-0 overflow-hidden -z-10" aria-hidden="true">
+    <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[560px] h-[300px] rounded-full bg-primary/12 dark:bg-primary/20 blur-[110px]"></div>
   </div>
 
-  <!-- Floating Top Theme Toggle Button -->
-  <div class="fixed top-4 right-4 z-50">
-    <button onclick="VertexApp.toggleTheme()" class="theme-toggle-btn shadow-sm" title="Toggle Theme (Light / Dark Mode)" aria-label="Toggle color theme">
+  <!-- Minimal Top Bar -->
+  <header class="max-w-5xl w-full mx-auto flex items-center justify-between py-2">
+    <a href="index.html" class="inline-flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white transition-colors">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span>Back to VertexCapitals</span>
+    </a>
+    <button type="button" onclick="VertexApp.toggleTheme()" class="theme-toggle-btn shadow-sm" title="Toggle Theme (Light / Dark Mode)" aria-label="Toggle color theme">
       <svg class="sun-icon w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
       <svg class="moon-icon w-4 h-4 text-slate-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
     </button>
-  </div>
+  </header>
 
-  <div class="vx-card max-w-md w-full p-7 sm:p-8 space-y-6 relative overflow-hidden">
-    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#183EFA] via-[#3B82F6] to-[#183EFA]"></div>
+  <main class="max-w-5xl w-full mx-auto my-auto py-6 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
 
-    <div class="text-center space-y-2 pt-2">
-      <a href="index.html" class="inline-block">
-        <img src="images/navbarlogo.svg" alt="VertexCapitals Logo" class="h-8 mx-auto brand-logo-adaptive">
+    <!-- Editorial Institutional Trust Panel (Desktop) -->
+    <aside class="hidden lg:flex lg:col-span-5 flex-col space-y-6 pr-4">
+      <a href="index.html" class="inline-block w-fit">
+        <img src="images/navbarlogo.svg" alt="VertexCapitals Logo" class="h-8 brand-logo-adaptive">
       </a>
-      <div class="pt-1">
+      <div class="space-y-3">
         <span class="vx-badge vx-badge-primary">Institutional Custody Portal</span>
+        <h2 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
+          Private Wealth &amp; Audited OTC Execution
+        </h2>
+        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+          Manage your segregated multi-asset wallet, monitor timestamped yield accrual, and review immutable maturity settlements in real time.
+        </p>
       </div>
-      <h1 class="text-2xl font-extrabold text-slate-900 dark:text-white mt-2 tracking-tight" id="login-heading">Institutional Sign In</h1>
-      <p class="text-xs text-slate-500 dark:text-gray-400" id="login-subheading">Access your active OTC allocations and liquid exchange wallet.</p>
-    </div>
 
-    <!-- Login Form -->
-    <form id="form-login" onsubmit="handleLoginSubmit(event)" class="space-y-4">
-      <div>
-        <label class="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1.5">Email Address</label>
-        <div class="relative">
-          <input type="email" id="login-email" required placeholder="name@example.com" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="email" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-[#183EFA] transition-colors placeholder-slate-400 dark:placeholder-gray-600">
+      <div class="space-y-3 pt-2">
+        <div class="vx-card p-4 flex items-start gap-3.5">
+          <div class="w-9 h-9 rounded-xl bg-primary/10 text-primary dark:text-[#60A5FA] flex items-center justify-center shrink-0">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <p class="text-xs font-bold text-slate-900 dark:text-white">Immutable Contractual Terms</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Agreed ROI and maturity horizons are locked atomically at subscription.</p>
+          </div>
+        </div>
+
+        <div class="vx-card p-4 flex items-start gap-3.5">
+          <div class="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <p class="text-xs font-bold text-slate-900 dark:text-white">Real-Time Timestamp Accrual</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Live balance tracking with transparent separation of accrued vs. settled yield.</p>
+          </div>
         </div>
       </div>
+    </aside>
 
-      <div>
-        <div class="flex justify-between items-center mb-1.5">
-          <label class="block text-xs font-semibold text-slate-700 dark:text-gray-300">Password</label>
-          <a href="forgotpassword.html" class="text-xs text-primary dark:text-[#38BDF8] font-semibold hover:underline transition-colors">Forgot password?</a>
+    <!-- Focused Auth Card -->
+    <section class="lg:col-span-7 flex justify-center w-full">
+      <div class="vx-card max-w-md w-full p-7 sm:p-8 space-y-6 relative overflow-hidden">
+        <div class="h-1 bg-gradient-to-r from-[#183EFA] via-[#3B82F6] to-[#183EFA] -mx-7 sm:-mx-8 -mt-7 sm:-mt-8 mb-6"></div>
+
+        <div class="text-center space-y-2">
+          <a href="index.html" class="inline-block lg:hidden">
+            <img src="images/navbarlogo.svg" alt="VertexCapitals Logo" class="h-8 mx-auto brand-logo-adaptive">
+          </a>
+          <div class="pt-1 lg:hidden">
+            <span class="vx-badge vx-badge-primary">Institutional Custody Portal</span>
+          </div>
+          <h1 class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight" id="login-heading">Institutional Sign In</h1>
+          <p class="text-xs text-slate-500 dark:text-gray-400 leading-relaxed" id="login-subheading">Access your active OTC allocations and liquid exchange wallet.</p>
         </div>
-        <div class="relative">
-          <input type="password" id="login-password" required placeholder="••••••••" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="current-password" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-[#183EFA] transition-colors placeholder-slate-400 dark:placeholder-gray-600">
+
+        <!-- Inline Status / Validation Banner -->
+        <div id="login-feedback-banner" class="vx-feedback-banner" role="status" aria-live="polite"></div>
+
+        <!-- Step 1: Login Form -->
+        <form id="form-login" onsubmit="handleLoginSubmit(event)" novalidate class="space-y-4">
+          <div class="vx-field-group">
+            <label for="login-email" class="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1.5">Email Address</label>
+            <input type="email" id="login-email" required placeholder="name@example.com" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="email" aria-describedby="login-email-error" class="vx-input w-full px-4 py-3 text-sm">
+            <p id="login-email-error" class="vx-field-error">Please enter a valid registered email address.</p>
+          </div>
+
+          <div class="vx-field-group">
+            <div class="flex justify-between items-center mb-1.5">
+              <label for="login-password" class="block text-xs font-semibold text-slate-700 dark:text-gray-300">Password</label>
+              <a href="forgotpassword.html" class="text-xs text-primary dark:text-[#60A5FA] font-semibold hover:underline transition-colors">Forgot password?</a>
+            </div>
+            <div class="vx-pw-wrap">
+              <input type="password" id="login-password" required placeholder="Enter your account password" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="current-password" aria-describedby="login-password-error" class="vx-input w-full px-4 py-3 text-sm">
+              <button type="button" id="toggle-login-password" class="vx-pw-toggle" aria-pressed="false" aria-label="Show password" onclick="togglePasswordField('login-password', this)">
+                <svg class="pw-icon-show w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg class="pw-icon-hide w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+              </button>
+            </div>
+            <p id="login-password-error" class="vx-field-error">Please enter your password.</p>
+          </div>
+
+          <button type="submit" id="btn-signin" class="vx-btn-primary w-full py-3.5 font-bold text-sm rounded-xl flex items-center justify-center gap-2 mt-2">
+            <span>Sign In to Account</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </form>
+
+        <!-- Step 2: Inline OTP Verification Step (if account unverified) -->
+        <div id="login-verify-step" class="hidden space-y-5">
+          <div class="p-4 sm:p-5 bg-primary/10 border border-primary/25 rounded-2xl text-center space-y-2">
+            <div class="w-11 h-11 mx-auto rounded-full bg-primary/15 border border-primary/30 flex items-center justify-center text-primary dark:text-[#60A5FA]">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+              </svg>
+            </div>
+            <h2 class="font-bold text-slate-900 dark:text-white text-sm tracking-wide">6-Digit Code Dispatched</h2>
+            <p class="text-xs text-slate-600 dark:text-gray-300">Enter the verification code sent to <strong id="login-verify-email" class="text-primary dark:text-[#60A5FA]"></strong></p>
+          </div>
+
+          <form id="form-login-verify" onsubmit="event.preventDefault(); handleLoginVerifySubmit();" novalidate class="space-y-4">
+            <div class="vx-field-group">
+              <label for="login-verify-code" class="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-gray-300 text-center mb-1">6-Digit Verification Code</label>
+              <span id="login-verify-code-hint" class="vx-field-hint text-center">Enter the 6-digit numeric security code sent to your inbox.</span>
+              <input type="text" id="login-verify-code" required maxlength="6" inputmode="numeric" pattern="\d{6}" autocomplete="one-time-code" placeholder="000000" aria-describedby="login-verify-code-hint login-verify-code-error" class="vx-input w-full border-2 border-primary/50 rounded-2xl px-4 py-4 text-center text-2xl font-bold tracking-[0.4em]">
+              <p id="login-verify-code-error" class="vx-field-error text-center">Please enter all 6 numeric digits of your verification code.</p>
+            </div>
+
+            <button type="submit" id="btn-login-verify" class="vx-btn-emerald w-full py-3.5 font-bold text-sm rounded-xl flex items-center justify-center gap-2">
+              <span>Verify &amp; Enter Dashboard</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            </button>
+          </form>
+
+          <div class="text-center text-xs text-slate-500 dark:text-gray-400 pt-1 flex justify-between items-center">
+            <button type="button" onclick="backToLogin()" class="text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white font-semibold">&larr; Back to Login</button>
+            <button type="button" onclick="resendLoginCode()" class="text-primary dark:text-[#60A5FA] hover:underline font-semibold">Resend Code</button>
+          </div>
+        </div>
+
+        <div class="text-center pt-4 border-t border-slate-200 dark:border-gray-800/80">
+          <p class="text-xs text-slate-600 dark:text-gray-400">New investor? <a href="register.html" class="text-primary dark:text-[#60A5FA] font-semibold hover:underline">Create an Account</a></p>
         </div>
       </div>
+    </section>
+  </main>
 
-      <button type="submit" id="btn-signin" class="vx-btn-primary w-full py-3.5 font-bold text-sm rounded-xl flex items-center justify-center gap-2">
-        <span>Sign In to Account</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
-    </form>
-
-    <!-- Inline OTP Verification Step (if account unverified) -->
-    <div id="login-verify-step" class="hidden space-y-6">
-      <div class="p-5 bg-primary/10 border border-primary/30 rounded-2xl text-center space-y-2">
-        <div class="w-12 h-12 mx-auto rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center text-primary dark:text-[#38BDF8] mb-1">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-          </svg>
-        </div>
-        <h3 class="font-bold text-slate-900 dark:text-white text-sm tracking-wide">6-Digit Code Dispatched</h3>
-        <p class="text-xs text-slate-600 dark:text-gray-300">Enter the verification code sent to <strong id="login-verify-email" class="text-primary dark:text-[#38BDF8]"></strong></p>
-      </div>
-
-      <div class="space-y-2">
-        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-gray-400 text-center">6-Digit Code</label>
-        <input type="text" id="login-verify-code" maxlength="6" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" autofocus placeholder="• • • • • •" class="w-full bg-slate-50 dark:bg-[#101726] border-2 border-primary/60 rounded-2xl px-4 py-4 text-center text-slate-900 dark:text-white text-2xl font-bold tracking-[0.4em] focus:outline-none focus:border-primary transition-colors">
-      </div>
-
-      <button onclick="handleLoginVerifySubmit()" id="btn-login-verify" class="vx-btn-emerald w-full py-4 font-bold text-sm rounded-xl flex items-center justify-center gap-2">
-        <span>Verify &amp; Enter Dashboard</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-      </button>
-
-      <div class="text-center text-xs text-slate-500 dark:text-gray-400 pt-1 flex justify-between items-center">
-        <button onclick="backToLogin()" class="text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white">← Back to Login</button>
-        <button onclick="resendLoginCode()" class="text-primary dark:text-[#38BDF8] hover:underline font-semibold">Resend Code</button>
-      </div>
-    </div>
-
-    <div class="text-center pt-3 border-t border-slate-200 dark:border-gray-800/80">
-      <p class="text-xs text-slate-600 dark:text-gray-400">New investor? <a href="register.html" class="text-primary dark:text-[#38BDF8] font-semibold hover:underline">Create an Account</a></p>
-    </div>
-  </div>
-
-  <p class="mt-6 text-[11px] font-semibold tracking-wider uppercase text-slate-400 dark:text-gray-500 text-center">
+  <footer class="max-w-5xl w-full mx-auto py-3 text-[11px] font-semibold tracking-wider uppercase text-slate-400 dark:text-gray-500 text-center">
     256-Bit TLS &bull; Segregated Cold Custody &bull; Audited OTC Ledger
-  </p>
+  </footer>
 
   <script>
     let unverifiedEmail = '';
 
+    function togglePasswordField(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input || !btn) return;
+      const isRevealed = input.type === 'text';
+      input.type = isRevealed ? 'password' : 'text';
+      btn.setAttribute('aria-pressed', String(!isRevealed));
+      btn.setAttribute('aria-label', isRevealed ? 'Show password' : 'Hide password');
+      const showIcon = btn.querySelector('.pw-icon-show');
+      const hideIcon = btn.querySelector('.pw-icon-hide');
+      if (showIcon && hideIcon) {
+        showIcon.classList.toggle('hidden', !isRevealed);
+        hideIcon.classList.toggle('hidden', isRevealed);
+      }
+    }
+
+    function showFeedbackBanner(type, message) {
+      const banner = document.getElementById('login-feedback-banner');
+      if (!banner) return;
+      if (!message) {
+        banner.className = 'vx-feedback-banner';
+        banner.innerText = '';
+        return;
+      }
+      banner.className = 'vx-feedback-banner ' + (type === 'success' ? 'is-success' : 'is-error');
+      banner.innerText = message;
+    }
+
+    function validateFieldAfterInteraction(input, forceShow) {
+      if (!input) return true;
+      const valid = input.checkValidity() && input.value.trim().length > 0;
+      if (!valid && (forceShow || input.dataset.touched === 'true')) {
+        input.setAttribute('aria-invalid', 'true');
+      } else if (valid) {
+        input.removeAttribute('aria-invalid');
+      }
+      return valid;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      ['login-email', 'login-password', 'login-verify-code'].forEach((id) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('blur', () => {
+          el.dataset.touched = 'true';
+          validateFieldAfterInteraction(el, false);
+        });
+        el.addEventListener('input', () => {
+          if (id === 'login-verify-code') {
+            el.value = el.value.replace(/\D/g, '').slice(0, 6);
+          }
+          if (el.dataset.touched === 'true' || el.getAttribute('aria-invalid') === 'true') {
+            validateFieldAfterInteraction(el, false);
+          }
+        });
+      });
+    });
+
     async function handleLoginSubmit(e) {
       e.preventDefault();
-      const email = document.getElementById('login-email').value.trim();
-      const pass = document.getElementById('login-password').value;
+      showFeedbackBanner(null, '');
+
+      const emailEl = document.getElementById('login-email');
+      const passEl = document.getElementById('login-password');
+      emailEl.dataset.touched = 'true';
+      passEl.dataset.touched = 'true';
+
+      const emailOk = validateFieldAfterInteraction(emailEl, true);
+      const passOk = validateFieldAfterInteraction(passEl, true);
+      if (!emailOk || !passOk) {
+        showFeedbackBanner('error', 'Please complete all required credentials before signing in.');
+        (!emailOk ? emailEl : passEl).focus();
+        return;
+      }
+
+      const email = emailEl.value.trim();
+      const pass = passEl.value;
       const btn = document.getElementById('btn-signin');
 
       btn.disabled = true;
-      btn.innerHTML = `<span>Authenticating...</span>`;
+      btn.innerHTML = `<svg class="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg><span>Authenticating...</span>`;
 
       const res = await VertexApp.login(email, pass);
       if (res.success) {
+        showFeedbackBanner('success', 'Authentication verified. Redirecting to your portfolio...');
         VertexApp.showToast('Authentication successful. Redirecting...', 'success');
         setTimeout(() => {
           if (res.user.role === 'admin') {
@@ -156,43 +288,59 @@
         }, 800);
       } else if (res.requiresVerification) {
         unverifiedEmail = email.toLowerCase();
+        showFeedbackBanner('success', 'Verification required. Check your inbox for your 6-digit security code.');
         document.getElementById('form-login').classList.add('hidden');
         document.getElementById('login-verify-step').classList.remove('hidden');
         document.getElementById('login-heading').innerText = 'Verify Your Email';
         document.getElementById('login-subheading').innerText = 'Your account requires 6-digit confirmation before access.';
         document.getElementById('login-verify-email').innerText = unverifiedEmail;
-        document.getElementById('login-verify-code').value = '';
-        document.getElementById('login-verify-code').focus();
+        const codeEl = document.getElementById('login-verify-code');
+        codeEl.value = '';
+        codeEl.removeAttribute('aria-invalid');
+        delete codeEl.dataset.touched;
+        codeEl.focus();
         VertexApp.showToast('Please enter the 6-digit code sent to your email.', 'info');
       } else {
         btn.disabled = false;
         btn.innerHTML = `<span>Sign In to Account</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
-        VertexApp.showToast(res.message || 'Invalid email or password.', 'error');
+        const errMsg = res.message || 'Invalid email or password.';
+        showFeedbackBanner('error', errMsg);
+        VertexApp.showToast(errMsg, 'error');
       }
     }
 
     async function handleLoginVerifySubmit() {
-      const code = document.getElementById('login-verify-code').value.trim();
+      const codeEl = document.getElementById('login-verify-code');
+      const code = codeEl.value.trim();
       const btn = document.getElementById('btn-login-verify');
 
-      if (!code || code.length !== 6) {
+      codeEl.dataset.touched = 'true';
+      if (!/^\d{6}$/.test(code)) {
+        codeEl.setAttribute('aria-invalid', 'true');
+        showFeedbackBanner('error', 'Please enter the 6-digit verification code.');
         VertexApp.showToast('Please enter the 6-digit verification code.', 'error');
+        codeEl.focus();
         return;
       }
+      codeEl.removeAttribute('aria-invalid');
+      showFeedbackBanner(null, '');
 
       btn.disabled = true;
-      btn.innerHTML = `<span>Verifying...</span>`;
+      btn.innerHTML = `<svg class="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg><span>Verifying...</span>`;
 
       const res = await VertexApp.verifyEmailCode(unverifiedEmail, code);
       if (res.success) {
+        showFeedbackBanner('success', 'Account activated! Entering dashboard...');
         VertexApp.showToast('Account activated! Entering dashboard...', 'success');
         setTimeout(() => {
           window.location.href = 'dashboard.html';
         }, 800);
       } else {
         btn.disabled = false;
-        btn.innerHTML = `<span>Verify & Enter Dashboard</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>`;
-        VertexApp.showToast(res.message || 'Invalid or expired 6-digit code.', 'error');
+        btn.innerHTML = `<span>Verify &amp; Enter Dashboard</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>`;
+        const errMsg = res.message || 'Invalid or expired 6-digit code.';
+        showFeedbackBanner('error', errMsg);
+        VertexApp.showToast(errMsg, 'error');
       }
     }
 
@@ -201,13 +349,17 @@
       VertexApp.showToast('Dispatching a fresh 6-digit code...', 'info');
       const res = await VertexApp.resendOTP(unverifiedEmail);
       if (res.success) {
+        showFeedbackBanner('success', 'Fresh 6-digit code dispatched to ' + unverifiedEmail);
         VertexApp.showToast('Fresh code sent to ' + unverifiedEmail, 'success');
       } else {
-        VertexApp.showToast(res.message || 'Unable to resend code.', 'error');
+        const errMsg = res.message || 'Unable to resend code.';
+        showFeedbackBanner('error', errMsg);
+        VertexApp.showToast(errMsg, 'error');
       }
     }
 
     function backToLogin() {
+      showFeedbackBanner(null, '');
       document.getElementById('login-verify-step').classList.add('hidden');
       document.getElementById('form-login').classList.remove('hidden');
       document.getElementById('login-heading').innerText = 'Institutional Sign In';

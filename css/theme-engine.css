@@ -632,7 +632,136 @@ textarea,
 input[type="number"],
 input[type="text"][inputmode="numeric"],
 #login-verify-code,
+#input-verify-code,
 #reg-verify-code,
 #reset-code {
   font-family: var(--font-sans) !important;
+}
+
+/* Accessible Form Validation, Password Visibility Toggles & Inline Feedback */
+.vx-pw-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.vx-pw-wrap > input {
+  padding-right: 2.75rem !important;
+}
+
+.vx-pw-toggle {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  color: var(--vx-text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.vx-pw-toggle:hover {
+  color: var(--vx-text-primary);
+  background-color: var(--vx-bg-recessed);
+}
+
+.vx-pw-toggle:focus-visible {
+  outline: 2px solid var(--vx-primary);
+  outline-offset: 2px;
+}
+
+.vx-field-hint {
+  display: block;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--vx-text-muted);
+  margin-bottom: 0.375rem;
+}
+
+.vx-field-error {
+  display: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--vx-rose);
+  margin-top: 0.375rem;
+}
+
+.vx-input:is(:user-invalid, [aria-invalid="true"]),
+select.vx-input:is(:user-invalid, [aria-invalid="true"]),
+input[type="checkbox"]:is(:user-invalid, [aria-invalid="true"]) {
+  border-color: var(--vx-rose) !important;
+}
+
+.vx-input:is(:user-invalid, [aria-invalid="true"]):focus {
+  box-shadow: 0 0 0 3px var(--vx-rose-tint) !important;
+}
+
+.vx-field-group:has(:is(:user-invalid, [aria-invalid="true"])) .vx-field-error,
+.vx-field-error.is-visible {
+  display: block;
+}
+
+.vx-feedback-banner {
+  display: none;
+  padding: 0.75rem 1rem;
+  border-radius: 0.875rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.45;
+  margin-bottom: 1.25rem;
+  border: 1px solid transparent;
+}
+
+.vx-feedback-banner.is-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  background-color: var(--vx-rose-tint);
+  border-color: var(--vx-rose-border);
+  color: var(--vx-rose);
+}
+
+.vx-feedback-banner.is-success {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  background-color: var(--vx-emerald-tint);
+  border-color: var(--vx-emerald-border);
+  color: var(--vx-emerald);
+}
+
+/* Admin Filter Pills */
+.vx-admin-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border: 1px solid var(--vx-border);
+  background-color: var(--vx-bg-card);
+  color: var(--vx-text-secondary);
+  cursor: pointer;
+  transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+}
+
+.vx-admin-pill:hover {
+  border-color: var(--vx-primary-border);
+  color: var(--vx-text-primary);
+}
+
+.vx-admin-pill.active,
+.vx-admin-pill[aria-pressed="true"] {
+  background-color: var(--vx-primary);
+  border-color: var(--vx-primary);
+  color: #FFFFFF;
 }

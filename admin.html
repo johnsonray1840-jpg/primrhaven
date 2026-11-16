@@ -41,16 +41,126 @@
   <script src="js/nav-fix.js"></script>
   <script src="js/app-store.js"></script>
 </head>
-<body class="bg-[#F8FAFC] dark:bg-[#070A11] text-slate-900 dark:text-gray-100 min-h-screen flex flex-col font-sans antialiased selection:bg-primary selection:text-white transition-colors duration-300">
-  
+<body class="bg-[#F8FAFC] dark:bg-[#070A11] text-slate-900 dark:text-gray-100 min-h-screen flex font-sans antialiased selection:bg-primary selection:text-white transition-colors duration-300">
+
+  <!-- Desktop Persistent Admin Sidebar -->
+  <aside id="admin-sidebar" aria-label="Admin Sidebar Navigation" class="vx-sidebar hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:left-0 z-40 p-4 justify-between overflow-y-auto">
+    <div class="space-y-6">
+      <div class="px-2 pt-1 pb-3 border-b border-slate-200 dark:border-gray-800/80 space-y-2">
+        <a href="index.html" class="inline-flex items-center gap-2">
+          <img src="images/navbarlogo.svg" alt="VertexCapitals Logo" class="h-7 brand-logo-adaptive">
+        </a>
+        <div class="flex items-center justify-between">
+          <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-primary/10 text-primary dark:text-[#60A5FA] border border-primary/20 uppercase tracking-wider">Master Desk</span>
+          <span class="flex items-center gap-1 text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Live Sync
+          </span>
+        </div>
+      </div>
+
+      <nav class="space-y-5" aria-label="Primary Admin Modules">
+        <div class="space-y-1">
+          <p class="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1.5">Overview &amp; Clients</p>
+          <button type="button" onclick="switchAdminTab('users')" id="side-btn-users" aria-current="page" class="vx-sidebar-link w-full text-left">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            <span>Investors &amp; Accounts</span>
+          </button>
+          <button type="button" onclick="switchAdminTab('investment-catalog')" id="side-btn-investment-catalog" class="vx-sidebar-link w-full text-left">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>Investment Plans</span>
+          </button>
+          <button type="button" onclick="switchAdminTab('otc-plans')" id="side-btn-otc-plans" class="vx-sidebar-link w-full text-left">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <span>Investment Monitor</span>
+          </button>
+        </div>
+
+        <div class="space-y-1">
+          <p class="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1.5">Treasury &amp; Settlement</p>
+          <button type="button" onclick="switchAdminTab('deposits')" id="side-btn-deposits" class="vx-sidebar-link w-full text-left">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span>Deposit Queue</span>
+          </button>
+          <button type="button" onclick="switchAdminTab('withdrawals')" id="side-btn-withdrawals" class="vx-sidebar-link w-full text-left">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            <span>Withdrawal Queue</span>
+          </button>
+          <button type="button" onclick="switchAdminTab('wallets')" id="side-btn-wallets" class="vx-sidebar-link w-full text-left">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 9.5h20"/></svg>
+            <span>Custody Wallets</span>
+          </button>
+        </div>
+
+        <div class="space-y-1">
+          <p class="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1.5">Reports &amp; Messaging</p>
+          <button type="button" onclick="switchAdminTab('ledger')" id="side-btn-ledger" class="vx-sidebar-link w-full text-left">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <span>Master Ledger</span>
+          </button>
+          <button type="button" onclick="switchAdminTab('emails')" id="side-btn-emails" class="vx-sidebar-link w-full text-left">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span>Email Dispatcher</span>
+          </button>
+        </div>
+      </nav>
+    </div>
+
+    <div class="space-y-2 pt-4 border-t border-slate-200 dark:border-gray-800/80">
+      <a href="adminchat.html" class="vx-sidebar-link text-xs">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span>Live Support Desk</span>
+      </a>
+      <a href="dashboard.html" class="vx-sidebar-link text-xs">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span>Investor Portal</span>
+      </a>
+      <button type="button" onclick="VertexApp.adminLogout()" class="w-full px-3 py-2 bg-rose-500/10 hover:bg-rose-500/20 text-xs font-bold text-rose-600 dark:text-rose-400 border border-rose-500/25 rounded-xl transition-all text-center">
+        Sign Out Admin
+      </button>
+    </div>
+  </aside>
+
+  <!-- Mobile Admin Navigation Drawer -->
+  <div id="admin-mobile-drawer" class="hidden lg:hidden fixed inset-0 z-50" role="dialog" aria-modal="true" aria-label="Mobile Admin Navigation">
+    <div onclick="toggleAdminMobileDrawer(false)" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm"></div>
+    <div class="relative w-72 max-w-[85vw] h-full bg-white dark:bg-[#0c121e] border-r border-slate-200 dark:border-gray-800 p-5 flex flex-col justify-between overflow-y-auto shadow-2xl">
+      <div class="space-y-5">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-gray-800">
+          <img src="images/navbarlogo.svg" alt="VertexCapitals Logo" class="h-6 brand-logo-adaptive">
+          <button type="button" onclick="toggleAdminMobileDrawer(false)" aria-label="Close navigation drawer" class="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 dark:hover:text-white">&times;</button>
+        </div>
+        <nav class="space-y-1.5">
+          <button type="button" onclick="switchAdminTab('users')" id="mob-btn-users" aria-current="page" class="vx-sidebar-link w-full text-left">Investors &amp; Accounts</button>
+          <button type="button" onclick="switchAdminTab('investment-catalog')" id="mob-btn-investment-catalog" class="vx-sidebar-link w-full text-left">Investment Plans</button>
+          <button type="button" onclick="switchAdminTab('otc-plans')" id="mob-btn-otc-plans" class="vx-sidebar-link w-full text-left">Investment Monitor</button>
+          <button type="button" onclick="switchAdminTab('deposits')" id="mob-btn-deposits" class="vx-sidebar-link w-full text-left">Deposit Queue</button>
+          <button type="button" onclick="switchAdminTab('withdrawals')" id="mob-btn-withdrawals" class="vx-sidebar-link w-full text-left">Withdrawal Queue</button>
+          <button type="button" onclick="switchAdminTab('wallets')" id="mob-btn-wallets" class="vx-sidebar-link w-full text-left">Custody Wallets</button>
+          <button type="button" onclick="switchAdminTab('ledger')" id="mob-btn-ledger" class="vx-sidebar-link w-full text-left">Master Ledger</button>
+          <button type="button" onclick="switchAdminTab('emails')" id="mob-btn-emails" class="vx-sidebar-link w-full text-left">Email Dispatcher</button>
+        </nav>
+      </div>
+      <div class="space-y-2 pt-4 border-t border-slate-200 dark:border-gray-800">
+        <a href="dashboard.html" class="vx-sidebar-link text-xs">Investor Portal View</a>
+        <button type="button" onclick="VertexApp.adminLogout()" class="w-full px-3 py-2 bg-rose-500/10 text-xs font-bold text-rose-600 dark:text-rose-400 border border-rose-500/25 rounded-xl">Sign Out</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Admin Shell -->
+  <div class="flex-1 flex flex-col min-w-0 lg:pl-64">
+
   <!-- Admin Top Master Header -->
-  <header class="vx-glass-header px-4 sm:px-8 py-3.5 flex justify-between items-center sticky top-0 z-40 transition-colors">
+  <header class="vx-glass-header px-4 sm:px-8 py-3.5 flex justify-between items-center sticky top-0 z-30 transition-colors">
     <div class="flex items-center gap-3">
-      <a href="admin.html" class="flex items-center gap-2">
+      <button type="button" id="admin-mobile-menu-btn" onclick="toggleAdminMobileDrawer()" aria-label="Open admin menu" class="lg:hidden p-2 rounded-xl bg-slate-100 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 text-slate-700 dark:text-gray-200">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <a href="admin.html" class="flex items-center gap-2 lg:hidden">
         <img src="images/navbarlogo.svg" alt="VertexCapitals Logo" class="h-7 sm:h-8 brand-logo-adaptive">
       </a>
-      <div class="hidden sm:flex items-center gap-2 pl-2 border-l border-slate-200 dark:border-gray-800">
-        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-primary/10 text-primary border border-primary/20 uppercase tracking-wider">Master Control Desk</span>
+      <div class="hidden sm:flex items-center gap-2 lg:pl-0 pl-2 border-l lg:border-l-0 border-slate-200 dark:border-gray-800">
+        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-primary/10 text-primary dark:text-[#60A5FA] border border-primary/20 uppercase tracking-wider">Executive Financial Administration</span>
         <span class="flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Live Node Sync
         </span>
@@ -60,8 +170,9 @@
     <!-- Right Actions -->
     <div class="flex items-center gap-2.5 sm:gap-3">
       <!-- Theme Switcher Button -->
-      <button onclick="VertexApp.toggleTheme()" class="theme-toggle-btn shadow-sm" title="Toggle Theme">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle></svg>
+      <button type="button" onclick="VertexApp.toggleTheme()" class="theme-toggle-btn shadow-sm" title="Toggle Theme" aria-label="Toggle color theme">
+        <svg class="sun-icon w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <svg class="moon-icon w-4 h-4 text-slate-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
       </button>
 
       <a href="dashboard.html" class="px-3.5 py-2 bg-slate-100 dark:bg-[#101726] hover:bg-slate-200 dark:hover:bg-gray-800 text-xs font-bold text-slate-700 dark:text-gray-200 border border-slate-200 dark:border-gray-800 rounded-xl transition-all hidden md:flex items-center gap-1.5">
@@ -73,20 +184,20 @@
         <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-black text-xs shadow-md shadow-primary/20">
           AD
         </div>
-        <div class="hidden lg:block text-left">
+        <div class="hidden xl:block text-left">
           <p class="text-xs font-bold text-slate-900 dark:text-white leading-tight">Master Administrator</p>
-          <p class="text-[10px] text-primary font-semibold uppercase">Superadmin Tier</p>
+          <p class="text-[10px] text-primary dark:text-[#60A5FA] font-semibold uppercase">Superadmin Tier</p>
         </div>
       </div>
 
-      <button onclick="VertexApp.adminLogout()" class="px-3 py-1.5 bg-rose-500/10 hover:bg-rose-500/20 text-xs font-bold text-rose-600 dark:text-rose-400 border border-rose-500/30 rounded-xl transition-all">
+      <button type="button" onclick="VertexApp.adminLogout()" class="px-3 py-1.5 bg-rose-500/10 hover:bg-rose-500/20 text-xs font-bold text-rose-600 dark:text-rose-400 border border-rose-500/30 rounded-xl transition-all">
         Sign Out
       </button>
     </div>
   </header>
 
   <!-- Admin Main Workspace -->
-  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-8">
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
     
     <!-- Top Executive KPI Stats Row -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 min-w-0">
@@ -134,11 +245,50 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-blue-500"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
         </div>
         <h3 class="text-2xl sm:text-3xl font-extrabold text-blue-600 dark:text-blue-400 tabular-nums" id="stat-active-otc-count">0</h3>
-        <p class="text-[10px] text-blue-600 dark:text-blue-400 font-medium">Weekly Yield Contracts</p>
+        <p class="text-[10px] text-blue-600 dark:text-blue-400 font-medium">Active Client Positions</p>
       </div>
     </div>
 
-    <!-- Admin Master Navigation Tabs -->
+    <!-- Real-Data Wallet, Transaction & Plan Catalogue Summary Strip -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 min-w-0">
+      <div class="vx-card p-4 flex items-center justify-between gap-3">
+        <div class="min-w-0">
+          <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Liquid Exchange Wallets</p>
+          <h4 class="text-lg font-extrabold text-slate-900 dark:text-white tabular-nums truncate mt-0.5" id="stat-total-liquid-wallets">$0.00</h4>
+          <p class="text-[10px] text-slate-400 mt-0.5">Available client cash balances</p>
+        </div>
+        <span class="vx-badge vx-badge-primary shrink-0">Cash</span>
+      </div>
+
+      <div class="vx-card p-4 flex items-center justify-between gap-3">
+        <div class="min-w-0">
+          <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Allocated OTC Principal</p>
+          <h4 class="text-lg font-extrabold text-slate-900 dark:text-white tabular-nums truncate mt-0.5" id="stat-total-otc-principal">$0.00</h4>
+          <p class="text-[10px] text-slate-400 mt-0.5">Locked active contract principal</p>
+        </div>
+        <span class="vx-badge vx-badge-emerald shrink-0">Invested</span>
+      </div>
+
+      <div class="vx-card p-4 flex items-center justify-between gap-3">
+        <div class="min-w-0">
+          <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Accrued Profit &amp; Ledger</p>
+          <h4 class="text-lg font-extrabold text-emerald-600 dark:text-emerald-400 tabular-nums truncate mt-0.5" id="stat-total-accrued-profit">$0.00</h4>
+          <p class="text-[10px] text-slate-400 mt-0.5"><span id="stat-completed-tx-count" class="font-bold text-slate-700 dark:text-slate-200 tabular-nums">0</span> settled ledger transactions</p>
+        </div>
+        <span class="vx-badge vx-badge-amber shrink-0">Yield</span>
+      </div>
+
+      <div onclick="switchAdminTab('investment-catalog')" class="vx-card p-4 flex items-center justify-between gap-3 cursor-pointer hover:border-primary/40 transition-colors">
+        <div class="min-w-0">
+          <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Published Plan Catalogue</p>
+          <h4 class="text-lg font-extrabold text-slate-900 dark:text-white tabular-nums truncate mt-0.5" id="stat-active-catalog-plans">0 Active</h4>
+          <p class="text-[10px] text-slate-400 mt-0.5" id="stat-catalog-breakdown">0 Short-Term &bull; 0 Long-Term</p>
+        </div>
+        <span class="vx-badge vx-badge-primary shrink-0">Catalogue</span>
+      </div>
+    </div>
+
+    <!-- Admin Quick Module Bar (Synchronized with Sidebar) -->
     <div class="flex flex-wrap gap-2 border-b border-slate-200 dark:border-gray-800 pb-3 overflow-x-auto">
       <button onclick="switchAdminTab('users')" id="tab-btn-users" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-primary text-white flex items-center gap-1.5 shadow-md shadow-primary/20">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
@@ -367,14 +517,20 @@
           <h3 class="font-bold text-lg text-slate-900 dark:text-white">Public Investment Plan Catalogue</h3>
           <p class="text-xs text-slate-500 dark:text-gray-400">Create, edit, and toggle public Short-Term and Long-Term investment tiers displayed to investors.</p>
         </div>
-        <div class="flex items-center gap-2">
-          <!-- Category Filter -->
-          <select id="catalog-category-filter" onchange="filterCatalogPlans()" class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 dark:text-gray-300">
+        <div class="flex flex-wrap items-center gap-2">
+          <!-- Quick Short-Term / Long-Term Category Filter Pills -->
+          <div class="flex items-center gap-1.5" role="group" aria-label="Filter plans by term category">
+            <button type="button" id="cat-pill-all" aria-pressed="true" onclick="setCatalogCategoryFilter('ALL')" class="vx-admin-pill active">All Plans</button>
+            <button type="button" id="cat-pill-short" aria-pressed="false" onclick="setCatalogCategoryFilter('Short-Term')" class="vx-admin-pill">Short-Term</button>
+            <button type="button" id="cat-pill-long" aria-pressed="false" onclick="setCatalogCategoryFilter('Long-Term')" class="vx-admin-pill">Long-Term</button>
+          </div>
+          <!-- Category Filter Select (preserved & synced) -->
+          <select id="catalog-category-filter" onchange="filterCatalogPlans()" aria-label="Plan Category Filter" class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 dark:text-gray-300">
             <option value="ALL">All Categories</option>
             <option value="Short-Term">Short-Term Only</option>
             <option value="Long-Term">Long-Term Only</option>
           </select>
-          <button onclick="openCreateCatalogPlanModal()" class="px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs rounded-xl shadow-lg transition-all flex items-center gap-1.5">
+          <button onclick="openCreateCatalogPlanModal()" class="vx-btn-primary px-4 py-2 font-bold text-xs rounded-xl flex items-center gap-1.5">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             <span>+ Create Investment Plan</span>
           </button>
@@ -569,6 +725,7 @@
     </section>
 
   </main>
+  </div> <!-- End Main Admin Shell -->
 
   <!-- ========================================================== -->
   <!-- MODAL 1: CREATE INVESTOR ACCOUNT -->
@@ -817,29 +974,34 @@
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Min Amount ($)</label>
-            <input type="number" id="catalog-plan-min" required step="1" min="1" value="500" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white font-bold focus:outline-none focus:border-blue-500">
+            <label for="catalog-plan-min" class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Min Amount ($)</label>
+            <input type="number" id="catalog-plan-min" required step="1" min="1" value="500" oninput="updateCatalogModalPreview()" class="vx-input w-full px-4 py-2.5 font-bold">
           </div>
           <div>
-            <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Max Amount ($)</label>
-            <input type="number" id="catalog-plan-max" required step="1" min="1" value="4999" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white font-bold focus:outline-none focus:border-blue-500">
+            <label for="catalog-plan-max" class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Max Amount ($)</label>
+            <input type="number" id="catalog-plan-max" required step="1" min="1" value="4999" oninput="updateCatalogModalPreview()" class="vx-input w-full px-4 py-2.5 font-bold">
           </div>
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Total ROI Percentage (%)</label>
-            <input type="number" id="catalog-plan-roi" required step="0.1" min="0.1" value="15" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-emerald-600 dark:text-emerald-400 font-black focus:outline-none focus:border-blue-500">
+            <label for="catalog-plan-roi" class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Total ROI Percentage (%)</label>
+            <input type="number" id="catalog-plan-roi" required step="0.1" min="0.1" value="15" oninput="updateCatalogModalPreview()" class="vx-input w-full px-4 py-2.5 text-emerald-600 dark:text-emerald-400 font-black">
             <span class="text-[10px] text-slate-400">Total simple interest payout</span>
           </div>
           <div>
-            <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Duration (Days)</label>
-            <input type="number" id="catalog-plan-duration" required min="1" value="14" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-blue-600 dark:text-blue-400 font-black focus:outline-none focus:border-blue-500">
+            <label for="catalog-plan-duration" class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Duration (Days)</label>
+            <input type="number" id="catalog-plan-duration" required min="1" value="14" oninput="updateCatalogModalPreview()" class="vx-input w-full px-4 py-2.5 text-blue-600 dark:text-blue-400 font-black">
             <span class="text-[10px] text-slate-400">Total cycle duration</span>
           </div>
         </div>
 
-        <button type="submit" id="catalog-plan-submit-btn" class="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-black text-xs rounded-xl shadow-lg transition-all mt-2">
+        <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 space-y-1">
+          <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Simple-Interest Sample Payout (at Min Investment)</p>
+          <p id="catalog-plan-preview-text" class="text-xs font-bold text-slate-900 dark:text-white tabular-nums">$500.00 principal &rarr; +$75.00 profit &rarr; $575.00 maturity payout over 14 days</p>
+        </div>
+
+        <button type="submit" id="catalog-plan-submit-btn" class="vx-btn-primary w-full py-3 font-black text-xs rounded-xl transition-all mt-2">
           Save Investment Plan
         </button>
       </form>
@@ -1013,18 +1175,18 @@
         <form id="admin-login-form" onsubmit="handleAdminLogin(event)">
           <div class="space-y-4">
             <div>
-              <label class="block text-xs font-semibold text-slate-600 dark:text-gray-400 mb-1.5 uppercase tracking-wider">Email Address</label>
+              <label for="admin-email-input" class="block text-xs font-semibold text-slate-600 dark:text-gray-400 mb-1.5 uppercase tracking-wider">Email Address</label>
               <input type="email" id="admin-email-input" required autocomplete="off"
                 placeholder="admin@vertexcapitals.ltd"
                 class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 focus:border-primary rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-gray-600 focus:outline-none transition-colors">
             </div>
             <div>
-              <label class="block text-xs font-semibold text-slate-600 dark:text-gray-400 mb-1.5 uppercase tracking-wider">Password</label>
+              <label for="admin-password-input" class="block text-xs font-semibold text-slate-600 dark:text-gray-400 mb-1.5 uppercase tracking-wider">Password</label>
               <div class="relative">
                 <input type="password" id="admin-password-input" required autocomplete="off"
                   placeholder="Enter admin password"
                   class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 focus:border-primary rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-gray-600 focus:outline-none transition-colors pr-12">
-                <button type="button" onclick="toggleAdminPasswordVisibility()" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-gray-500 hover:text-slate-600 dark:hover:text-gray-300 transition-colors">
+                <button type="button" id="toggle-admin-password" aria-pressed="false" aria-label="Show password" onclick="toggleAdminPasswordVisibility()" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-gray-500 hover:text-slate-600 dark:hover:text-gray-300 transition-colors">
                   <svg id="pw-eye-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                 </button>
               </div>
@@ -1109,7 +1271,21 @@
 
     function toggleAdminPasswordVisibility() {
       const input = document.getElementById('admin-password-input');
-      input.type = input.type === 'password' ? 'text' : 'password';
+      const btn = document.getElementById('toggle-admin-password');
+      if (!input) return;
+      const isHidden = input.type === 'password';
+      input.type = isHidden ? 'text' : 'password';
+      if (btn) {
+        btn.setAttribute('aria-pressed', String(isHidden));
+        btn.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
+      }
+    }
+
+    function toggleAdminMobileDrawer(forceOpen) {
+      const drawer = document.getElementById('admin-mobile-drawer');
+      if (!drawer) return;
+      const shouldOpen = typeof forceOpen === 'boolean' ? forceOpen : drawer.classList.contains('hidden');
+      drawer.classList.toggle('hidden', !shouldOpen);
     }
 
     async function handleAdminLogin(e) {
@@ -1208,18 +1384,45 @@
       loadCatalogPlans();
     }
 
+    function updateCatalogStatsSummary(plansList) {
+      const list = Array.isArray(plansList) ? plansList : cachedCatalogPlans;
+      const activePlans = list.filter(p => (p.status === 'active' || p.is_active === true));
+      const shortCount = activePlans.filter(p => p.category === 'Short-Term').length;
+      const longCount = activePlans.filter(p => p.category === 'Long-Term').length;
+      const activeEl = document.getElementById('stat-active-catalog-plans');
+      const breakdownEl = document.getElementById('stat-catalog-breakdown');
+      if (activeEl) activeEl.innerText = `${activePlans.length} Active`;
+      if (breakdownEl) breakdownEl.innerText = `${shortCount} Short-Term • ${longCount} Long-Term`;
+    }
+
     function renderStats() {
       const users = adminOverviewData.users.filter(u => u.role !== 'admin');
       document.getElementById('stat-investors-count').innerText = users.length;
 
       let totalAUM = 0;
+      let totalLiquid = 0;
+      let totalOtcPrincipal = 0;
+      let totalAccrued = 0;
       adminOverviewData.wallets.forEach(w => {
         const u = adminOverviewData.users.find(usr => usr.id === w.user_id);
         if (u && u.role !== 'admin') {
-          totalAUM += (parseFloat(w.exchange_balance || 0) + parseFloat(w.otc_investment_balance || 0) + parseFloat(w.accrued_profit || 0));
+          const exch = parseFloat(w.exchange_balance || 0);
+          const otc = parseFloat(w.otc_investment_balance || 0);
+          const acc = parseFloat(w.accrued_profit || 0);
+          totalLiquid += exch;
+          totalOtcPrincipal += otc;
+          totalAccrued += acc;
+          totalAUM += (exch + otc + acc);
         }
       });
-      document.getElementById('stat-managed-assets').innerText = '$' + totalAUM.toLocaleString(undefined, { minimumFractionDigits: 2 });
+      document.getElementById('stat-managed-assets').innerText = '$' + totalAUM.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+      const liqEl = document.getElementById('stat-total-liquid-wallets');
+      if (liqEl) liqEl.innerText = '$' + totalLiquid.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      const otcPrinEl = document.getElementById('stat-total-otc-principal');
+      if (otcPrinEl) otcPrinEl.innerText = '$' + totalOtcPrincipal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      const accEl = document.getElementById('stat-total-accrued-profit');
+      if (accEl) accEl.innerText = '$' + totalAccrued.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
       const txs = adminOverviewData.transactions || [];
       const pendDeps = txs.filter(t => t.type === 'deposit' && t.status === 'pending').length;
@@ -1228,8 +1431,14 @@
       const pendWds = txs.filter(t => t.type === 'withdrawal' && t.status === 'pending').length;
       document.getElementById('stat-pending-withdrawals').innerText = pendWds;
 
+      const completedTxCount = txs.filter(t => t.status === 'completed' || t.status === 'approved').length;
+      const compEl = document.getElementById('stat-completed-tx-count');
+      if (compEl) compEl.innerText = completedTxCount;
+
       const otcPlans = adminOverviewData.otcPlans ? adminOverviewData.otcPlans.filter(p => p.status === 'active') : [];
       document.getElementById('stat-active-otc-count').innerText = otcPlans.length;
+
+      updateCatalogStatsSummary(adminOverviewData.investmentPlans || cachedCatalogPlans);
     }
 
     function renderUsers() {
@@ -1489,23 +1698,42 @@
         const tr = document.createElement('tr');
         tr.className = 'hover:bg-slate-50/80 dark:hover:bg-gray-800/30 transition-colors';
 
-        const totalDays = p.duration_days || 30;
-        const daysElapsed = p.days_elapsed || 1;
-        const percent = Math.min(100, Math.round((daysElapsed / totalDays) * 100));
+        const totalDays = Math.max(1, parseInt(p.duration_days || 30, 10));
+        const startedMs = p.started_at ? new Date(p.started_at).getTime() : null;
+        const maturesMs = p.matures_at ? new Date(p.matures_at).getTime() : null;
+        let daysElapsed = parseFloat(p.days_elapsed || 0);
+        let percent = Math.min(100, Math.round((daysElapsed / totalDays) * 100));
+        if (startedMs && maturesMs && maturesMs > startedMs) {
+          const totalSpan = maturesMs - startedMs;
+          const elapsedSpan = Math.max(0, Math.min(totalSpan, Date.now() - startedMs));
+          percent = p.status === 'completed' ? 100 : Math.min(100, Math.round((elapsedSpan / totalSpan) * 100));
+          daysElapsed = Math.min(totalDays, +(elapsedSpan / 86400000).toFixed(1));
+        }
+
+        const principal = parseFloat(p.amount || 0);
+        const totalRoi = p.total_roi_percent !== null && p.total_roi_percent !== undefined ? parseFloat(p.total_roi_percent) : null;
+        const expectedProfit = totalRoi !== null ? (principal * (totalRoi / 100)) : null;
+        const roiHtml = totalRoi !== null
+          ? `<div class="font-bold text-emerald-600 dark:text-emerald-400">+${totalRoi.toFixed(2)}% Total</div><div class="text-[10px] text-slate-400 tabular-nums">+$${expectedProfit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} est.</div>`
+          : `<div class="font-bold text-emerald-600 dark:text-emerald-400">+${parseFloat(p.weekly_roi_percent || 7.5).toFixed(2)}% / wk</div>`;
+
+        const startLabel = startedMs ? new Date(startedMs).toLocaleDateString() : 'Active';
+        const maturityLabel = maturesMs ? new Date(maturesMs).toLocaleDateString() : `${totalDays}d term`;
 
         tr.innerHTML = `
           <td class="py-4 px-6 text-slate-700 dark:text-gray-300 font-bold">#OTC-${p.id.toString().slice(-6)}</td>
           <td class="py-4 px-6 font-bold text-slate-900 dark:text-white">${u.full_name}</td>
           <td class="py-4 px-6 font-semibold text-amber-600 dark:text-amber-400">${p.tranche_name || 'Executive Multi-Asset'}</td>
-          <td class="py-4 px-6 font-bold text-slate-900 dark:text-white">$${parseFloat(p.amount).toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
-          <td class="py-4 px-6 font-bold text-emerald-600 dark:text-emerald-400">+${parseFloat(p.weekly_roi_percent || 7.5).toFixed(2)}% / wk</td>
+          <td class="py-4 px-6 font-bold text-slate-900 dark:text-white tabular-nums">$${principal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+          <td class="py-4 px-6">${roiHtml}</td>
           <td class="py-4 px-6">
             <div class="flex items-center gap-2">
               <div class="w-24 bg-slate-200 dark:bg-gray-900 h-2 rounded-full overflow-hidden border border-slate-300 dark:border-gray-800">
                 <div class="bg-emerald-500 h-full rounded-full" style="width: ${percent}%;"></div>
               </div>
-              <span class="text-[10px] text-slate-500 dark:text-gray-400">Day ${daysElapsed}/${totalDays}</span>
+              <span class="text-[10px] text-slate-500 dark:text-gray-400 tabular-nums">${percent}% (${daysElapsed}/${totalDays}d)</span>
             </div>
+            <div class="text-[10px] text-slate-400 mt-1">${startLabel} &rarr; ${maturityLabel}</div>
           </td>
           <td class="py-4 px-6">
             <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${p.status === 'active' ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30' : 'bg-slate-100 dark:bg-gray-800 text-slate-500 dark:text-gray-400 border border-slate-200 dark:border-gray-700'} uppercase">${p.status}</span>
@@ -1620,19 +1848,34 @@
     function switchAdminTab(tab) {
       ['users', 'deposits', 'withdrawals', 'investment-catalog', 'otc-plans', 'wallets', 'ledger', 'emails'].forEach(t => {
         const btn = document.getElementById(`tab-btn-${t}`);
+        const sideBtn = document.getElementById(`side-btn-${t}`);
+        const mobBtn = document.getElementById(`mob-btn-${t}`);
         const sec = document.getElementById(`tab-content-${t}`);
+        const isCurrent = t === tab;
+
+        if (sideBtn) {
+          if (isCurrent) sideBtn.setAttribute('aria-current', 'page');
+          else sideBtn.removeAttribute('aria-current');
+        }
+        if (mobBtn) {
+          if (isCurrent) mobBtn.setAttribute('aria-current', 'page');
+          else mobBtn.removeAttribute('aria-current');
+        }
         if (!btn || !sec) return;
-        if (t === tab) {
+        if (isCurrent) {
           btn.className = 'px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-primary text-white flex items-center gap-1.5 shadow-md shadow-primary/20';
+          btn.setAttribute('aria-current', 'page');
           sec.classList.remove('hidden');
           if (tab === 'investment-catalog') {
             loadCatalogPlans();
           }
         } else {
           btn.className = 'px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 shadow-sm';
+          btn.removeAttribute('aria-current');
           sec.classList.add('hidden');
         }
       });
+      toggleAdminMobileDrawer(false);
     }
 
     function populateTrancheSelect() {
@@ -1658,21 +1901,55 @@
         const data = await res.json();
         if (data.success && Array.isArray(data.plans)) {
           cachedCatalogPlans = data.plans;
-          renderCatalogPlans(cachedCatalogPlans);
+          filterCatalogPlans();
           populateTrancheSelect();
+          updateCatalogStatsSummary(cachedCatalogPlans);
         }
       } catch (err) {
         console.error('Failed to load plan catalogue:', err);
       }
     }
 
+    function setCatalogCategoryFilter(cat) {
+      const sel = document.getElementById('catalog-category-filter');
+      if (sel) {
+        sel.value = cat;
+      }
+      filterCatalogPlans();
+    }
+
     function filterCatalogPlans() {
-      const cat = document.getElementById('catalog-category-filter').value;
+      const sel = document.getElementById('catalog-category-filter');
+      const cat = sel ? sel.value : 'ALL';
+      const pillMap = {
+        'ALL': document.getElementById('cat-pill-all'),
+        'Short-Term': document.getElementById('cat-pill-short'),
+        'Long-Term': document.getElementById('cat-pill-long')
+      };
+      Object.keys(pillMap).forEach(key => {
+        const pill = pillMap[key];
+        if (!pill) return;
+        const active = key === cat;
+        pill.classList.toggle('active', active);
+        pill.setAttribute('aria-pressed', String(active));
+      });
+
       if (cat === 'ALL') {
         renderCatalogPlans(cachedCatalogPlans);
       } else {
         renderCatalogPlans(cachedCatalogPlans.filter(p => p.category === cat));
       }
+    }
+
+    function updateCatalogModalPreview() {
+      const el = document.getElementById('catalog-plan-preview-text');
+      if (!el) return;
+      const minAmt = Math.max(0, parseFloat(document.getElementById('catalog-plan-min')?.value || 0));
+      const roi = Math.max(0, parseFloat(document.getElementById('catalog-plan-roi')?.value || 0));
+      const days = Math.max(1, parseInt(document.getElementById('catalog-plan-duration')?.value || 1, 10));
+      const profit = minAmt * (roi / 100);
+      const total = minAmt + profit;
+      el.innerText = `$${minAmt.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} principal -> +$${profit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} profit -> $${total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} maturity payout over ${days} day${days === 1 ? '' : 's'}`;
     }
 
     function renderCatalogPlans(plans) {
@@ -1743,6 +2020,7 @@
       document.getElementById('catalog-plan-max').value = '4999';
       document.getElementById('catalog-plan-roi').value = '15';
       document.getElementById('catalog-plan-duration').value = '14';
+      updateCatalogModalPreview();
       document.getElementById('catalog-plan-modal').classList.remove('hidden');
     }
 
@@ -1760,6 +2038,7 @@
       document.getElementById('catalog-plan-max').value = plan.max_amount;
       document.getElementById('catalog-plan-roi').value = plan.roi_percentage;
       document.getElementById('catalog-plan-duration').value = plan.duration_days;
+      updateCatalogModalPreview();
       document.getElementById('catalog-plan-modal').classList.remove('hidden');
     }
 

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
-  <title>VertexCapitals — Create Account</title>
+  <title>VertexCapitals — Create Institutional Account</title>
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
   <!-- Theme Early Initializer to prevent flash of wrong theme (FOUC) -->
   <script>
@@ -41,125 +41,236 @@
   <script src="js/nav-fix.js"></script>
   <script src="js/app-store.js"></script>
 </head>
-<body class="bg-[#F8FAFC] dark:bg-[#070A11] text-slate-900 dark:text-gray-100 min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 font-sans antialiased transition-colors duration-300 relative overflow-x-hidden">
-  
+<body class="bg-[#F8FAFC] dark:bg-[#070A11] text-slate-900 dark:text-gray-100 min-h-screen flex flex-col justify-between p-4 sm:p-6 font-sans antialiased transition-colors duration-300 relative overflow-x-hidden">
+
   <!-- Subtle Institutional Ambient Glow -->
-  <div class="pointer-events-none fixed inset-0 overflow-hidden -z-10">
-    <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[540px] h-[300px] rounded-full bg-primary/15 dark:bg-primary/20 blur-[110px]"></div>
+  <div class="pointer-events-none fixed inset-0 overflow-hidden -z-10" aria-hidden="true">
+    <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[560px] h-[300px] rounded-full bg-primary/12 dark:bg-primary/20 blur-[110px]"></div>
   </div>
 
-  <!-- Floating Top Theme Toggle Button -->
-  <div class="fixed top-4 right-4 z-50">
-    <button onclick="VertexApp.toggleTheme()" class="theme-toggle-btn shadow-sm" title="Toggle Theme (Light / Dark Mode)" aria-label="Toggle color theme">
+  <!-- Minimal Top Bar -->
+  <header class="max-w-5xl w-full mx-auto flex items-center justify-between py-2">
+    <a href="index.html" class="inline-flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white transition-colors">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span>Back to VertexCapitals</span>
+    </a>
+    <button type="button" onclick="VertexApp.toggleTheme()" class="theme-toggle-btn shadow-sm" title="Toggle Theme (Light / Dark Mode)" aria-label="Toggle color theme">
       <svg class="sun-icon w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
       <svg class="moon-icon w-4 h-4 text-slate-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
     </button>
-  </div>
+  </header>
 
-  <div class="vx-card max-w-md w-full p-7 sm:p-8 space-y-6 relative overflow-hidden">
-    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#183EFA] via-[#3B82F6] to-[#183EFA]"></div>
+  <main class="max-w-5xl w-full mx-auto my-auto py-6 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
 
-    <div class="text-center space-y-2 pt-2">
-      <a href="index.html" class="inline-block">
-        <img src="images/navbarlogo.svg" alt="VertexCapitals Logo" class="h-8 mx-auto brand-logo-adaptive">
+    <!-- Editorial Onboarding Overview (Desktop) -->
+    <aside class="hidden lg:flex lg:col-span-5 flex-col space-y-6 pr-4">
+      <a href="index.html" class="inline-block w-fit">
+        <img src="images/navbarlogo.svg" alt="VertexCapitals Logo" class="h-8 brand-logo-adaptive">
       </a>
-      <div class="pt-1">
+      <div class="space-y-3">
         <span class="vx-badge vx-badge-primary">Institutional Custody Onboarding</span>
-      </div>
-      <h1 class="text-2xl font-extrabold text-slate-900 dark:text-white mt-2 tracking-tight" id="page-title">Create Your Portfolio</h1>
-      <p class="text-xs text-slate-500 dark:text-gray-400" id="page-subtitle">Join VertexCapitals to allocate capital and earn passive OTC returns.</p>
-    </div>
-
-    <!-- Step 1: Registration Form -->
-    <form id="register-form" onsubmit="handleRegisterSubmit(event)" class="space-y-4">
-      <div>
-        <label class="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1.5">Full Legal Name</label>
-        <input type="text" id="reg-name" required placeholder="e.g. Alexander Wright" autocomplete="name" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-[#183EFA] transition-colors placeholder-slate-400 dark:placeholder-gray-600">
+        <h2 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
+          Open a Multi-Asset Wealth Account
+        </h2>
+        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+          Complete your profile and 6-digit email verification to access regulated short-term liquidity tranches and long-term OTC yield mandates.
+        </p>
       </div>
 
-      <div>
-        <label class="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1.5">Email Address</label>
-        <input type="email" id="reg-email" required placeholder="name@example.com" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="email" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-[#183EFA] transition-colors placeholder-slate-400 dark:placeholder-gray-600">
-      </div>
-
-      <div>
-        <label class="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1.5">Password</label>
-        <input type="password" id="reg-password" required minlength="6" placeholder="••••••••" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="new-password" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-[#183EFA] transition-colors placeholder-slate-400 dark:placeholder-gray-600">
-      </div>
-
-      <div>
-        <label class="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1.5">Country</label>
-        <select id="reg-country" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-[#183EFA] transition-colors">
-          <option value="United States">United States</option>
-          <option value="United Kingdom">United Kingdom</option>
-          <option value="Canada">Canada</option>
-          <option value="Germany">Germany</option>
-          <option value="Australia">Australia</option>
-          <option value="Singapore">Singapore</option>
-          <option value="United Arab Emirates">United Arab Emirates</option>
-          <option value="Switzerland">Switzerland</option>
-          <option value="France">France</option>
-          <option value="Netherlands">Netherlands</option>
-          <option value="Spain">Spain</option>
-          <option value="South Africa">South Africa</option>
-          <option value="Nigeria">Nigeria</option>
-        </select>
-      </div>
-
-      <div>
-        <label class="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1.5">Referral Code (Optional)</label>
-        <input type="text" id="reg-ref" placeholder="VX-XXXX" autocapitalize="characters" autocorrect="off" spellcheck="false" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-xs font-mono focus:outline-none focus:border-[#183EFA] transition-colors placeholder-slate-400 dark:placeholder-gray-600">
-      </div>
-
-      <div class="flex items-center gap-2 pt-1">
-        <input type="checkbox" required id="reg-terms" class="rounded bg-slate-100 dark:bg-gray-800 border-slate-300 dark:border-gray-700 text-[#183EFA] focus:ring-0">
-        <label for="reg-terms" class="text-xs text-slate-600 dark:text-gray-400">I agree to the <a href="about.html" class="text-primary dark:text-[#38BDF8] hover:underline">Terms of Service</a> &amp; Custody Disclosures.</label>
-      </div>
-
-      <button type="submit" id="btn-register" class="vx-btn-primary w-full py-3.5 font-bold text-sm rounded-xl flex items-center justify-center gap-2">
-        <span>Proceed to Email Verification</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
-    </form>
-
-    <!-- Step 2: 6-Digit Email Verification Screen (Real & Mandatory) -->
-    <div id="verification-step" class="hidden space-y-6">
-      <div class="p-5 bg-primary/10 border border-primary/30 rounded-2xl text-center space-y-2">
-        <div class="w-12 h-12 mx-auto rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center text-primary dark:text-[#38BDF8] mb-1">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-          </svg>
+      <div class="space-y-3 pt-2">
+        <div class="vx-card p-4 flex items-start gap-3.5">
+          <div class="w-9 h-9 rounded-xl bg-primary/10 text-primary dark:text-[#60A5FA] flex items-center justify-center shrink-0">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <div>
+            <p class="text-xs font-bold text-slate-900 dark:text-white">Mandatory 6-Digit Email Custody Lock</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Every new portfolio requires inbox confirmation before wallet activation.</p>
+          </div>
         </div>
-        <h3 class="font-bold text-slate-900 dark:text-white text-sm tracking-wide">6-Digit Verification Dispatched</h3>
-        <p class="text-xs text-slate-600 dark:text-gray-300">We have sent a 6-digit confirmation code to: <br><strong id="verification-target-email" class="text-primary dark:text-[#38BDF8]">email@domain.com</strong></p>
-        <p class="text-[11px] text-slate-500 dark:text-gray-500">Please check your inbox (and spam folder) and enter the code below.</p>
+
+        <div class="vx-card p-4 flex items-start gap-3.5">
+          <div class="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div>
+            <p class="text-xs font-bold text-slate-900 dark:text-white">Transparent Wallet Separation</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Track liquid USD cash alongside active principal and timestamped yield accrual.</p>
+          </div>
+        </div>
       </div>
+    </aside>
 
-      <div class="space-y-2">
-        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-gray-400 text-center">Enter 6-Digit Code</label>
-        <input type="text" id="input-verify-code" maxlength="6" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" autofocus placeholder="• • • • • •" class="w-full bg-slate-50 dark:bg-[#101726] border-2 border-primary/60 rounded-2xl px-4 py-4 text-center text-slate-900 dark:text-white text-2xl font-bold tracking-[0.4em] focus:outline-none focus:border-primary transition-colors">
+    <!-- Focused Registration Card -->
+    <section class="lg:col-span-7 flex justify-center w-full">
+      <div class="vx-card max-w-md w-full p-7 sm:p-8 space-y-6 relative overflow-hidden">
+        <div class="h-1 bg-gradient-to-r from-[#183EFA] via-[#3B82F6] to-[#183EFA] -mx-7 sm:-mx-8 -mt-7 sm:-mt-8 mb-6"></div>
+
+        <div class="text-center space-y-2">
+          <a href="index.html" class="inline-block lg:hidden">
+            <img src="images/navbarlogo.svg" alt="VertexCapitals Logo" class="h-8 mx-auto brand-logo-adaptive">
+          </a>
+          <div class="pt-1 lg:hidden">
+            <span class="vx-badge vx-badge-primary">Institutional Custody Onboarding</span>
+          </div>
+          <h1 class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight" id="page-title">Create Your Portfolio</h1>
+          <p class="text-xs text-slate-500 dark:text-gray-400 leading-relaxed" id="page-subtitle">Join VertexCapitals to allocate capital and earn passive OTC returns.</p>
+        </div>
+
+        <!-- Inline Status / Validation Banner -->
+        <div id="register-feedback-banner" class="vx-feedback-banner" role="status" aria-live="polite"></div>
+
+        <!-- Step 1: Registration Form -->
+        <form id="register-form" onsubmit="handleRegisterSubmit(event)" novalidate class="space-y-4">
+          <div class="vx-field-group">
+            <label for="reg-name" class="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1.5">Full Legal Name</label>
+            <input type="text" id="reg-name" required minlength="2" placeholder="e.g. Alexander Wright" autocomplete="name" aria-describedby="reg-name-error" class="vx-input w-full px-4 py-3 text-sm">
+            <p id="reg-name-error" class="vx-field-error">Please enter your full legal name (at least 2 characters).</p>
+          </div>
+
+          <div class="vx-field-group">
+            <label for="reg-email" class="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1.5">Email Address</label>
+            <input type="email" id="reg-email" required placeholder="name@example.com" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="email" aria-describedby="reg-email-error" class="vx-input w-full px-4 py-3 text-sm">
+            <p id="reg-email-error" class="vx-field-error">Please enter a valid email address for 6-digit verification.</p>
+          </div>
+
+          <div class="vx-field-group">
+            <label for="reg-password" class="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1">Password</label>
+            <span id="reg-password-hint" class="vx-field-hint">Minimum 6 characters required.</span>
+            <div class="vx-pw-wrap">
+              <input type="password" id="reg-password" required minlength="6" placeholder="Create a strong password" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="new-password" aria-describedby="reg-password-hint reg-password-error" class="vx-input w-full px-4 py-3 text-sm">
+              <button type="button" id="toggle-reg-password" class="vx-pw-toggle" aria-pressed="false" aria-label="Show password" onclick="togglePasswordField('reg-password', this)">
+                <svg class="pw-icon-show w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg class="pw-icon-hide w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+              </button>
+            </div>
+            <p id="reg-password-error" class="vx-field-error">Password must be at least 6 characters long.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <div class="vx-field-group">
+              <label for="reg-country" class="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1.5">Country</label>
+              <select id="reg-country" class="vx-input w-full px-3.5 py-3 text-sm">
+                <option value="United States">United States</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="Canada">Canada</option>
+                <option value="Germany">Germany</option>
+                <option value="Australia">Australia</option>
+                <option value="Singapore">Singapore</option>
+                <option value="United Arab Emirates">United Arab Emirates</option>
+                <option value="Switzerland">Switzerland</option>
+                <option value="France">France</option>
+                <option value="Netherlands">Netherlands</option>
+                <option value="Spain">Spain</option>
+                <option value="South Africa">South Africa</option>
+                <option value="Nigeria">Nigeria</option>
+              </select>
+            </div>
+
+            <div class="vx-field-group">
+              <label for="reg-ref" class="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1.5">Referral Code <span class="text-slate-400 font-normal">(Optional)</span></label>
+              <input type="text" id="reg-ref" placeholder="VX-XXXX" autocapitalize="characters" autocorrect="off" spellcheck="false" class="vx-input w-full px-3.5 py-3 text-xs font-mono">
+            </div>
+          </div>
+
+          <div class="vx-field-group pt-1">
+            <div class="flex items-start gap-2.5">
+              <input type="checkbox" required id="reg-terms" aria-describedby="reg-terms-error" class="mt-0.5 rounded bg-slate-100 dark:bg-gray-800 border-slate-300 dark:border-gray-700 text-[#183EFA] focus:ring-primary">
+              <label for="reg-terms" class="text-xs text-slate-600 dark:text-gray-400 leading-relaxed">I agree to the <a href="about.html" class="text-primary dark:text-[#60A5FA] hover:underline font-medium">Terms of Service</a> &amp; Custody Disclosures.</label>
+            </div>
+            <p id="reg-terms-error" class="vx-field-error">You must accept the Terms of Service &amp; Custody Disclosures to proceed.</p>
+          </div>
+
+          <button type="submit" id="btn-register" class="vx-btn-primary w-full py-3.5 font-bold text-sm rounded-xl flex items-center justify-center gap-2">
+            <span>Proceed to Email Verification</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </form>
+
+        <!-- Step 2: 6-Digit Email Verification Screen (Real & Mandatory) -->
+        <div id="verification-step" class="hidden space-y-5">
+          <div class="p-4 sm:p-5 bg-primary/10 border border-primary/25 rounded-2xl text-center space-y-2">
+            <div class="w-11 h-11 mx-auto rounded-full bg-primary/15 border border-primary/30 flex items-center justify-center text-primary dark:text-[#60A5FA]">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+              </svg>
+            </div>
+            <h2 class="font-bold text-slate-900 dark:text-white text-sm tracking-wide">6-Digit Verification Dispatched</h2>
+            <p class="text-xs text-slate-600 dark:text-gray-300">We have sent a 6-digit confirmation code to:<br><strong id="verification-target-email" class="text-primary dark:text-[#60A5FA]">email@domain.com</strong></p>
+          </div>
+
+          <form id="form-register-verify" onsubmit="event.preventDefault(); handleVerifyCodeSubmit();" novalidate class="space-y-4">
+            <div class="vx-field-group">
+              <label for="input-verify-code" class="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-gray-300 text-center mb-1">Enter 6-Digit Code</label>
+              <span id="input-verify-code-hint" class="vx-field-hint text-center">Check your inbox (or spam folder) and enter the 6 numeric digits below.</span>
+              <input type="text" id="input-verify-code" required maxlength="6" inputmode="numeric" pattern="\d{6}" autocomplete="one-time-code" placeholder="000000" aria-describedby="input-verify-code-hint input-verify-code-error" class="vx-input w-full border-2 border-primary/50 rounded-2xl px-4 py-4 text-center text-2xl font-bold tracking-[0.4em]">
+              <p id="input-verify-code-error" class="vx-field-error text-center">Please enter the complete 6-digit numeric verification code.</p>
+            </div>
+
+            <button type="submit" id="btn-verify" class="vx-btn-emerald w-full py-3.5 font-bold text-sm rounded-xl flex items-center justify-center gap-2">
+              <span>Verify Code &amp; Activate Account</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            </button>
+          </form>
+
+          <div class="text-center text-xs text-slate-500 dark:text-gray-400 pt-1">
+            Didn't receive the email? <button type="button" onclick="resendCode()" class="text-primary dark:text-[#60A5FA] font-semibold hover:underline">Resend Verification Code</button>
+          </div>
+        </div>
+
+        <div class="text-center pt-4 border-t border-slate-200 dark:border-gray-800/80">
+          <p class="text-xs text-slate-600 dark:text-gray-400">Already registered? <a href="login.html" class="text-primary dark:text-[#60A5FA] font-semibold hover:underline">Sign In</a></p>
+        </div>
       </div>
+    </section>
+  </main>
 
-      <button onclick="handleVerifyCodeSubmit()" id="btn-verify" class="vx-btn-emerald w-full py-4 font-bold text-sm rounded-xl flex items-center justify-center gap-2">
-        <span>Verify Code &amp; Activate Account</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-      </button>
-
-      <div class="text-center text-xs text-slate-500 dark:text-gray-400 pt-2">
-        Didn't receive the email? <button onclick="resendCode()" class="text-primary dark:text-[#38BDF8] font-semibold hover:underline">Resend Verification Code</button>
-      </div>
-    </div>
-
-    <div class="text-center pt-3 border-t border-slate-200 dark:border-gray-800/80">
-      <p class="text-xs text-slate-600 dark:text-gray-400">Already registered? <a href="login.html" class="text-primary dark:text-[#38BDF8] font-semibold hover:underline">Sign In</a></p>
-    </div>
-  </div>
-
-  <p class="mt-6 text-[11px] font-semibold tracking-wider uppercase text-slate-400 dark:text-gray-500 text-center">
+  <footer class="max-w-5xl w-full mx-auto py-3 text-[11px] font-semibold tracking-wider uppercase text-slate-400 dark:text-gray-500 text-center">
     256-Bit TLS &bull; Segregated Cold Custody &bull; Audited OTC Ledger
-  </p>
+  </footer>
 
   <script>
+    let pendingEmail = '';
+
+    function togglePasswordField(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input || !btn) return;
+      const isRevealed = input.type === 'text';
+      input.type = isRevealed ? 'password' : 'text';
+      btn.setAttribute('aria-pressed', String(!isRevealed));
+      btn.setAttribute('aria-label', isRevealed ? 'Show password' : 'Hide password');
+      const showIcon = btn.querySelector('.pw-icon-show');
+      const hideIcon = btn.querySelector('.pw-icon-hide');
+      if (showIcon && hideIcon) {
+        showIcon.classList.toggle('hidden', !isRevealed);
+        hideIcon.classList.toggle('hidden', isRevealed);
+      }
+    }
+
+    function showFeedbackBanner(type, message) {
+      const banner = document.getElementById('register-feedback-banner');
+      if (!banner) return;
+      if (!message) {
+        banner.className = 'vx-feedback-banner';
+        banner.innerText = '';
+        return;
+      }
+      banner.className = 'vx-feedback-banner ' + (type === 'success' ? 'is-success' : 'is-error');
+      banner.innerText = message;
+    }
+
+    function validateFieldAfterInteraction(input, forceShow) {
+      if (!input) return true;
+      const valid = input.type === 'checkbox'
+        ? input.checked
+        : (input.checkValidity() && input.value.trim().length > 0);
+      if (!valid && (forceShow || input.dataset.touched === 'true')) {
+        input.setAttribute('aria-invalid', 'true');
+      } else if (valid) {
+        input.removeAttribute('aria-invalid');
+      }
+      return valid;
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       try {
         const refParam = new URLSearchParams(window.location.search).get('ref');
@@ -168,58 +279,102 @@
           refInput.value = refParam.trim();
         }
       } catch (e) {}
-    });
-  </script>
 
-  <script>
-    let pendingEmail = '';
+      ['reg-name', 'reg-email', 'reg-password', 'reg-terms', 'input-verify-code'].forEach((id) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const evt = el.type === 'checkbox' ? 'change' : 'blur';
+        el.addEventListener(evt, () => {
+          el.dataset.touched = 'true';
+          validateFieldAfterInteraction(el, false);
+        });
+        el.addEventListener('input', () => {
+          if (id === 'input-verify-code') {
+            el.value = el.value.replace(/\D/g, '').slice(0, 6);
+          }
+          if (el.dataset.touched === 'true' || el.getAttribute('aria-invalid') === 'true') {
+            validateFieldAfterInteraction(el, false);
+          }
+        });
+      });
+    });
 
     async function handleRegisterSubmit(e) {
       e.preventDefault();
-      const name = document.getElementById('reg-name').value;
-      const email = document.getElementById('reg-email').value;
+      showFeedbackBanner(null, '');
+
+      const fields = ['reg-name', 'reg-email', 'reg-password', 'reg-terms'].map((id) => document.getElementById(id));
+      let firstInvalid = null;
+      fields.forEach((f) => {
+        if (!f) return;
+        f.dataset.touched = 'true';
+        const ok = validateFieldAfterInteraction(f, true);
+        if (!ok && !firstInvalid) firstInvalid = f;
+      });
+      if (firstInvalid) {
+        showFeedbackBanner('error', 'Please review the highlighted fields before continuing.');
+        firstInvalid.focus();
+        return;
+      }
+
+      const name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
       const pass = document.getElementById('reg-password').value;
       const country = document.getElementById('reg-country').value;
-      const ref = document.getElementById('reg-ref').value;
+      const ref = document.getElementById('reg-ref').value.trim();
       const btn = document.getElementById('btn-register');
 
       btn.disabled = true;
-      btn.innerHTML = `<span>Sending Verification Code...</span>`;
+      btn.innerHTML = `<svg class="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg><span>Sending Verification Code...</span>`;
 
-      pendingEmail = email.trim().toLowerCase();
+      pendingEmail = email.toLowerCase();
       const res = await VertexApp.register(name, email, pass, country, ref);
 
       btn.disabled = false;
       btn.innerHTML = `<span>Proceed to Email Verification</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
 
       if (res.success) {
+        showFeedbackBanner('success', '6-digit verification code sent to ' + pendingEmail);
         document.getElementById('register-form').classList.add('hidden');
         document.getElementById('verification-step').classList.remove('hidden');
         document.getElementById('page-title').innerText = 'Verify Your Email';
         document.getElementById('page-subtitle').innerText = 'Enter the 6-digit authorization code dispatched to your email address.';
         document.getElementById('verification-target-email').innerText = pendingEmail;
-        document.getElementById('input-verify-code').value = '';
-        document.getElementById('input-verify-code').focus();
+        const codeEl = document.getElementById('input-verify-code');
+        codeEl.value = '';
+        codeEl.removeAttribute('aria-invalid');
+        delete codeEl.dataset.touched;
+        codeEl.focus();
         VertexApp.showToast('Verification code dispatched to your inbox!', 'info');
       } else {
-        VertexApp.showToast(res.message || 'Registration failed.', 'error');
+        const errMsg = res.message || 'Registration failed.';
+        showFeedbackBanner('error', errMsg);
+        VertexApp.showToast(errMsg, 'error');
       }
     }
 
     async function handleVerifyCodeSubmit() {
-      const code = document.getElementById('input-verify-code').value.trim();
+      const codeEl = document.getElementById('input-verify-code');
+      const code = codeEl.value.trim();
       const btn = document.getElementById('btn-verify');
 
-      if (!code || code.length !== 6) {
+      codeEl.dataset.touched = 'true';
+      if (!/^\d{6}$/.test(code)) {
+        codeEl.setAttribute('aria-invalid', 'true');
+        showFeedbackBanner('error', 'Please enter the complete 6-digit verification code.');
         VertexApp.showToast('Please enter the complete 6-digit verification code.', 'error');
+        codeEl.focus();
         return;
       }
+      codeEl.removeAttribute('aria-invalid');
+      showFeedbackBanner(null, '');
 
       btn.disabled = true;
-      btn.innerHTML = `<span>Verifying Code...</span>`;
+      btn.innerHTML = `<svg class="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg><span>Verifying Code...</span>`;
 
       const res = await VertexApp.verifyEmailCode(pendingEmail, code);
       if (res.success) {
+        showFeedbackBanner('success', 'Account activated! Welcome email dispatched. Redirecting...');
         VertexApp.showToast('Account activated! Welcome email dispatched.', 'success');
         setTimeout(() => {
           window.location.href = 'dashboard.html';
@@ -227,7 +382,9 @@
       } else {
         btn.disabled = false;
         btn.innerHTML = `<span>Verify Code & Activate Account</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>`;
-        VertexApp.showToast(res.message || 'Invalid or expired 6-digit code.', 'error');
+        const errMsg = res.message || 'Invalid or expired 6-digit code.';
+        showFeedbackBanner('error', errMsg);
+        VertexApp.showToast(errMsg, 'error');
       }
     }
 
@@ -236,9 +393,12 @@
       VertexApp.showToast('Dispatching a fresh 6-digit code...', 'info');
       const res = await VertexApp.resendOTP(pendingEmail);
       if (res.success) {
+        showFeedbackBanner('success', 'Fresh verification code sent to ' + pendingEmail);
         VertexApp.showToast('Fresh verification code sent to ' + pendingEmail, 'success');
       } else {
-        VertexApp.showToast(res.message || 'Unable to resend code.', 'error');
+        const errMsg = res.message || 'Unable to resend code.';
+        showFeedbackBanner('error', errMsg);
+        VertexApp.showToast(errMsg, 'error');
       }
     }
   </script>
