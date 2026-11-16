@@ -361,6 +361,9 @@ async function requestHandler(req, res) {
       if (user.status === 'banned') {
         return sendJSON(res, { success: false, message: 'Account is suspended. Contact compliance desk.' }, 403);
       }
+      if (user.status === 'deleted') {
+        return sendJSON(res, { success: false, message: 'This account has been deactivated.' }, 403);
+      }
 
       if (!user.password_hash || user.password_hash !== password) {
         return sendJSON(res, { success: false, message: 'Invalid email or password.' }, 401);
@@ -516,31 +519,42 @@ async function requestHandler(req, res) {
       const user = await db.findUserById(userId);
       if (!user) return sendJSON(res, { success: false, message: 'User not found.' }, 404);
 
-      const wallet = await db.getWalletByUserId(user.id);
       const parsedAmount = parseFloat(amount || 0);
-
-      if (!wallet || wallet.exchange_balance < parsedAmount) {
-        return sendJSON(res, { success: false, message: 'Insufficient Exchange Wallet balance.' }, 400);
+      if (parsedAmount <= 0 || isNaN(parsedAmount)) {
+        return sendJSON(res, { success: false, message: 'Please enter a valid withdrawal amount.' }, 400);
       }
 
-      const updatedWallet = await db.updateWallet(user.id, {
-        exchange_balance: wallet.exchange_balance - parsedAmount
-      });
-
       const txRef = 'WD-' + Math.floor(100000 + Math.random() * 900000);
-      const newTx = await db.createTransaction({
-        tx_ref: txRef,
-        user_id: user.id,
-        user_name: user.full_name,
-        user_email: user.email,
-        type: 'withdrawal',
-        amount: parsedAmount,
-        asset: asset || 'Bitcoin (BTC)',
-        status: 'pending',
-        destination_address: destination_address || 'External Address',
-        tx_hash: 'PENDING-PAYOUT-DISPATCH',
-        notes: 'Pending Admin Processing'
-      });
+      let updatedWallet;
+      let newTx;
+
+      try {
+        const result = await db.withTransaction(async (client) => {
+          // Atomic balance deduction with overdraft protection
+          const w = await db.adjustWalletBalance(user.id, { exchangeDelta: -parsedAmount }, client);
+          const t = await db.createTransaction({
+            tx_ref: txRef,
+            user_id: user.id,
+            user_name: user.full_name,
+            user_email: user.email,
+            type: 'withdrawal',
+            amount: parsedAmount,
+            asset: asset || 'Bitcoin (BTC)',
+            status: 'pending',
+            destination_address: destination_address || 'External Address',
+            tx_hash: 'PENDING-PAYOUT-DISPATCH',
+            notes: 'Pending Admin Processing'
+          }, client);
+          return { wallet: w, tx: t };
+        });
+        updatedWallet = result.wallet;
+        newTx = result.tx;
+      } catch (err) {
+        if (err.message && err.message.includes('Insufficient wallet balance')) {
+          return sendJSON(res, { success: false, message: 'Insufficient Exchange Wallet balance.' }, 400);
+        }
+        throw err;
+      }
 
       const template = emailService.EmailTemplates.withdrawalRequested(user.full_name, parsedAmount, newTx.asset, newTx.destination_address);
       await dispatchEmailAsync({
@@ -564,61 +578,76 @@ async function requestHandler(req, res) {
         return sendJSON(res, { success: false, message: 'User account not found.' }, 404);
       }
 
-      const wallet = await db.getWalletByUserId(user.id);
       const parsedAmount = parseFloat(amount || 0);
-
-      if (parsedAmount <= 0) {
+      if (parsedAmount <= 0 || isNaN(parsedAmount)) {
         return sendJSON(res, { success: false, message: 'Please enter a valid investment amount.' }, 400);
-      }
-
-      if (!wallet || wallet.exchange_balance < parsedAmount) {
-        return sendJSON(res, { success: false, message: `Insufficient Exchange Wallet balance ($${wallet ? wallet.exchange_balance.toFixed(2) : '0.00'} available). Please deposit funds first.` }, 400);
       }
 
       const trancheTitle = tranche_name || (parsedAmount >= 50000 ? 'Prime Sovereign Whale Tranche' : parsedAmount >= 5000 ? 'Executive Multi-Asset Tranche' : 'Starter Institutional Tranche');
       const roiRate = parseFloat(weekly_roi || (parsedAmount >= 50000 ? 10.0 : parsedAmount >= 5000 ? 7.5 : 5.0));
       const duration = parseInt(duration_days || (parsedAmount >= 50000 ? 60 : 30), 10);
-
-      const updatedWallet = await db.updateWallet(user.id, {
-        exchange_balance: wallet.exchange_balance - parsedAmount,
-        otc_investment_balance: (parseFloat(wallet.otc_investment_balance) || 0) + parsedAmount,
-        total_invested: (parseFloat(wallet.total_invested) || 0) + parsedAmount
-      });
-
-      let plan = await db.getOtcPlanByUserId(user.id);
-      if (!plan) {
-        plan = await db.createOtcPlan({
-          user_id: user.id,
-          tranche_name: trancheTitle,
-          amount: parsedAmount,
-          weekly_roi_percent: roiRate,
-          duration_days: duration,
-          days_elapsed: 1,
-          profit_accrued: 0,
-          status: 'active'
-        });
-      } else {
-        plan = await db.updateOtcPlan(plan.id, {
-          amount: (parseFloat(plan.amount) || 0) + parsedAmount,
-          tranche_name: trancheTitle,
-          weekly_roi_percent: roiRate,
-          status: 'active'
-        });
-      }
-
       const txRef = 'OTC-' + Math.floor(100000 + Math.random() * 900000);
-      const txObj = await db.createTransaction({
-        tx_ref: txRef,
-        user_id: user.id,
-        user_name: user.full_name,
-        type: 'invest_otc',
-        amount: parsedAmount,
-        asset: trancheTitle,
-        status: 'completed',
-        destination_address: 'OTC Trading Vault (Segregated)',
-        tx_hash: 'INTERNAL-OTC-ALLOCATION',
-        notes: `${trancheTitle} Allocation (${roiRate}% / wk)`
-      });
+
+      let updatedWallet;
+      let plan;
+      let txObj;
+
+      try {
+        const result = await db.withTransaction(async (client) => {
+          // Atomic balance adjustment: debits exchange balance, credits otc balance and total invested atomically
+          const w = await db.adjustWalletBalance(user.id, {
+            exchangeDelta: -parsedAmount,
+            otcDelta: parsedAmount,
+            investedDelta: parsedAmount
+          }, client);
+
+          let p = await db.getOtcPlanByUserId(user.id);
+          if (!p) {
+            p = await db.createOtcPlan({
+              user_id: user.id,
+              tranche_name: trancheTitle,
+              amount: parsedAmount,
+              weekly_roi_percent: roiRate,
+              duration_days: duration,
+              days_elapsed: 1,
+              profit_accrued: 0,
+              status: 'active'
+            }, client);
+          } else {
+            p = await db.updateOtcPlan(p.id, {
+              amount: (parseFloat(p.amount) || 0) + parsedAmount,
+              tranche_name: trancheTitle,
+              weekly_roi_percent: roiRate,
+              status: 'active'
+            }, client);
+          }
+
+          const t = await db.createTransaction({
+            tx_ref: txRef,
+            user_id: user.id,
+            user_name: user.full_name,
+            type: 'invest_otc',
+            amount: parsedAmount,
+            asset: trancheTitle,
+            status: 'completed',
+            destination_address: 'OTC Trading Vault (Segregated)',
+            tx_hash: 'INTERNAL-OTC-ALLOCATION',
+            notes: `${trancheTitle} Allocation (${roiRate}% / wk)`
+          }, client);
+
+          return { wallet: w, plan: p, tx: t };
+        });
+
+        updatedWallet = result.wallet;
+        plan = result.plan;
+        txObj = result.tx;
+      } catch (err) {
+        if (err.message && err.message.includes('Insufficient wallet balance')) {
+          const currentW = await db.getWalletByUserId(user.id);
+          return sendJSON(res, { success: false, message: `Insufficient Exchange Wallet balance ($${currentW ? currentW.exchange_balance.toFixed(2) : '0.00'} available). Please deposit funds first.` }, 400);
+        }
+        throw err;
+      }
 
       const template = emailService.EmailTemplates.otcCapitalAllocated(user.full_name, parsedAmount, trancheTitle, roiRate, duration);
       await dispatchEmailAsync({
@@ -654,6 +683,9 @@ async function requestHandler(req, res) {
       }
       if (user.status === 'banned') {
         return sendJSON(res, { success: false, message: 'Account suspended.' }, 403);
+      }
+      if (user.status === 'deleted') {
+        return sendJSON(res, { success: false, message: 'Admin account has been deactivated.' }, 403);
       }
       if (!user.password_hash || user.password_hash !== password) {
         return sendJSON(res, { success: false, message: 'Invalid credentials.' }, 401);
@@ -737,16 +769,24 @@ async function requestHandler(req, res) {
       const tx = await db.getTransactionByRef(tx_ref);
       if (!tx) return sendJSON(res, { success: false, message: 'Transaction not found.' }, 404);
 
-      const updatedTx = await db.updateTransaction(tx_ref, { status: 'completed' });
-      const user = await db.findUserById(tx.user_id);
-      const wallet = await db.getWalletByUserId(tx.user_id);
-      
-      let updatedWallet = wallet;
-      if (wallet) {
-        updatedWallet = await db.updateWallet(tx.user_id, {
-          exchange_balance: (parseFloat(wallet.exchange_balance) || 0) + parseFloat(tx.amount)
-        });
+      if (tx.status === 'completed') {
+        return sendJSON(res, { success: false, message: 'Deposit has already been approved and credited.' }, 400);
       }
+
+      let updatedTx;
+      let updatedWallet;
+      const user = await db.findUserById(tx.user_id);
+
+      const result = await db.withTransaction(async (client) => {
+        const t = await db.updateTransaction(tx_ref, { status: 'completed' }, client);
+        const w = await db.adjustWalletBalance(tx.user_id, {
+          exchangeDelta: parseFloat(tx.amount) || 0
+        }, client);
+        return { tx: t, wallet: w };
+      });
+
+      updatedTx = result.tx;
+      updatedWallet = result.wallet;
 
       if (user && updatedWallet) {
         const template = emailService.EmailTemplates.depositApproved(user.full_name, tx.amount, tx.asset, updatedWallet.exchange_balance);
@@ -823,35 +863,45 @@ async function requestHandler(req, res) {
       const { user_id, profit_amount, note } = body;
       const userId = parseInt(user_id, 10);
       const user = await db.findUserById(userId);
-      const wallet = await db.getWalletByUserId(userId);
 
-      if (!user || !wallet) {
-        return sendJSON(res, { success: false, message: 'User or wallet not found.' }, 404);
+      if (!user) {
+        return sendJSON(res, { success: false, message: 'User not found.' }, 404);
       }
 
       const parsedProfit = parseFloat(profit_amount || 0);
-      if (parsedProfit <= 0) {
+      if (parsedProfit <= 0 || isNaN(parsedProfit)) {
         return sendJSON(res, { success: false, message: 'Please specify a valid profit amount.' }, 400);
       }
 
-      const updatedWallet = await db.updateWallet(userId, {
-        accrued_profit: (parseFloat(wallet.accrued_profit) || 0) + parsedProfit,
-        exchange_balance: (parseFloat(wallet.exchange_balance) || 0) + parsedProfit
+      const txRef = 'YLD-' + Math.floor(100000 + Math.random() * 900000);
+      let updatedWallet;
+      let txObj;
+
+      const result = await db.withTransaction(async (client) => {
+        // Atomic adjustment: increments accrued_profit and exchange_balance simultaneously
+        const w = await db.adjustWalletBalance(user.id, {
+          exchangeDelta: parsedProfit,
+          profitDelta: parsedProfit
+        }, client);
+
+        const t = await db.createTransaction({
+          tx_ref: txRef,
+          user_id: user.id,
+          user_name: user.full_name,
+          type: 'otc_profit',
+          amount: parsedProfit,
+          asset: 'OTC Yield Return',
+          status: 'completed',
+          destination_address: 'Exchange Wallet',
+          tx_hash: 'YIELD-CYCLE-SETTLEMENT',
+          notes: note || 'Institutional Weekly OTC Yield Settled'
+        }, client);
+
+        return { wallet: w, tx: t };
       });
 
-      const txRef = 'YLD-' + Math.floor(100000 + Math.random() * 900000);
-      const txObj = await db.createTransaction({
-        tx_ref: txRef,
-        user_id: user.id,
-        user_name: user.full_name,
-        type: 'otc_profit',
-        amount: parsedProfit,
-        asset: 'OTC Yield Return',
-        status: 'completed',
-        destination_address: 'Exchange Wallet',
-        tx_hash: 'YIELD-CYCLE-SETTLEMENT',
-        notes: note || 'Institutional Weekly OTC Yield Settled'
-      });
+      updatedWallet = result.wallet;
+      txObj = result.tx;
 
       const template = emailService.EmailTemplates.otcProfitCredited(user.full_name, parsedProfit, updatedWallet.accrued_profit);
       await dispatchEmailAsync({
@@ -922,18 +972,32 @@ async function requestHandler(req, res) {
       const tx = await db.getTransactionByRef(tx_ref);
       if (!tx) return sendJSON(res, { success: false, message: 'Transaction not found.' }, 404);
 
-      const updatedTx = await db.updateTransaction(tx_ref, {
-        status: 'rejected',
-        notes: reason || 'Withdrawal rejected by treasury desk.'
+      if (tx.status === 'rejected') {
+        return sendJSON(res, { success: false, message: 'Withdrawal has already been rejected and refunded.' }, 400);
+      }
+      if (tx.status === 'completed') {
+        return sendJSON(res, { success: false, message: 'Cannot reject an already completed payout.' }, 400);
+      }
+
+      let updatedTx;
+      let updatedWallet;
+
+      const result = await db.withTransaction(async (client) => {
+        const t = await db.updateTransaction(tx_ref, {
+          status: 'rejected',
+          notes: reason || 'Withdrawal rejected by treasury desk.'
+        }, client);
+
+        // Atomic refund of withdrawn amount back to user's exchange balance
+        const w = await db.adjustWalletBalance(tx.user_id, {
+          exchangeDelta: parseFloat(tx.amount) || 0
+        }, client);
+
+        return { tx: t, wallet: w };
       });
 
-      const wallet = await db.getWalletByUserId(tx.user_id);
-      let updatedWallet = wallet;
-      if (wallet) {
-        updatedWallet = await db.updateWallet(tx.user_id, {
-          exchange_balance: (parseFloat(wallet.exchange_balance) || 0) + parseFloat(tx.amount)
-        });
-      }
+      updatedTx = result.tx;
+      updatedWallet = result.wallet;
 
       return sendJSON(res, { success: true, message: 'Withdrawal rejected and funds returned to user Exchange Wallet.', transaction: updatedTx, wallet: updatedWallet });
     }
@@ -1066,32 +1130,39 @@ async function requestHandler(req, res) {
       const txStatus = status || 'completed';
 
       const txRef = (txType.substring(0, 3).toUpperCase()) + '-' + Math.floor(100000 + Math.random() * 900000);
-      const newTx = await db.createTransaction({
-        tx_ref: txRef,
-        user_id: user.id,
-        user_name: user.full_name,
-        type: txType,
-        amount: parsedAmount,
-        asset: asset || 'USD Adjustment',
-        status: txStatus,
-        destination_address: txType === 'withdrawal' ? 'External Wallet' : 'Exchange Wallet',
-        tx_hash: 'ADMIN-ADJUSTMENT-' + Date.now(),
-        notes: notes || 'Administrative Balance Adjustment'
+      let newTx;
+      let updatedWallet;
+
+      const result = await db.withTransaction(async (client) => {
+        const t = await db.createTransaction({
+          tx_ref: txRef,
+          user_id: user.id,
+          user_name: user.full_name,
+          type: txType,
+          amount: parsedAmount,
+          asset: asset || 'USD Adjustment',
+          status: txStatus,
+          destination_address: txType === 'withdrawal' ? 'External Wallet' : 'Exchange Wallet',
+          tx_hash: 'ADMIN-ADJUSTMENT-' + Date.now(),
+          notes: notes || 'Administrative Balance Adjustment'
+        }, client);
+
+        let w = null;
+        if (txStatus === 'completed') {
+          if (txType === 'deposit' || txType === 'otc_profit') {
+            w = await db.adjustWalletBalance(userId, { exchangeDelta: parsedAmount }, client);
+          } else if (txType === 'withdrawal') {
+            w = await db.adjustWalletBalance(userId, { exchangeDelta: -parsedAmount }, client);
+          }
+        }
+        if (!w) {
+          w = await db.getWalletByUserId(userId, client);
+        }
+        return { tx: t, wallet: w };
       });
 
-      const wallet = await db.getWalletByUserId(userId);
-      let updatedWallet = wallet;
-      if (txStatus === 'completed' && wallet) {
-        if (txType === 'deposit' || txType === 'otc_profit') {
-          updatedWallet = await db.updateWallet(userId, {
-            exchange_balance: (parseFloat(wallet.exchange_balance) || 0) + parsedAmount
-          });
-        } else if (txType === 'withdrawal') {
-          updatedWallet = await db.updateWallet(userId, {
-            exchange_balance: Math.max(0, (parseFloat(wallet.exchange_balance) || 0) - parsedAmount)
-          });
-        }
-      }
+      newTx = result.tx;
+      updatedWallet = result.wallet;
 
       return sendJSON(res, { success: true, message: 'Transaction record created.', transaction: newTx, wallet: updatedWallet });
     }
@@ -1116,23 +1187,31 @@ async function requestHandler(req, res) {
       const parsedAmount = parseFloat(amount || 0);
       const roi = parseFloat(weekly_roi_percent || 7.5);
       const duration = parseInt(duration_days || 30, 10);
+      let plan;
+      let updatedWallet;
 
-      const plan = await db.createOtcPlan({
-        user_id: user.id,
-        tranche_name: tranche_name || 'Executive Multi-Asset Tranche',
-        amount: parsedAmount,
-        weekly_roi_percent: roi,
-        duration_days: duration,
-        days_elapsed: 1,
-        profit_accrued: 0,
-        status: 'active'
+      const result = await db.withTransaction(async (client) => {
+        const p = await db.createOtcPlan({
+          user_id: user.id,
+          tranche_name: tranche_name || 'Executive Multi-Asset Tranche',
+          amount: parsedAmount,
+          weekly_roi_percent: roi,
+          duration_days: duration,
+          days_elapsed: 1,
+          profit_accrued: 0,
+          status: 'active'
+        }, client);
+
+        const w = await db.adjustWalletBalance(userId, {
+          otcDelta: parsedAmount,
+          investedDelta: parsedAmount
+        }, client);
+
+        return { plan: p, wallet: w };
       });
 
-      const wallet = await db.getWalletByUserId(userId);
-      const updatedWallet = await db.updateWallet(userId, {
-        otc_investment_balance: (parseFloat(wallet.otc_investment_balance) || 0) + parsedAmount,
-        total_invested: (parseFloat(wallet.total_invested) || 0) + parsedAmount
-      });
+      plan = result.plan;
+      updatedWallet = result.wallet;
 
       return sendJSON(res, { success: true, message: 'OTC investment contract allocated.', plan, wallet: updatedWallet });
     }
@@ -1158,17 +1237,25 @@ async function requestHandler(req, res) {
       const { plan_id } = body;
       const planId = parseInt(plan_id, 10);
 
-      const updatedPlan = await db.updateOtcPlan(planId, { status: 'completed' });
-      if (!updatedPlan) return sendJSON(res, { success: false, message: 'OTC contract not found.' }, 404);
+      let updatedPlan;
+      let updatedWallet;
 
-      const wallet = await db.getWalletByUserId(updatedPlan.user_id);
-      let updatedWallet = wallet;
-      if (wallet) {
-        updatedWallet = await db.updateWallet(updatedPlan.user_id, {
-          exchange_balance: (parseFloat(wallet.exchange_balance) || 0) + parseFloat(updatedPlan.amount),
-          otc_investment_balance: Math.max(0, (parseFloat(wallet.otc_investment_balance) || 0) - parseFloat(updatedPlan.amount))
-        });
-      }
+      const result = await db.withTransaction(async (client) => {
+        const p = await db.updateOtcPlan(planId, { status: 'completed' }, client);
+        if (!p) {
+          throw new Error('OTC contract not found');
+        }
+
+        const w = await db.adjustWalletBalance(p.user_id, {
+          exchangeDelta: parseFloat(p.amount) || 0,
+          otcDelta: -(parseFloat(p.amount) || 0)
+        }, client);
+
+        return { plan: p, wallet: w };
+      });
+
+      updatedPlan = result.plan;
+      updatedWallet = result.wallet;
 
       return sendJSON(res, { success: true, message: 'Contract settled and principal returned to Exchange Wallet.', plan: updatedPlan, wallet: updatedWallet });
     }

@@ -457,16 +457,18 @@ async function getAllUsers() {
 async function deleteUser(id) {
   const numId = parseInt(id, 10);
   if (usePostgres) {
-    const res = await pool.query('DELETE FROM users WHERE id = $1', [numId]);
+    // Soft deletion: deactivates account and marks as deleted while preserving all financial transactions and history
+    const res = await pool.query(
+      "UPDATE users SET status = 'deleted', updated_at = NOW() WHERE id = $1 RETURNING *",
+      [numId]
+    );
     return res.rowCount > 0;
   }
 
-  const idx = store.users.findIndex(u => u.id === numId);
-  if (idx !== -1) {
-    store.users.splice(idx, 1);
-    store.wallets = store.wallets.filter(w => w.user_id !== numId);
-    store.otc_plans = store.otc_plans.filter(p => p.user_id !== numId);
-    store.transactions = store.transactions.filter(t => t.user_id !== numId);
+  const user = store.users.find(u => u.id === numId);
+  if (user) {
+    user.status = 'deleted';
+    user.updated_at = new Date().toISOString();
     saveDatabaseSync();
     return true;
   }
@@ -675,7 +677,7 @@ async function getOtcPlanByUserId(userId) {
   return store.otc_plans.find(p => p.user_id === numId && p.status === 'active') || null;
 }
 
-async function createOtcPlan(data) {
+async function createOtcPlan(data, client = null) {
   const numId = parseInt(data.user_id, 10);
   const trancheName = data.tranche_name || 'Executive Multi-Asset Tranche';
   const amount = parseFloat(data.amount || 0);
@@ -684,9 +686,10 @@ async function createOtcPlan(data) {
   const daysElapsed = parseInt(data.days_elapsed || 1, 10);
   const profitAccrued = parseFloat(data.profit_accrued || 0);
   const status = data.status || 'active';
+  const dbExecutor = client || pool;
 
   if (usePostgres) {
-    const res = await pool.query(`
+    const res = await dbExecutor.query(`
       INSERT INTO otc_plans (
         user_id, tranche_name, amount, weekly_roi_percent, duration_days,
         days_elapsed, profit_accrued, status
@@ -714,12 +717,13 @@ async function createOtcPlan(data) {
   return newPlan;
 }
 
-async function updateOtcPlan(id, updates) {
+async function updateOtcPlan(id, updates, client = null) {
   const numId = parseInt(id, 10);
+  const dbExecutor = client || pool;
   if (usePostgres) {
     const keys = Object.keys(updates);
     if (keys.length === 0) {
-      const res = await pool.query('SELECT * FROM otc_plans WHERE id = $1 LIMIT 1', [numId]);
+      const res = await dbExecutor.query('SELECT * FROM otc_plans WHERE id = $1 LIMIT 1', [numId]);
       return formatPlan(res.rows[0]) || null;
     }
 
@@ -740,7 +744,7 @@ async function updateOtcPlan(id, updates) {
       WHERE id = $${idx}
       RETURNING *;
     `;
-    const res = await pool.query(query, values);
+    const res = await dbExecutor.query(query, values);
     return formatPlan(res.rows[0]) || null;
   }
 
@@ -780,7 +784,7 @@ async function deleteOtcPlan(id) {
 // ==========================================
 // TRANSACTION OPERATIONS
 // ==========================================
-async function createTransaction(data) {
+async function createTransaction(data, client = null) {
   const numId = parseInt(data.user_id, 10);
   const txRef = data.tx_ref || ('TX-' + Math.floor(100000 + Math.random() * 900000));
   const userName = data.user_name || null;
@@ -792,9 +796,10 @@ async function createTransaction(data) {
   const destinationAddress = data.destination_address || null;
   const txHash = data.tx_hash || null;
   const notes = data.notes || null;
+  const dbExecutor = client || pool;
 
   if (usePostgres) {
-    const res = await pool.query(`
+    const res = await dbExecutor.query(`
       INSERT INTO transactions (
         tx_ref, user_id, user_name, user_email, type, amount,
         asset, status, destination_address, tx_hash, notes
@@ -841,7 +846,8 @@ async function getTransactionByRef(txRef) {
   return store.transactions.find(t => t.tx_ref === txRef) || null;
 }
 
-async function updateTransaction(txRef, updates) {
+async function updateTransaction(txRef, updates, client = null) {
+  const dbExecutor = client || pool;
   if (usePostgres) {
     const keys = Object.keys(updates);
     if (keys.length === 0) return getTransactionByRef(txRef);
@@ -863,7 +869,7 @@ async function updateTransaction(txRef, updates) {
       WHERE tx_ref = $${idx}
       RETURNING *;
     `;
-    const res = await pool.query(query, values);
+    const res = await dbExecutor.query(query, values);
     return formatTx(res.rows[0]) || null;
   }
 
