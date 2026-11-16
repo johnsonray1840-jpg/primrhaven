@@ -31,9 +31,10 @@ if (usePostgres) {
     ssl: {
       rejectUnauthorized: false
     },
-    max: 10,
-    idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 10000
+    // Serverless-optimized connection pool settings for Vercel & Neon
+    max: process.env.VERCEL ? 3 : 10, // Prevent connection exhaustion across multiple serverless lambda instances
+    idleTimeoutMillis: 15000,          // Close idle connections quickly in serverless environments
+    connectionTimeoutMillis: 5000      // Fail fast if database is unreachable
   });
 
   pool.on('error', (err) => {
