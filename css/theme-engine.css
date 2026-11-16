@@ -494,6 +494,73 @@ details.vx-faq-item:not([open])::details-content {
   }
 }
 
+/* Persistent Desktop Sidebar Navigation Links */
+.vx-sidebar {
+  background-color: var(--vx-bg-card);
+  border-right: 1px solid var(--vx-border);
+}
+
+.vx-sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.875rem;
+  border-radius: 0.875rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--vx-text-secondary);
+  border: 1px solid transparent;
+  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.vx-sidebar-link:hover {
+  background-color: var(--vx-bg-recessed);
+  color: var(--vx-text-primary);
+}
+
+.vx-sidebar-link[aria-current="page"] {
+  background-color: var(--vx-primary-tint);
+  color: var(--vx-primary);
+  border-color: var(--vx-primary-border);
+  font-weight: 700;
+}
+
+html.dark .vx-sidebar-link[aria-current="page"] {
+  color: #93C5FD;
+  border-color: rgba(96, 165, 250, 0.45);
+}
+
+.vx-sidebar-link:focus-visible {
+  outline: 2px solid var(--vx-primary);
+  outline-offset: 2px;
+}
+
+/* Native Modal Dialogs (Scroll-Containment & Top-Layer Backdrop) */
+dialog.vx-dialog {
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--vx-border);
+  border-radius: 1.5rem;
+  background-color: var(--vx-bg-card);
+  color: var(--vx-text-primary);
+  box-shadow: var(--vx-shadow-luxury);
+  max-width: min(92vw, 34rem);
+  width: 100%;
+  max-height: 90dvh;
+  overflow-y: auto;
+}
+
+dialog:modal {
+  overscroll-behavior: contain;
+}
+
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background-color: rgba(7, 10, 17, 0.72);
+  backdrop-filter: blur(4px);
+}
+
 /* Forced Colors High-Contrast Mode Support */
 @media (forced-colors: active) {
   .vx-card,
@@ -504,7 +571,9 @@ details.vx-faq-item:not([open])::details-content {
   .vx-btn-secondary,
   .vx-btn-emerald,
   .vx-faq-item,
-  .vx-nav-link[aria-current="page"] {
+  .vx-nav-link[aria-current="page"],
+  .vx-sidebar-link[aria-current="page"],
+  dialog.vx-dialog {
     border: 1px solid CanvasText;
     box-shadow: none;
   }
