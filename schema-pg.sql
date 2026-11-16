@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS investment_plans (
   roi_percentage NUMERIC(8, 2) NOT NULL,
   duration_days INT NOT NULL,
   status VARCHAR(20) NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'inactive', 'archived')),
+  is_active BOOLEAN NOT NULL DEFAULT true,
   display_icon VARCHAR(100) DEFAULT NULL,
   created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
