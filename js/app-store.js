@@ -629,13 +629,14 @@
       return data;
     }
 
-    async investOTC(amount, trancheName = 'Executive Multi-Asset Tranche', weeklyRoi = 7.5, durationDays = 30) {
+    async investOTC(amount, trancheName = 'Executive Multi-Asset Tranche', weeklyRoi = 25.0, durationDays = 30, planId = null) {
       if (!this.currentUser) return { success: false, message: 'Please sign in first.' };
       const res = await callApi('/api/wallet/invest-otc', {
         method: 'POST',
         body: JSON.stringify({
           user_id: this.currentUser.id,
           amount: parseFloat(amount),
+          plan_id: planId,
           tranche_name: trancheName,
           weekly_roi: parseFloat(weeklyRoi),
           duration_days: parseInt(durationDays, 10)
@@ -643,7 +644,7 @@
       });
       const data = res.data || {};
       if (data.success) {
-        this.showToast(`Allocated $${parseFloat(amount).toLocaleString()} to ${trancheName}!`, 'success');
+        this.showToast(data.message || `Allocated $${parseFloat(amount).toLocaleString()} to ${trancheName}!`, 'success');
       } else {
         this.showToast(data.message || 'Allocation failed.', 'error');
       }

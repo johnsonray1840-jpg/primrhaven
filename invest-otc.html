@@ -119,135 +119,26 @@
       </div>
     </div>
 
-    <!-- 3 Institutional OTC Tranches Grid -->
-    <div class="space-y-4">
-      <div class="flex justify-between items-end">
+    <!-- Dynamic Public Investment Plan Catalogue Grid -->
+    <div class="space-y-6">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-3 border-b border-slate-200 dark:border-gray-800 pb-3">
         <div>
-          <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white">Select OTC Investment Tranche</h2>
-          <p class="text-xs text-slate-500 dark:text-gray-400">Choose the tranche tier that aligns with your capital allocation strategy.</p>
+          <h2 class="text-lg sm:text-2xl font-extrabold text-slate-900 dark:text-white">Investment Plan Catalogue</h2>
+          <p class="text-xs text-slate-500 dark:text-gray-400">Select an audited Short-Term or Long-Term investment tranche configured with simple interest returns.</p>
+        </div>
+        <!-- Category Toggle Pills -->
+        <div class="flex items-center gap-1.5 p-1 bg-slate-100 dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 rounded-xl">
+          <button onclick="setCategoryTab('ALL')" id="filter-btn-all" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-primary text-white shadow-sm">All Plans</button>
+          <button onclick="setCategoryTab('Short-Term')" id="filter-btn-short" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white">Short-Term</button>
+          <button onclick="setCategoryTab('Long-Term')" id="filter-btn-long" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white">Long-Term</button>
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-        <!-- TRANCHE 1: Starter Institutional -->
-        <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 hover:border-primary/50 rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 shadow-lg dark:shadow-xl transition-all duration-300 hover:scale-[1.01] group relative" id="tranche-card-starter">
-          <div class="space-y-4">
-            <div class="flex justify-between items-center">
-              <span class="px-3 py-1 rounded-full text-[10px] font-extrabold bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-gray-300 border border-slate-200 dark:border-gray-700 uppercase tracking-wider">Tier 1 • Entry Desk</span>
-              <span class="text-xs font-bold text-slate-500 dark:text-gray-400">30 Days</span>
-            </div>
-
-            <div>
-              <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">Starter Yield Tranche</h3>
-              <p class="text-xs text-slate-500 dark:text-gray-400 mt-1">Foundational OTC market maker allocation with weekly capital distributions.</p>
-            </div>
-
-            <div class="p-4 bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800/80 rounded-2xl space-y-1 text-center">
-              <span class="text-[11px] text-slate-500 dark:text-gray-400 uppercase font-semibold">Weekly Target Yield</span>
-              <div class="text-3xl font-black text-emerald-600 dark:text-emerald-400 ">+5.00% <span class="text-xs text-slate-500 dark:text-gray-400 font-normal">/ week</span></div>
-              <p class="text-[10px] text-slate-500 dark:text-gray-400">20.00% Total 30-Day Estimated Return</p>
-            </div>
-
-            <ul class="space-y-2.5 text-xs text-slate-600 dark:text-gray-300 pt-2">
-              <li class="flex items-center gap-2">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-500"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Minimum Capital: <strong>$500 USD</strong></span>
-              </li>
-              <li class="flex items-center gap-2">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-500"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Maximum Capital: <strong>$4,999 USD</strong></span>
-              </li>
-              <li class="flex items-center gap-2">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-500"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Weekly Automatic Settlement</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-500"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Segregated Cold Vault Custody</span>
-              </li>
-            </ul>
-          </div>
-
-          <button onclick="selectTranche('Starter Institutional Tranche', 5.0, 500, 4999, 30)" class="w-full py-3.5 bg-slate-100 dark:bg-[#101726] hover:bg-primary hover:text-white border border-slate-200 dark:border-gray-700 hover:border-primary text-slate-800 dark:text-gray-200 font-extrabold text-xs rounded-2xl transition-all shadow-sm">
-            Select Starter Tranche
-          </button>
-        </div>
-
-        <!-- TRANCHE 2: Executive Multi-Asset (FEATURED) -->
-        <div class="bg-white dark:bg-gradient-to-b dark:from-[#101726] dark:to-[#0c121e] border-2 border-primary/60 rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 shadow-xl dark:shadow-2xl relative group" id="tranche-card-executive">
-          <!-- Featured Badge -->
-          <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-primary text-white font-black text-[10px] uppercase tracking-widest shadow-lg shadow-primary/30">
-            Most Popular Institutional Tier
-          </div>
-
-          <div class="space-y-4 pt-1">
-            <div class="flex justify-between items-center">
-              <span class="px-3 py-1 rounded-full text-[10px] font-extrabold bg-primary/15 text-primary border border-primary/30 uppercase tracking-wider">Tier 2 • Executive</span>
-              <span class="text-xs font-bold text-slate-500 dark:text-gray-300">30 Days</span>
-            </div>
-
-            <div>
-              <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">Executive Multi-Asset OTC</h3>
-              <p class="text-xs text-slate-600 dark:text-gray-300 mt-1">High-frequency OTC arbitrage and institutional algorithmic liquidity provisioning.</p>
-            </div>
-
-            <div class="p-4 bg-slate-50 dark:bg-[#070a11]/90 border border-slate-200 dark:border-gray-800 rounded-2xl space-y-1 text-center shadow-inner">
-              <span class="text-[11px] text-slate-500 dark:text-gray-400 uppercase font-semibold">Weekly Target Yield</span>
-              <div class="text-3xl font-black text-emerald-600 dark:text-emerald-400 ">+7.50% <span class="text-xs text-slate-500 dark:text-gray-400 font-normal">/ week</span></div>
-              <p class="text-[10px] text-slate-500 dark:text-gray-300">30.00% Total 30-Day Estimated Return</p>
-            </div>
-
-            <ul class="space-y-2.5 text-xs text-slate-700 dark:text-gray-200 pt-2">
-              <li class="flex items-center gap-2">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-500"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Minimum Capital: <strong>$5,000 USD</strong></span>
-              </li>
-              <li class="flex items-center gap-2">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-500"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Maximum Capital: <strong>$49,999 USD</strong></span>
-              </li>
-              <li class="flex items-center gap-2">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-500"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Priority Institutional Desk Routing</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-500"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Full Capital Principal Guarantee</span>
-              </li>
-            </ul>
-          </div>
-
-          <button onclick="selectTranche('Executive Multi-Asset Tranche', 7.5, 5000, 49999, 30)" class="w-full py-3.5 bg-primary hover:bg-[#1332c9] text-white font-extrabold text-xs rounded-2xl transition-all shadow-lg shadow-primary/25">
-            Select Executive Tranche
-          </button>
-        </div>
-
-        <!-- TRANCHE 3: Prime Sovereign Whale -->
-        <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 hover:border-purple-500/40 rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 shadow-lg dark:shadow-xl transition-all duration-300 hover:scale-[1.01] group relative" id="tranche-card-prime">
-          <div class="space-y-4">
-            <div class="flex justify-between items-center">
-              <span class="px-3 py-1 rounded-full text-[10px] font-extrabold bg-purple-500/15 text-purple-600 dark:text-purple-300 border border-purple-500/30 uppercase tracking-wider">Tier 3 • Whale Desk</span>
-              <span class="text-xs font-bold text-purple-600 dark:text-purple-400">60 Days</span>
-            </div>
-
-            <div>
-              <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">Prime Sovereign Whale</h3>
-              <p class="text-xs text-slate-500 dark:text-gray-400 mt-1">Tier-1 prime broker dark pool routing & syndicate trade execution.</p>
-            </div>
-
-            <div class="p-4 bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800/80 rounded-2xl space-y-1 text-center">
-              <span class="text-[11px] text-slate-500 dark:text-gray-400 uppercase font-semibold">Weekly Target Yield</span>
-              <div class="text-3xl font-black text-purple-600 dark:text-purple-400 ">+10.00% <span class="text-xs text-slate-500 dark:text-gray-400 font-normal">/ week</span></div>
-              <p class="text-[10px] text-slate-500 dark:text-gray-400">80.00% Total 60-Day Estimated Return</p>
-            </div>
-
-            <ul class="space-y-2.5 text-xs text-slate-600 dark:text-gray-300 pt-2">
-              <li class="flex items-center gap-2">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-purple-500"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Minimum Capital: <strong>$50,000 USD</strong></span>
-              </li>
-              <li class="flex items-center gap-2">
+      <!-- Dynamic Plans Grid Container -->
+      <div id="dynamic-plans-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Rendered Dynamically from /api/plans/active -->
+      </div>
+    </div>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-purple-500"><polyline points="20 6 9 17 4 12"/></svg>
                 <span>Maximum Capital: <strong>$500,000+ USD</strong></span>
               </li>
@@ -465,6 +356,7 @@
 
       // 3. Load Live Data
       await refreshOTCPage();
+      await loadPublicCatalogPlans();
     });
 
     async function refreshOTCPage() {
@@ -497,30 +389,126 @@
       recalculateProjections();
     }
 
-    function selectTranche(name, roi, min, max, duration) {
-      currentSelectedTranche = { name, roi, min, max, duration };
+    let loadedCatalogPlans = [];
+    let currentCategoryFilter = 'ALL';
+
+    async function loadPublicCatalogPlans() {
+      try {
+        const res = await fetch('/api/plans/active');
+        const data = await res.json();
+        if (data.success && Array.isArray(data.plans)) {
+          loadedCatalogPlans = data.plans;
+          renderPublicPlans();
+          if (loadedCatalogPlans.length > 0) {
+            const first = loadedCatalogPlans[0];
+            selectTranche(first.name, first.roi_percentage, first.min_amount, first.max_amount, first.duration_days, first.id);
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load public plans:', err);
+      }
+    }
+
+    function setCategoryTab(category) {
+      currentCategoryFilter = category;
+      ['all', 'short', 'long'].forEach(c => {
+        const btn = document.getElementById(`filter-btn-${c}`);
+        if (!btn) return;
+        btn.className = 'px-3 py-1.5 rounded-lg text-xs font-bold transition-all text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white';
+      });
+
+      const activeBtnId = category === 'ALL' ? 'filter-btn-all' : category === 'Short-Term' ? 'filter-btn-short' : 'filter-btn-long';
+      const activeBtn = document.getElementById(activeBtnId);
+      if (activeBtn) {
+        activeBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-primary text-white shadow-sm';
+      }
+      renderPublicPlans();
+    }
+
+    function renderPublicPlans() {
+      const container = document.getElementById('dynamic-plans-grid');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const filtered = currentCategoryFilter === 'ALL' 
+        ? loadedCatalogPlans 
+        : loadedCatalogPlans.filter(p => p.category === currentCategoryFilter);
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<div class="col-span-full py-12 text-center text-slate-400 dark:text-gray-500 font-semibold">No active investment plans in this category.</div>';
+        return;
+      }
+
+      filtered.forEach(p => {
+        const isSelected = currentSelectedTranche.id === p.id || currentSelectedTranche.name === p.name;
+        const isShort = p.category === 'Short-Term';
+
+        const card = document.createElement('div');
+        card.id = `plan-card-${p.id}`;
+        card.className = `bg-white dark:bg-[#0c121e] border ${isSelected ? 'ring-2 ring-primary border-primary' : 'border-slate-200 dark:border-gray-800'} hover:border-primary/50 rounded-3xl p-6 flex flex-col justify-between space-y-6 shadow-lg dark:shadow-xl transition-all duration-300 hover:scale-[1.01] cursor-pointer`;
+        card.onclick = () => selectTranche(p.name, p.roi_percentage, p.min_amount, p.max_amount, p.duration_days, p.id);
+
+        card.innerHTML = `
+          <div class="space-y-4">
+            <div class="flex justify-between items-center">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider ${isShort ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30' : 'bg-blue-500/15 text-blue-600 dark:text-blue-400 border border-blue-500/30'}">
+                ${p.category}
+              </span>
+              <span class="text-xs font-bold text-slate-500 dark:text-gray-400">${p.duration_days} Days</span>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">${p.name}</h3>
+              <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 line-clamp-2">${p.description || 'Institutional capital allocation with guaranteed maturity settlement.'}</p>
+            </div>
+
+            <div class="p-3.5 bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800/80 rounded-2xl space-y-0.5 text-center">
+              <span class="text-[10px] text-slate-500 dark:text-gray-400 uppercase font-bold tracking-wider">Fixed Total ROI</span>
+              <div class="text-2xl font-black text-emerald-600 dark:text-emerald-400">+${p.roi_percentage}%</div>
+              <p class="text-[10px] text-slate-500 dark:text-gray-400">Simple Interest paid at maturity</p>
+            </div>
+
+            <ul class="space-y-2 text-xs text-slate-600 dark:text-gray-300 pt-1">
+              <li class="flex items-center gap-2">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-emerald-500"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Min: <strong>$${p.min_amount.toLocaleString()} USD</strong></span>
+              </li>
+              <li class="flex items-center gap-2">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-emerald-500"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Max: <strong>$${p.max_amount.toLocaleString()} USD</strong></span>
+              </li>
+              <li class="flex items-center gap-2">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-emerald-500"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Duration: <strong>${p.duration_days} Days</strong></span>
+              </li>
+            </ul>
+          </div>
+
+          <button type="button" class="w-full py-2.5 ${isSelected ? 'bg-primary text-white shadow-md shadow-primary/30' : 'bg-slate-100 dark:bg-[#101726] text-slate-700 dark:text-gray-300 hover:bg-primary hover:text-white'} font-extrabold text-xs rounded-xl transition-all">
+            ${isSelected ? 'Selected' : 'Select Plan'}
+          </button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function selectTranche(name, roi, min, max, duration, id = null) {
+      currentSelectedTranche = { name, roi, min, max, duration, id };
       
       document.getElementById('selected-tranche-name').innerText = name;
-      document.getElementById('selected-tranche-roi').innerText = `+${roi.toFixed(2)}% / week`;
+      document.getElementById('selected-tranche-roi').innerText = `+${parseFloat(roi).toFixed(2)}% Total Return`;
       document.getElementById('tranche-min-max-label').innerText = `$${min.toLocaleString()} – $${max.toLocaleString()} USD`;
-      document.getElementById('proj-term-days-label').innerText = `${duration}-Day contract lifecycle`;
+      document.getElementById('proj-term-days-label').innerText = `${duration}-Day total lifecycle`;
 
       const input = document.getElementById('invest-amount-input');
       input.min = min;
+      input.max = max;
       if (parseFloat(input.value) < min) {
         input.value = min;
       }
 
-      // Highlight active tranche card
-      ['starter', 'executive', 'prime'].forEach(t => {
-        const el = document.getElementById(`tranche-card-${t}`);
-        if (el) el.classList.remove('ring-2', 'ring-amber-500');
-      });
-
-      if (name.includes('Starter')) document.getElementById('tranche-card-starter')?.classList.add('ring-2', 'ring-emerald-500');
-      else if (name.includes('Executive')) document.getElementById('tranche-card-executive')?.classList.add('ring-2', 'ring-amber-500');
-      else if (name.includes('Prime')) document.getElementById('tranche-card-prime')?.classList.add('ring-2', 'ring-purple-500');
-
+      // Refresh card selection borders
+      renderPublicPlans();
       recalculateProjections();
     }
 
@@ -546,14 +534,16 @@
 
     function recalculateProjections() {
       const amount = parseFloat(document.getElementById('invest-amount-input').value || 0);
-      const weeklyRoi = currentSelectedTranche.roi / 100;
-      const weeks = currentSelectedTranche.duration / 7;
-
-      const weeklyProfit = amount * weeklyRoi;
-      const totalProfit = weeklyProfit * (currentSelectedTranche.duration / 7.5);
+      // Simple Interest Rule: profit = principal * (roi_percentage / 100)
+      const totalRoi = (currentSelectedTranche.roi || 0) / 100.0;
+      const totalProfit = parseFloat((amount * totalRoi).toFixed(2));
       const gross = amount + totalProfit;
 
-      document.getElementById('proj-weekly-profit').innerText = `+$${weeklyProfit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      const weeklyEst = currentSelectedTranche.duration > 0 ? (totalProfit / (currentSelectedTranche.duration / 7.0)) : 0;
+      const weeklyEl = document.getElementById('proj-weekly-profit');
+      if (weeklyEl) {
+        weeklyEl.innerText = `+$${weeklyEst.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      }
       document.getElementById('proj-total-profit').innerText = `+$${totalProfit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
       document.getElementById('proj-gross-payout').innerText = `$${gross.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     }
@@ -581,7 +571,7 @@
       btn.disabled = true;
       btn.innerHTML = `<span>Allocating Capital to OTC Desk...</span>`;
 
-      const res = await VertexApp.investOTC(amount, currentSelectedTranche.name, currentSelectedTranche.roi, currentSelectedTranche.duration);
+      const res = await VertexApp.investOTC(amount, currentSelectedTranche.name, currentSelectedTranche.roi, currentSelectedTranche.duration, currentSelectedTranche.id || null);
       btn.disabled = false;
       btn.innerHTML = `<span>Confirm & Allocate Capital</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>`;
 

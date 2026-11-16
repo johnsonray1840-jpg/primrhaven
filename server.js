@@ -472,8 +472,44 @@ async function requestHandler(req, res) {
         db.getCompanyWallets()
       ]);
 
+      // Dynamic real-time calculation of investment progression and accrued profit
+      let dynamicPlan = otcPlan;
+      if (otcPlan && otcPlan.status === 'active') {
+        const start = otcPlan.start_date ? new Date(otcPlan.start_date).getTime() : Date.now();
+        const now = Date.now();
+        const totalDurationDays = otcPlan.duration_days || 30;
+        const totalDurationMs = totalDurationDays * 24 * 60 * 60 * 1000;
+        const elapsedMs = Math.max(0, now - start);
+        const daysElapsed = Math.min(totalDurationDays, Math.max(1, Math.floor(elapsedMs / (24 * 60 * 60 * 1000))));
+        const progressFraction = Math.min(1.0, elapsedMs / totalDurationMs);
+
+        // Simple Interest calculation: Total expected profit = principal * (ROI / 100)
+        const principal = parseFloat(otcPlan.amount || 0);
+        const roiPercent = parseFloat(otcPlan.total_roi_percent || otcPlan.weekly_roi_percent || 0);
+        const totalExpectedProfit = parseFloat((principal * (roiPercent / 100.0)).toFixed(2));
+        const accruedProfit = parseFloat((totalExpectedProfit * progressFraction).toFixed(2));
+        const daysRemaining = Math.max(0, totalDurationDays - daysElapsed);
+
+        dynamicPlan = {
+          ...otcPlan,
+          days_elapsed: daysElapsed,
+          days_remaining: daysRemaining,
+          progress_percent: Math.round(progressFraction * 100),
+          total_expected_profit: totalExpectedProfit,
+          profit_accrued: accruedProfit,
+          is_mature: elapsedMs >= totalDurationMs
+        };
+      }
+
       const activeWallets = (companyWallets || []).filter(w => w.is_active === 1);
-      return sendJSON(res, { success: true, user, wallet, otcPlan, transactions, companyWallets: activeWallets });
+      return sendJSON(res, {
+        success: true,
+        user,
+        wallet,
+        otcPlan: dynamicPlan,
+        transactions,
+        companyWallets: activeWallets
+      });
     }
 
     // 7. Wallet: Request Deposit
@@ -567,10 +603,25 @@ async function requestHandler(req, res) {
       return sendJSON(res, { success: true, message: 'Withdrawal submitted.', wallet: updatedWallet, transaction: newTx });
     }
 
-    // 9. Wallet: Invest in OTC
+    // ==========================================
+    // 8b. Public Investment Plans Catalogue
+    // ==========================================
+    if (method === 'GET' && pathname === '/api/plans/active') {
+      const activePlans = await db.getAllInvestmentPlans(false);
+      const shortTerm = activePlans.filter(p => p.category === 'Short-Term');
+      const longTerm = activePlans.filter(p => p.category === 'Long-Term');
+      return sendJSON(res, {
+        success: true,
+        plans: activePlans,
+        shortTerm,
+        longTerm
+      });
+    }
+
+    // 9. Wallet: Invest in OTC / Investment Plan
     if (method === 'POST' && pathname === '/api/wallet/invest-otc') {
       const body = await parseBody(req);
-      const { user_id, amount, tranche_name, weekly_roi, duration_days } = body;
+      const { user_id, amount, plan_id, tranche_name, weekly_roi, duration_days } = body;
       const userId = parseInt(user_id, 10);
       const user = await db.findUserById(userId);
       
@@ -583,10 +634,37 @@ async function requestHandler(req, res) {
         return sendJSON(res, { success: false, message: 'Please enter a valid investment amount.' }, 400);
       }
 
-      const trancheTitle = tranche_name || (parsedAmount >= 50000 ? 'Prime Sovereign Whale Tranche' : parsedAmount >= 5000 ? 'Executive Multi-Asset Tranche' : 'Starter Institutional Tranche');
-      const roiRate = parseFloat(weekly_roi || (parsedAmount >= 50000 ? 10.0 : parsedAmount >= 5000 ? 7.5 : 5.0));
-      const duration = parseInt(duration_days || (parsedAmount >= 50000 ? 60 : 30), 10);
-      const txRef = 'OTC-' + Math.floor(100000 + Math.random() * 900000);
+      let selectedPlan = null;
+      if (plan_id) {
+        selectedPlan = await db.getInvestmentPlanById(plan_id);
+      }
+
+      let trancheTitle = tranche_name;
+      let totalRoi = weekly_roi ? parseFloat(weekly_roi) : 20.0;
+      let duration = duration_days ? parseInt(duration_days, 10) : 30;
+
+      if (selectedPlan) {
+        if (selectedPlan.status !== 'active') {
+          return sendJSON(res, { success: false, message: 'The selected investment plan is not currently open for funding.' }, 400);
+        }
+        if (parsedAmount < selectedPlan.min_amount) {
+          return sendJSON(res, { success: false, message: `Investment amount is below minimum required ($${selectedPlan.min_amount.toLocaleString()}) for this plan.` }, 400);
+        }
+        if (parsedAmount > selectedPlan.max_amount) {
+          return sendJSON(res, { success: false, message: `Investment amount exceeds maximum limit ($${selectedPlan.max_amount.toLocaleString()}) for this plan.` }, 400);
+        }
+        trancheTitle = selectedPlan.name;
+        totalRoi = selectedPlan.roi_percentage;
+        duration = selectedPlan.duration_days;
+      } else {
+        trancheTitle = tranche_name || (parsedAmount >= 50000 ? 'Prime Sovereign Whale Tranche' : parsedAmount >= 5000 ? 'Executive Multi-Asset Tranche' : 'Starter Institutional Tranche');
+        totalRoi = parseFloat(weekly_roi || (parsedAmount >= 50000 ? 50.0 : parsedAmount >= 5000 ? 25.0 : 15.0));
+        duration = parseInt(duration_days || (parsedAmount >= 50000 ? 60 : 30), 10);
+      }
+
+      // Simple Interest Formula: profit = principal * (ROI / 100)
+      const expectedProfit = parseFloat((parsedAmount * (totalRoi / 100.0)).toFixed(2));
+      const txRef = 'INV-' + Math.floor(100000 + Math.random() * 900000);
 
       let updatedWallet;
       let plan;
@@ -601,26 +679,24 @@ async function requestHandler(req, res) {
             investedDelta: parsedAmount
           }, client);
 
-          let p = await db.getOtcPlanByUserId(user.id);
-          if (!p) {
-            p = await db.createOtcPlan({
-              user_id: user.id,
-              tranche_name: trancheTitle,
-              amount: parsedAmount,
-              weekly_roi_percent: roiRate,
-              duration_days: duration,
-              days_elapsed: 1,
-              profit_accrued: 0,
-              status: 'active'
-            }, client);
-          } else {
-            p = await db.updateOtcPlan(p.id, {
-              amount: (parseFloat(p.amount) || 0) + parsedAmount,
-              tranche_name: trancheTitle,
-              weekly_roi_percent: roiRate,
-              status: 'active'
-            }, client);
-          }
+          const now = new Date();
+          const endDate = new Date(now.getTime() + duration * 24 * 60 * 60 * 1000);
+
+          const p = await db.createOtcPlan({
+            user_id: user.id,
+            plan_id: selectedPlan ? selectedPlan.id : null,
+            tranche_name: trancheTitle,
+            amount: parsedAmount,
+            weekly_roi_percent: totalRoi,
+            total_roi_percent: totalRoi,
+            total_expected_profit: expectedProfit,
+            duration_days: duration,
+            days_elapsed: 1,
+            profit_accrued: 0,
+            status: 'active',
+            start_date: now.toISOString(),
+            end_date: endDate.toISOString()
+          }, client);
 
           const t = await db.createTransaction({
             tx_ref: txRef,
@@ -630,9 +706,9 @@ async function requestHandler(req, res) {
             amount: parsedAmount,
             asset: trancheTitle,
             status: 'completed',
-            destination_address: 'OTC Trading Vault (Segregated)',
-            tx_hash: 'INTERNAL-OTC-ALLOCATION',
-            notes: `${trancheTitle} Allocation (${roiRate}% / wk)`
+            destination_address: 'Institutional Investment Vault',
+            tx_hash: 'INV-CYCLE-' + Date.now(),
+            notes: `${trancheTitle} Allocation (${totalRoi}% Total ROI - ${duration} Days)`
           }, client);
 
           return { wallet: w, plan: p, tx: t };
@@ -649,7 +725,7 @@ async function requestHandler(req, res) {
         throw err;
       }
 
-      const template = emailService.EmailTemplates.otcCapitalAllocated(user.full_name, parsedAmount, trancheTitle, roiRate, duration);
+      const template = emailService.EmailTemplates.otcCapitalAllocated(user.full_name, parsedAmount, trancheTitle, totalRoi, duration);
       await dispatchEmailAsync({
         userId: user.id,
         to: user.email,
@@ -659,7 +735,7 @@ async function requestHandler(req, res) {
 
       return sendJSON(res, {
         success: true,
-        message: `Successfully allocated $${parsedAmount.toLocaleString()} to ${trancheTitle}.`,
+        message: `Successfully invested $${parsedAmount.toLocaleString()} in ${trancheTitle}. Expected maturity return: $${(parsedAmount + expectedProfit).toLocaleString()}.`,
         wallet: updatedWallet,
         plan,
         transaction: txObj
@@ -1234,30 +1310,78 @@ async function requestHandler(req, res) {
 
     if (method === 'POST' && pathname === '/api/admin/otc-plans/terminate') {
       const body = await parseBody(req);
-      const { plan_id } = body;
+      const { plan_id, return_profit } = body;
       const planId = parseInt(plan_id, 10);
 
       let updatedPlan;
       let updatedWallet;
+      let maturityTx;
 
       const result = await db.withTransaction(async (client) => {
-        const p = await db.updateOtcPlan(planId, { status: 'completed' }, client);
-        if (!p) {
-          throw new Error('OTC contract not found');
+        // Fetch plan first
+        let currentPlan;
+        if (db.isPostgres()) {
+          const r = await client.query('SELECT * FROM otc_plans WHERE id = $1 FOR UPDATE', [planId]);
+          currentPlan = r.rows[0];
+        } else {
+          currentPlan = db.store.otc_plans.find(p => p.id === planId);
         }
 
-        const w = await db.adjustWalletBalance(p.user_id, {
-          exchangeDelta: parseFloat(p.amount) || 0,
-          otcDelta: -(parseFloat(p.amount) || 0)
+        if (!currentPlan) {
+          throw new Error('Investment plan not found');
+        }
+        if (currentPlan.status === 'completed') {
+          throw new Error('Investment plan has already reached maturity or been settled.');
+        }
+
+        const principal = parseFloat(currentPlan.amount || 0);
+        const roiPercent = parseFloat(currentPlan.total_roi_percent || currentPlan.weekly_roi_percent || 0);
+        // Profit calculation: simple interest = principal * (roi / 100)
+        const profit = return_profit !== false ? parseFloat((principal * (roiPercent / 100.0)).toFixed(2)) : 0;
+        const totalPayout = principal + profit;
+        const maturityRef = 'MAT-' + Math.floor(100000 + Math.random() * 900000);
+
+        const p = await db.updateOtcPlan(planId, {
+          status: 'completed',
+          profit_accrued: profit,
+          maturity_payout_ref: maturityRef,
+          matured_at: new Date().toISOString()
         }, client);
 
-        return { plan: p, wallet: w };
+        // Atomic wallet credit: returns original principal AND full calculated profit into spendable exchange_balance
+        const w = await db.adjustWalletBalance(p.user_id, {
+          exchangeDelta: totalPayout,
+          otcDelta: -principal,
+          profitDelta: profit
+        }, client);
+
+        const t = await db.createTransaction({
+          tx_ref: maturityRef,
+          user_id: p.user_id,
+          user_name: currentPlan.user_name || null,
+          type: 'otc_profit',
+          amount: totalPayout,
+          asset: currentPlan.tranche_name || 'Investment Plan',
+          status: 'completed',
+          destination_address: 'Exchange Wallet',
+          tx_hash: 'MATURITY-SETTLEMENT-' + Date.now(),
+          notes: `Maturity Payout for ${currentPlan.tranche_name || 'Plan'} (Principal: $${principal.toLocaleString()} + Simple Interest Profit: $${profit.toLocaleString()})`
+        }, client);
+
+        return { plan: p, wallet: w, tx: t };
       });
 
       updatedPlan = result.plan;
       updatedWallet = result.wallet;
+      maturityTx = result.tx;
 
-      return sendJSON(res, { success: true, message: 'Contract settled and principal returned to Exchange Wallet.', plan: updatedPlan, wallet: updatedWallet });
+      return sendJSON(res, {
+        success: true,
+        message: 'Contract settled. Original principal and calculated maturity profit successfully credited to Exchange Wallet.',
+        plan: updatedPlan,
+        wallet: updatedWallet,
+        transaction: maturityTx
+      });
     }
 
     if (method === 'POST' && pathname === '/api/admin/otc-plans/delete') {
@@ -1266,6 +1390,177 @@ async function requestHandler(req, res) {
       const planId = parseInt(plan_id, 10);
       await db.deleteOtcPlan(planId);
       return sendJSON(res, { success: true, message: 'OTC plan deleted.' });
+    }
+
+    // ==========================================
+    // 23b. Admin CRUD: Investment Plan Catalogue
+    // ==========================================
+    if (method === 'GET' && pathname === '/api/admin/plans/list') {
+      const plans = await db.getAllInvestmentPlans(true);
+      return sendJSON(res, { success: true, plans });
+    }
+
+    if (method === 'POST' && pathname === '/api/admin/plans/create') {
+      const body = await parseBody(req);
+      const { name, description, category, min_amount, max_amount, roi_percentage, duration_days, status, display_icon } = body;
+
+      if (!name || !roi_percentage || !duration_days) {
+        return sendJSON(res, { success: false, message: 'Plan name, total ROI percentage, and duration days are required.' }, 400);
+      }
+
+      const plan = await db.createInvestmentPlan({
+        name,
+        description: description || '',
+        category: category === 'Long-Term' ? 'Long-Term' : 'Short-Term',
+        min_amount: parseFloat(min_amount) || 100,
+        max_amount: parseFloat(max_amount) || 100000,
+        roi_percentage: parseFloat(roi_percentage),
+        duration_days: parseInt(duration_days, 10),
+        status: status === 'inactive' ? 'inactive' : 'active',
+        display_icon: display_icon || (category === 'Long-Term' ? 'shield' : 'zap')
+      });
+
+      return sendJSON(res, { success: true, message: `Investment plan "${plan.name}" created successfully.`, plan });
+    }
+
+    if (method === 'POST' && pathname === '/api/admin/plans/update') {
+      const body = await parseBody(req);
+      const { plan_id, name, description, category, min_amount, max_amount, roi_percentage, duration_days, status, display_icon } = body;
+      const planId = parseInt(plan_id, 10);
+
+      const updates = {};
+      if (name) updates.name = name;
+      if (description !== undefined) updates.description = description;
+      if (category) updates.category = category === 'Long-Term' ? 'Long-Term' : 'Short-Term';
+      if (min_amount !== undefined) updates.min_amount = parseFloat(min_amount);
+      if (max_amount !== undefined) updates.max_amount = parseFloat(max_amount);
+      if (roi_percentage !== undefined) updates.roi_percentage = parseFloat(roi_percentage);
+      if (duration_days !== undefined) updates.duration_days = parseInt(duration_days, 10);
+      if (status) updates.status = status;
+      if (display_icon) updates.display_icon = display_icon;
+
+      const updated = await db.updateInvestmentPlan(planId, updates);
+      if (!updated) return sendJSON(res, { success: false, message: 'Investment plan not found.' }, 404);
+
+      return sendJSON(res, { success: true, message: `Investment plan "${updated.name}" updated. Existing customer contracts remain protected.`, plan: updated });
+    }
+
+    if (method === 'POST' && pathname === '/api/admin/plans/delete') {
+      const body = await parseBody(req);
+      const { plan_id } = body;
+      const planId = parseInt(plan_id, 10);
+
+      const result = await db.deleteInvestmentPlan(planId);
+      if (result.archived) {
+        return sendJSON(res, {
+          success: true,
+          archived: true,
+          message: 'Plan has associated customer investments and has been safely archived to preserve agreed investor terms.'
+        });
+      }
+      return sendJSON(res, { success: true, message: 'Investment plan deleted.' });
+    }
+
+    // ==========================================
+    // 23c. Automated Cron: Process Investment Progression & Maturity Settlement
+    // ==========================================
+    if ((method === 'GET' || method === 'POST') && pathname === '/api/cron/process-investments') {
+      const authHeader = req.headers['authorization'];
+      const cronSecret = process.env.CRON_SECRET;
+
+      // Allow if request is from Vercel Cron or matches CRON_SECRET or is authenticated admin
+      const isVercelCron = req.headers['x-vercel-cron'] === '1';
+      const isSecretMatch = cronSecret && authHeader === `Bearer ${cronSecret}`;
+      const isAdmin = validateAdminToken(req);
+
+      if (!isVercelCron && !isSecretMatch && !isAdmin && process.env.NODE_ENV === 'production') {
+        return sendJSON(res, { success: false, message: 'Unauthorized cron invocation.' }, 401);
+      }
+
+      const activePlans = await db.getAllOtcPlans();
+      const maturedSettlements = [];
+      const now = Date.now();
+
+      for (const plan of activePlans) {
+        if (plan.status !== 'active') continue;
+
+        const start = plan.start_date ? new Date(plan.start_date).getTime() : now;
+        const totalDurationDays = plan.duration_days || 30;
+        const totalDurationMs = totalDurationDays * 24 * 60 * 60 * 1000;
+        const elapsedMs = Math.max(0, now - start);
+        const daysElapsed = Math.min(totalDurationDays, Math.max(1, Math.floor(elapsedMs / (24 * 60 * 60 * 1000))));
+
+        // Check if plan has reached full maturity
+        if (elapsedMs >= totalDurationMs) {
+          try {
+            await db.withTransaction(async (client) => {
+              // Lock the plan row to prevent duplicate payouts across concurrent cron runs
+              let lockedPlan;
+              if (db.isPostgres()) {
+                const r = await client.query('SELECT * FROM otc_plans WHERE id = $1 FOR UPDATE', [plan.id]);
+                lockedPlan = r.rows[0];
+              } else {
+                lockedPlan = db.store.otc_plans.find(p => p.id === plan.id);
+              }
+
+              if (!lockedPlan || lockedPlan.status !== 'active') return;
+
+              const principal = parseFloat(lockedPlan.amount || 0);
+              const roiPercent = parseFloat(lockedPlan.total_roi_percent || lockedPlan.weekly_roi_percent || 0);
+              const profit = parseFloat((principal * (roiPercent / 100.0)).toFixed(2));
+              const totalPayout = principal + profit;
+              const maturityRef = 'MAT-' + Math.floor(100000 + Math.random() * 900000);
+
+              await db.updateOtcPlan(plan.id, {
+                status: 'completed',
+                days_elapsed: totalDurationDays,
+                profit_accrued: profit,
+                maturity_payout_ref: maturityRef,
+                matured_at: new Date().toISOString()
+              }, client);
+
+              // Atomically credit full principal and profit to exchange wallet
+              await db.adjustWalletBalance(lockedPlan.user_id, {
+                exchangeDelta: totalPayout,
+                otcDelta: -principal,
+                profitDelta: profit
+              }, client);
+
+              // Record immutable ledger entry
+              await db.createTransaction({
+                tx_ref: maturityRef,
+                user_id: lockedPlan.user_id,
+                type: 'otc_profit',
+                amount: totalPayout,
+                asset: lockedPlan.tranche_name || 'Investment Plan',
+                status: 'completed',
+                destination_address: 'Exchange Wallet',
+                tx_hash: 'MATURITY-SETTLEMENT-' + Date.now(),
+                notes: `Automated Maturity Payout: Principal ($${principal.toLocaleString()}) + Profit ($${profit.toLocaleString()})`
+              }, client);
+
+              maturedSettlements.push({
+                planId: plan.id,
+                userId: lockedPlan.user_id,
+                payout: totalPayout
+              });
+            });
+          } catch (err) {
+            console.error(`Error processing maturity for plan #${plan.id}:`, err.message);
+          }
+        } else {
+          // Increment days_elapsed progress
+          if (plan.days_elapsed !== daysElapsed) {
+            await db.updateOtcPlan(plan.id, { days_elapsed: daysElapsed });
+          }
+        }
+      }
+
+      return sendJSON(res, {
+        success: true,
+        message: `Processed ${activePlans.length} active contract(s). Settled ${maturedSettlements.length} matured plan(s).`,
+        maturedSettlements
+      });
     }
 
     // 24. Admin CRUD: Manage Company Wallets

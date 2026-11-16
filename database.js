@@ -306,6 +306,19 @@ function formatWallet(row) {
   };
 }
 
+// Helper: Format Investment Plan Catalog
+function formatInvestmentPlan(row) {
+  if (!row) return null;
+  return {
+    ...row,
+    min_amount: parseFloat(row.min_amount || 0),
+    max_amount: parseFloat(row.max_amount || 0),
+    roi_percentage: parseFloat(row.roi_percentage || 0),
+    duration_days: parseInt(row.duration_days || 0, 10),
+    active_investments_count: row.active_investments_count !== undefined ? parseInt(row.active_investments_count, 10) : undefined
+  };
+}
+
 // Helper: Format OTC plan numeric fields
 function formatPlan(row) {
   if (!row) return null;
@@ -313,6 +326,8 @@ function formatPlan(row) {
     ...row,
     amount: parseFloat(row.amount || 0),
     weekly_roi_percent: parseFloat(row.weekly_roi_percent || 7.5),
+    total_roi_percent: row.total_roi_percent !== null && row.total_roi_percent !== undefined ? parseFloat(row.total_roi_percent) : parseFloat(row.weekly_roi_percent || 7.5),
+    total_expected_profit: row.total_expected_profit !== null && row.total_expected_profit !== undefined ? parseFloat(row.total_expected_profit) : parseFloat(row.profit_accrued || 0),
     duration_days: parseInt(row.duration_days || 30, 10),
     days_elapsed: parseInt(row.days_elapsed || 0, 10),
     profit_accrued: parseFloat(row.profit_accrued || 0)
@@ -782,6 +797,165 @@ async function deleteOtcPlan(id) {
 }
 
 // ==========================================
+// INVESTMENT PLAN CATALOG OPERATIONS
+// ==========================================
+async function getAllInvestmentPlans(includeInactive = false) {
+  if (usePostgres) {
+    let sql = `
+      SELECT p.*, 
+        COUNT(o.id) FILTER (WHERE o.status = 'active') AS active_investments_count
+      FROM investment_plans p
+      LEFT JOIN otc_plans o ON o.plan_id = p.id
+    `;
+    if (!includeInactive) {
+      sql += ` WHERE p.status = 'active' `;
+    } else {
+      sql += ` WHERE p.status != 'archived' `;
+    }
+    sql += ` GROUP BY p.id ORDER BY p.id ASC`;
+    const res = await pool.query(sql);
+    return res.rows.map(formatInvestmentPlan);
+  }
+
+  // Fallback in-memory
+  if (!store.investment_plans) {
+    store.investment_plans = [];
+  }
+  return store.investment_plans
+    .filter(p => includeInactive ? p.status !== 'archived' : p.status === 'active')
+    .map(formatInvestmentPlan);
+}
+
+async function getInvestmentPlanById(id) {
+  const numId = parseInt(id, 10);
+  if (usePostgres) {
+    const res = await pool.query(`
+      SELECT p.*,
+        COUNT(o.id) FILTER (WHERE o.status = 'active') AS active_investments_count
+      FROM investment_plans p
+      LEFT JOIN otc_plans o ON o.plan_id = p.id
+      WHERE p.id = $1
+      GROUP BY p.id
+      LIMIT 1
+    `, [numId]);
+    return formatInvestmentPlan(res.rows[0]) || null;
+  }
+  if (!store.investment_plans) store.investment_plans = [];
+  const plan = store.investment_plans.find(p => p.id === numId);
+  return formatInvestmentPlan(plan) || null;
+}
+
+async function createInvestmentPlan(data, client = null) {
+  const name = (data.name || '').trim();
+  const description = data.description || '';
+  const category = data.category === 'Long-Term' ? 'Long-Term' : 'Short-Term';
+  const minAmount = parseFloat(data.min_amount || 100);
+  const maxAmount = parseFloat(data.max_amount || 100000);
+  const roiPercentage = parseFloat(data.roi_percentage || 10);
+  const durationDays = parseInt(data.duration_days || 30, 10);
+  const status = data.status === 'inactive' ? 'inactive' : 'active';
+  const displayIcon = data.display_icon || (category === 'Short-Term' ? 'zap' : 'shield');
+  const dbExecutor = client || pool;
+
+  if (usePostgres) {
+    const res = await dbExecutor.query(`
+      INSERT INTO investment_plans (
+        name, description, category, min_amount, max_amount,
+        roi_percentage, duration_days, status, display_icon
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+      RETURNING *;
+    `, [name, description, category, minAmount, maxAmount, roiPercentage, durationDays, status, displayIcon]);
+    return formatInvestmentPlan(res.rows[0]);
+  }
+
+  if (!store.investment_plans) store.investment_plans = [];
+  const newPlan = {
+    id: store.investment_plans.length ? Math.max(...store.investment_plans.map(p => p.id || 0)) + 1 : 1,
+    name,
+    description,
+    category,
+    min_amount: minAmount,
+    max_amount: maxAmount,
+    roi_percentage: roiPercentage,
+    duration_days: durationDays,
+    status,
+    display_icon: displayIcon,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  };
+  store.investment_plans.push(newPlan);
+  saveDatabaseSync();
+  return newPlan;
+}
+
+async function updateInvestmentPlan(id, updates, client = null) {
+  const numId = parseInt(id, 10);
+  const dbExecutor = client || pool;
+  if (usePostgres) {
+    const allowed = ['name', 'description', 'category', 'min_amount', 'max_amount', 'roi_percentage', 'duration_days', 'status', 'display_icon'];
+    const keys = Object.keys(updates).filter(k => allowed.includes(k));
+    if (keys.length === 0) return getInvestmentPlanById(numId);
+
+    const setClauses = [];
+    const values = [];
+    let idx = 1;
+
+    for (const key of keys) {
+      setClauses.push(`${key} = $${idx}`);
+      values.push(updates[key]);
+      idx++;
+    }
+    setClauses.push(`updated_at = NOW()`);
+    values.push(numId);
+
+    const query = `
+      UPDATE investment_plans
+      SET ${setClauses.join(', ')}
+      WHERE id = $${idx}
+      RETURNING *;
+    `;
+    const res = await dbExecutor.query(query, values);
+    return formatInvestmentPlan(res.rows[0]) || null;
+  }
+
+  if (!store.investment_plans) store.investment_plans = [];
+  const plan = store.investment_plans.find(p => p.id === numId);
+  if (plan) {
+    Object.assign(plan, updates, { updated_at: new Date().toISOString() });
+    saveDatabaseSync();
+    return plan;
+  }
+  return null;
+}
+
+async function deleteInvestmentPlan(id) {
+  const numId = parseInt(id, 10);
+  if (usePostgres) {
+    // Check if any customer investments are currently attached to this plan
+    const checkRes = await pool.query('SELECT COUNT(*) FROM otc_plans WHERE plan_id = $1', [numId]);
+    const attachedCount = parseInt(checkRes.rows[0].count, 10);
+
+    if (attachedCount > 0) {
+      // Non-destructive: archive/deactivate plan to protect existing customer contract terms
+      await pool.query("UPDATE investment_plans SET status = 'archived', updated_at = NOW() WHERE id = $1", [numId]);
+      return { archived: true, message: 'Plan has active investments and was safely archived rather than deleted.' };
+    }
+
+    const res = await pool.query('DELETE FROM investment_plans WHERE id = $1', [numId]);
+    return { deleted: res.rowCount > 0 };
+  }
+
+  if (!store.investment_plans) store.investment_plans = [];
+  const idx = store.investment_plans.findIndex(p => p.id === numId);
+  if (idx !== -1) {
+    store.investment_plans.splice(idx, 1);
+    saveDatabaseSync();
+    return { deleted: true };
+  }
+  return { deleted: false };
+}
+
+// ==========================================
 // TRANSACTION OPERATIONS
 // ==========================================
 async function createTransaction(data, client = null) {
@@ -1074,6 +1248,13 @@ module.exports = {
   logEmail,
   getEmailLogs,
   clearEmailLogs,
+
+  // Investment Plan Catalog operations
+  getAllInvestmentPlans,
+  getInvestmentPlanById,
+  createInvestmentPlan,
+  updateInvestmentPlan,
+  deleteInvestmentPlan,
 
   // Pool access & store
   pool,

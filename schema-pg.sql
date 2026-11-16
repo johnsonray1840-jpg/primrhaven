@@ -34,20 +34,42 @@ CREATE TABLE IF NOT EXISTS wallets (
   CONSTRAINT chk_wallets_non_negative CHECK (exchange_balance >= 0 AND otc_investment_balance >= 0 AND accrued_profit >= 0)
 );
 
--- 3. OTC Investment Plans Table
+-- 3. Reusable Public Investment Plans Catalogue Table
+CREATE TABLE IF NOT EXISTS investment_plans (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(150) NOT NULL,
+  description TEXT DEFAULT NULL,
+  category VARCHAR(30) NOT NULL CHECK (category IN ('Short-Term', 'Long-Term')),
+  min_amount NUMERIC(18, 2) NOT NULL DEFAULT 100.00,
+  max_amount NUMERIC(18, 2) NOT NULL DEFAULT 100000.00,
+  roi_percentage NUMERIC(8, 2) NOT NULL,
+  duration_days INT NOT NULL,
+  status VARCHAR(20) NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'inactive', 'archived')),
+  display_icon VARCHAR(100) DEFAULT NULL,
+  created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 3b. Customer Active & Past Investments (OTC Plans Table)
 CREATE TABLE IF NOT EXISTS otc_plans (
   id SERIAL PRIMARY KEY,
   user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  plan_id INT REFERENCES investment_plans(id) ON DELETE SET NULL,
   tranche_name VARCHAR(150) DEFAULT 'Executive Multi-Asset Tranche',
   amount NUMERIC(18, 2) NOT NULL,
   weekly_roi_percent NUMERIC(6, 2) DEFAULT 7.50,
+  total_roi_percent NUMERIC(8, 2) DEFAULT NULL,
+  total_expected_profit NUMERIC(18, 2) DEFAULT NULL,
   duration_days INT DEFAULT 30,
   days_elapsed INT DEFAULT 0,
   profit_accrued NUMERIC(18, 2) DEFAULT 0.00,
   status VARCHAR(20) DEFAULT 'active',
   created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
   start_date TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-  next_payout_date TIMESTAMPTZ DEFAULT NULL
+  end_date TIMESTAMPTZ DEFAULT NULL,
+  next_payout_date TIMESTAMPTZ DEFAULT NULL,
+  maturity_payout_ref VARCHAR(50) UNIQUE DEFAULT NULL,
+  matured_at TIMESTAMPTZ DEFAULT NULL
 );
 
 -- 4. Transactions Ledger Table

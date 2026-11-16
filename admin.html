@@ -154,6 +154,11 @@
         <span>Withdrawal Queue</span>
       </button>
 
+      <button onclick="switchAdminTab('investment-catalog')" id="tab-btn-investment-catalog" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 shadow-sm">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <span>Plan Catalogue</span>
+      </button>
+
       <button onclick="switchAdminTab('otc-plans')" id="tab-btn-otc-plans" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 shadow-sm">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
         <span>OTC Contracts Desk</span>
@@ -345,6 +350,53 @@
               </tr>
             </thead>
             <tbody id="admin-withdrawals-table-body" class="divide-y divide-slate-100 dark:divide-gray-800/60 font-medium">
+              <!-- Rendered Dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================== -->
+    <!-- TAB 3b: INVESTMENT PLAN CATALOGUE (FULL CRUD) -->
+    <!-- ========================================================== -->
+    <section id="tab-content-investment-catalog" class="hidden space-y-4">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+        <div>
+          <h3 class="font-bold text-lg text-slate-900 dark:text-white">Public Investment Plan Catalogue</h3>
+          <p class="text-xs text-slate-500 dark:text-gray-400">Create, edit, and toggle public Short-Term and Long-Term investment tiers displayed to investors.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <!-- Category Filter -->
+          <select id="catalog-category-filter" onchange="filterCatalogPlans()" class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 dark:text-gray-300">
+            <option value="ALL">All Categories</option>
+            <option value="Short-Term">Short-Term Only</option>
+            <option value="Long-Term">Long-Term Only</option>
+          </select>
+          <button onclick="openCreateCatalogPlanModal()" class="px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs rounded-xl shadow-lg transition-all flex items-center gap-1.5">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span>+ Create Investment Plan</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800/80 rounded-3xl overflow-hidden shadow-md dark:shadow-2xl">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead>
+              <tr class="bg-slate-50 dark:bg-[#070a11] text-slate-500 dark:text-gray-400 uppercase tracking-wider border-b border-slate-200 dark:border-gray-800">
+                <th class="py-4 px-6">ID</th>
+                <th class="py-4 px-6">Plan Name</th>
+                <th class="py-4 px-6">Category</th>
+                <th class="py-4 px-6">Min / Max Range</th>
+                <th class="py-4 px-6">Total ROI</th>
+                <th class="py-4 px-6">Duration</th>
+                <th class="py-4 px-6">Active Contracts</th>
+                <th class="py-4 px-6">Status</th>
+                <th class="py-4 px-6 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-catalog-plans-table-body" class="divide-y divide-slate-100 dark:divide-gray-800/60 font-medium">
               <!-- Rendered Dynamically -->
             </tbody>
           </table>
@@ -723,6 +775,77 @@
   </div>
 
   <!-- ========================================================== -->
+  <!-- MODAL 4b: CREATE / EDIT PUBLIC INVESTMENT PLAN -->
+  <!-- ========================================================== -->
+  <div id="catalog-plan-modal" class="hidden fixed inset-0 bg-slate-900/60 dark:bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-5 shadow-2xl">
+      <div class="flex justify-between items-center pb-3 border-b border-slate-200 dark:border-gray-800">
+        <h3 class="font-bold text-slate-900 dark:text-white text-base" id="catalog-plan-modal-title">Create Investment Plan</h3>
+        <button onclick="closeModal('catalog-plan-modal')" class="text-slate-400 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white">✕</button>
+      </div>
+
+      <form onsubmit="handleSaveCatalogPlanSubmit(event)" class="space-y-4 text-xs">
+        <input type="hidden" id="catalog-plan-id" value="">
+
+        <div>
+          <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Plan Name</label>
+          <input type="text" id="catalog-plan-name" required placeholder="e.g. Starter Alpha Tranche" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Plan Description</label>
+          <textarea id="catalog-plan-desc" rows="2" placeholder="Brief investment summary for prospective investors..." class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-blue-500"></textarea>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Category</label>
+            <select id="catalog-plan-category" required class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-bold">
+              <option value="Short-Term">Short-Term</option>
+              <option value="Long-Term">Long-Term</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Status</label>
+            <select id="catalog-plan-status" required class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-bold">
+              <option value="active">Active (Visible Publicly)</option>
+              <option value="inactive">Inactive (Hidden)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Min Amount ($)</label>
+            <input type="number" id="catalog-plan-min" required step="1" min="1" value="500" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white font-bold focus:outline-none focus:border-blue-500">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Max Amount ($)</label>
+            <input type="number" id="catalog-plan-max" required step="1" min="1" value="4999" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white font-bold focus:outline-none focus:border-blue-500">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Total ROI Percentage (%)</label>
+            <input type="number" id="catalog-plan-roi" required step="0.1" min="0.1" value="15" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-emerald-600 dark:text-emerald-400 font-black focus:outline-none focus:border-blue-500">
+            <span class="text-[10px] text-slate-400">Total simple interest payout</span>
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Duration (Days)</label>
+            <input type="number" id="catalog-plan-duration" required min="1" value="14" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-blue-600 dark:text-blue-400 font-black focus:outline-none focus:border-blue-500">
+            <span class="text-[10px] text-slate-400">Total cycle duration</span>
+          </div>
+        </div>
+
+        <button type="submit" id="catalog-plan-submit-btn" class="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-black text-xs rounded-xl shadow-lg transition-all mt-2">
+          Save Investment Plan
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================== -->
   <!-- MODAL 5: ALLOCATE OTC CONTRACT -->
   <!-- ========================================================== -->
   <div id="create-otc-modal" class="hidden fixed inset-0 bg-slate-900/60 dark:bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -1076,6 +1199,7 @@
       renderMasterLedger();
       renderEmailLogs();
       populateUserDropdowns();
+      loadCatalogPlans();
     }
 
     function renderStats() {
@@ -1485,18 +1609,218 @@
       }
     }
 
+    let cachedCatalogPlans = [];
+
     function switchAdminTab(tab) {
-      ['users', 'deposits', 'withdrawals', 'otc-plans', 'wallets', 'ledger', 'emails'].forEach(t => {
+      ['users', 'deposits', 'withdrawals', 'investment-catalog', 'otc-plans', 'wallets', 'ledger', 'emails'].forEach(t => {
         const btn = document.getElementById(`tab-btn-${t}`);
         const sec = document.getElementById(`tab-content-${t}`);
+        if (!btn || !sec) return;
         if (t === tab) {
           btn.className = 'px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-primary text-white flex items-center gap-1.5 shadow-md shadow-primary/20';
           sec.classList.remove('hidden');
+          if (tab === 'investment-catalog') {
+            loadCatalogPlans();
+          }
         } else {
           btn.className = 'px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 shadow-sm';
           sec.classList.add('hidden');
         }
       });
+    }
+
+    async function loadCatalogPlans() {
+      try {
+        const res = await fetch('/api/admin/plans/list', {
+          headers: { 'Authorization': `Bearer ${localStorage.getItem('vertexcapitals_admin_token')}` }
+        });
+        const data = await res.json();
+        if (data.success && Array.isArray(data.plans)) {
+          cachedCatalogPlans = data.plans;
+          renderCatalogPlans(cachedCatalogPlans);
+        }
+      } catch (err) {
+        console.error('Failed to load plan catalogue:', err);
+      }
+    }
+
+    function filterCatalogPlans() {
+      const cat = document.getElementById('catalog-category-filter').value;
+      if (cat === 'ALL') {
+        renderCatalogPlans(cachedCatalogPlans);
+      } else {
+        renderCatalogPlans(cachedCatalogPlans.filter(p => p.category === cat));
+      }
+    }
+
+    function renderCatalogPlans(plans) {
+      const tbody = document.getElementById('admin-catalog-plans-table-body');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      if (!plans || plans.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="9" class="py-8 text-center text-slate-400 dark:text-gray-500">No investment plans in catalogue. Click "+ Create Investment Plan" to publish one.</td></tr>';
+        return;
+      }
+
+      plans.forEach(p => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-50/80 dark:hover:bg-gray-800/30 transition-colors';
+
+        const isShort = p.category === 'Short-Term';
+        const isActive = p.status === 'active';
+
+        tr.innerHTML = `
+          <td class="py-4 px-6 text-slate-700 dark:text-gray-300 font-bold">#PL-${p.id}</td>
+          <td class="py-4 px-6">
+            <div class="font-bold text-slate-900 dark:text-white text-sm">${p.name}</div>
+            <div class="text-[11px] text-slate-400 dark:text-gray-400 truncate max-w-xs">${p.description || 'No description'}</div>
+          </td>
+          <td class="py-4 px-6">
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider ${isShort ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30' : 'bg-blue-500/15 text-blue-600 dark:text-blue-400 border border-blue-500/30'}">
+              ${p.category}
+            </span>
+          </td>
+          <td class="py-4 px-6 font-semibold text-slate-900 dark:text-white">
+            $${p.min_amount.toLocaleString()} - $${p.max_amount.toLocaleString()}
+          </td>
+          <td class="py-4 px-6 font-black text-emerald-600 dark:text-emerald-400 text-sm">
+            +${p.roi_percentage}% Total
+          </td>
+          <td class="py-4 px-6 font-bold text-slate-700 dark:text-gray-300">
+            ${p.duration_days} Days
+          </td>
+          <td class="py-4 px-6 font-bold text-blue-600 dark:text-blue-400">
+            ${p.active_investments_count || 0} active
+          </td>
+          <td class="py-4 px-6">
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase ${isActive ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30' : 'bg-slate-200 dark:bg-gray-800 text-slate-500 dark:text-gray-400 border border-slate-300 dark:border-gray-700'}">
+              ${p.status}
+            </span>
+          </td>
+          <td class="py-4 px-6 text-center space-x-1 whitespace-nowrap">
+            <button onclick="openEditCatalogPlanModal(${p.id})" class="px-2.5 py-1 bg-blue-500/15 hover:bg-blue-500/25 text-blue-600 dark:text-blue-400 border border-blue-500/30 rounded-lg text-xs font-bold transition-all">Edit</button>
+            <button onclick="toggleCatalogPlanStatus(${p.id}, '${isActive ? 'inactive' : 'active'}')" class="px-2.5 py-1 ${isActive ? 'bg-amber-500/15 text-amber-600 hover:bg-amber-500/25 border-amber-500/30' : 'bg-emerald-500/15 text-emerald-600 hover:bg-emerald-500/25 border-emerald-500/30'} border rounded-lg text-xs font-bold transition-all">
+              ${isActive ? 'Deactivate' : 'Activate'}
+            </button>
+            <button onclick="deleteCatalogPlan(${p.id})" class="px-2 py-1 bg-rose-500/15 hover:bg-rose-500/25 text-rose-600 dark:text-rose-400 border border-rose-500/30 rounded-lg text-xs font-bold transition-all" title="Archive or Delete Plan">✕</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function openCreateCatalogPlanModal() {
+      document.getElementById('catalog-plan-modal-title').innerText = 'Create Investment Plan';
+      document.getElementById('catalog-plan-id').value = '';
+      document.getElementById('catalog-plan-name').value = '';
+      document.getElementById('catalog-plan-desc').value = '';
+      document.getElementById('catalog-plan-category').value = 'Short-Term';
+      document.getElementById('catalog-plan-status').value = 'active';
+      document.getElementById('catalog-plan-min').value = '500';
+      document.getElementById('catalog-plan-max').value = '4999';
+      document.getElementById('catalog-plan-roi').value = '15';
+      document.getElementById('catalog-plan-duration').value = '14';
+      document.getElementById('catalog-plan-modal').classList.remove('hidden');
+    }
+
+    function openEditCatalogPlanModal(id) {
+      const plan = cachedCatalogPlans.find(p => p.id === id);
+      if (!plan) return;
+
+      document.getElementById('catalog-plan-modal-title').innerText = `Edit Plan: ${plan.name}`;
+      document.getElementById('catalog-plan-id').value = plan.id;
+      document.getElementById('catalog-plan-name').value = plan.name;
+      document.getElementById('catalog-plan-desc').value = plan.description || '';
+      document.getElementById('catalog-plan-category').value = plan.category;
+      document.getElementById('catalog-plan-status').value = plan.status;
+      document.getElementById('catalog-plan-min').value = plan.min_amount;
+      document.getElementById('catalog-plan-max').value = plan.max_amount;
+      document.getElementById('catalog-plan-roi').value = plan.roi_percentage;
+      document.getElementById('catalog-plan-duration').value = plan.duration_days;
+      document.getElementById('catalog-plan-modal').classList.remove('hidden');
+    }
+
+    async function handleSaveCatalogPlanSubmit(e) {
+      e.preventDefault();
+      const planId = document.getElementById('catalog-plan-id').value;
+      const payload = {
+        name: document.getElementById('catalog-plan-name').value,
+        description: document.getElementById('catalog-plan-desc').value,
+        category: document.getElementById('catalog-plan-category').value,
+        status: document.getElementById('catalog-plan-status').value,
+        min_amount: parseFloat(document.getElementById('catalog-plan-min').value),
+        max_amount: parseFloat(document.getElementById('catalog-plan-max').value),
+        roi_percentage: parseFloat(document.getElementById('catalog-plan-roi').value),
+        duration_days: parseInt(document.getElementById('catalog-plan-duration').value, 10)
+      };
+
+      const url = planId ? '/api/admin/plans/update' : '/api/admin/plans/create';
+      if (planId) payload.plan_id = parseInt(planId, 10);
+
+      try {
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('vertexcapitals_admin_token')}`
+          },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success) {
+          VertexApp.showToast(data.message, 'success');
+          closeModal('catalog-plan-modal');
+          await loadCatalogPlans();
+        } else {
+          VertexApp.showToast(data.message || 'Error saving plan.', 'error');
+        }
+      } catch (err) {
+        VertexApp.showToast('Network error saving plan.', 'error');
+      }
+    }
+
+    async function toggleCatalogPlanStatus(id, newStatus) {
+      try {
+        const res = await fetch('/api/admin/plans/update', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('vertexcapitals_admin_token')}`
+          },
+          body: JSON.stringify({ plan_id: id, status: newStatus })
+        });
+        const data = await res.json();
+        if (data.success) {
+          VertexApp.showToast(`Plan marked as ${newStatus}.`, 'success');
+          await loadCatalogPlans();
+        }
+      } catch (err) {
+        VertexApp.showToast('Failed to update status.', 'error');
+      }
+    }
+
+    async function deleteCatalogPlan(id) {
+      if (!confirm('Are you sure you want to delete or archive this plan? (If investors have purchased this plan, it will be safely archived without affecting existing contracts)')) return;
+      try {
+        const res = await fetch('/api/admin/plans/delete', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('vertexcapitals_admin_token')}`
+          },
+          body: JSON.stringify({ plan_id: id })
+        });
+        const data = await res.json();
+        if (data.success) {
+          VertexApp.showToast(data.message, 'success');
+          await loadCatalogPlans();
+        } else {
+          VertexApp.showToast(data.message || 'Error deleting plan.', 'error');
+        }
+      } catch (err) {
+        VertexApp.showToast('Network error deleting plan.', 'error');
+      }
     }
 
     function filterUsersTable() {
