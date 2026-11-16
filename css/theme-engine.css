@@ -162,13 +162,18 @@ body, header, aside, .theme-card, .theme-bg, .vx-card, .vx-card-interactive, .vx
   transition: background-color 0.22s ease, border-color 0.22s ease, color 0.18s ease, box-shadow 0.22s ease, transform 0.2s ease;
 }
 
-/* Brand Logo Adaptation */
+/* Brand Logo Adaptation (Full-Color Light SVG by default; clean white/sky SVG in Dark Mode) */
 html:not(.dark) .brand-logo-adaptive {
-  filter: brightness(0.12) contrast(1.1);
+  filter: none;
 }
 
-html.dark .brand-logo-adaptive {
-  filter: brightness(2);
+html.dark img.brand-logo-adaptive {
+  content: url('../images/footerlogo.svg');
+  filter: none;
+}
+
+html.dark .brand-logo-adaptive:not(img) {
+  filter: brightness(1.15);
 }
 
 /* ==========================================================

@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
-  <title>VertexCapitals — Institutional Wealth Management &amp; OTC Portal</title>
+  <title>PrimeHavenCapital — Institutional Wealth Management &amp; OTC Portal</title>
   <meta name="description" content="Structured Short-Term and Long-Term investment plans backed by dual-wallet custody, immutable terms snapshots, simple-interest projections, and automated maturity settlement.">
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
   <script>
     (function() {
       try {
-        const theme = localStorage.getItem('vertexcapitals_theme');
-        if (theme === 'light') {
-          document.documentElement.classList.remove('dark');
-        } else {
+        const theme = localStorage.getItem('primehavencapital_theme');
+        if (theme === 'dark') {
           document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
         }
       } catch (e) {}
     })();
@@ -49,8 +49,8 @@
   <header class="vx-glass-header sticky top-0 z-50 w-full">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[76px] flex items-center justify-between gap-4">
       <div class="flex items-center gap-3 shrink-0">
-        <a href="index.html" class="flex items-center gap-2.5" aria-label="VertexCapitals Home">
-          <img src="images/navbarlogo.svg" alt="VertexCapitals Logo" class="h-7 sm:h-8 brand-logo-adaptive">
+        <a href="index.html" class="flex items-center gap-2.5" aria-label="PrimeHavenCapital Home">
+          <img src="images/navbarlogo.svg" alt="PrimeHavenCapital Logo" class="h-8 sm:h-9 brand-logo-adaptive">
         </a>
         <span class="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-primary/10 text-primary dark:text-blue-400 border border-primary/20 uppercase tracking-widest">
           Wealth &amp; OTC Desk
@@ -82,53 +82,55 @@
           <a href="register.html" class="vx-btn-primary px-5 py-2.5 rounded-xl text-xs whitespace-nowrap">Get Started</a>
         </div>
 
-        <!-- Mobile Menu Trigger (Preserves button.flex-col selector for nav-fix.js) -->
-        <button type="button" class="flex xl:hidden flex-col justify-center items-center w-10 h-10 rounded-xl bg-slate-100 dark:bg-[#101726] border border-slate-200 dark:border-gray-800" aria-label="Toggle mobile navigation" aria-controls="mobile-nav-drawer">
+        <!-- Mobile Menu Trigger -->
+        <button type="button" id="mobile-menu-btn" onclick="toggleMobileNavDrawer(event)" class="flex xl:hidden flex-col justify-center items-center w-10 h-10 rounded-xl bg-slate-100 dark:bg-[#101726] border border-slate-200 dark:border-gray-800" aria-label="Toggle mobile navigation" aria-expanded="false" aria-controls="mobile-nav-drawer">
           <span class="bg-slate-800 dark:bg-slate-200 block h-0.5 w-5 rounded-sm -translate-y-0.5"></span>
           <span class="bg-slate-800 dark:bg-slate-200 block h-0.5 w-5 rounded-sm my-0.5"></span>
           <span class="bg-slate-800 dark:bg-slate-200 block h-0.5 w-5 rounded-sm translate-y-0.5"></span>
         </button>
       </div>
     </div>
-
-    <!-- Pre-rendered Adaptive Mobile Navigation Drawer (controlled cleanly by nav-fix.js) -->
-    <div id="mobile-nav-drawer" style="display: none;" class="xl:hidden fixed inset-x-0 top-[76px] bottom-0 bg-white/95 dark:bg-[#0C121E]/95 backdrop-blur-lg border-t border-slate-200 dark:border-gray-800 z-[998] flex-col p-6 space-y-2 overflow-y-auto text-sm font-semibold">
-      <a href="index.html" aria-current="page" class="px-4 py-3 rounded-xl bg-primary/10 text-primary dark:text-blue-400 border border-primary/20">Home</a>
-      <a href="#homepage-plans-section" onclick="closeMobileNavDrawer()" class="px-4 py-3 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5">Investment Plans</a>
-      <a href="#how-it-works" onclick="closeMobileNavDrawer()" class="px-4 py-3 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5">How It Works</a>
-      <a href="#platform-features" onclick="closeMobileNavDrawer()" class="px-4 py-3 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5">Features</a>
-      <a href="#security-transparency" onclick="closeMobileNavDrawer()" class="px-4 py-3 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5">Security &amp; Transparency</a>
-      <a href="#faq" onclick="closeMobileNavDrawer()" class="px-4 py-3 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5">FAQ</a>
-      <a href="about.html" class="px-4 py-3 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5">About VertexCapitals</a>
-      <a href="apply.html" class="px-4 py-3 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5">Partner Program</a>
-      <div id="mobile-drawer-auth" class="pt-4 mt-4 border-t border-slate-200 dark:border-gray-800 grid grid-cols-2 gap-3">
-        <a href="login.html" class="vx-btn-secondary py-3 rounded-xl text-xs text-center">Sign In</a>
-        <a href="register.html" class="vx-btn-primary py-3 rounded-xl text-xs text-center">Get Started</a>
-      </div>
-    </div>
   </header>
+
+  <!-- Adaptive Mobile Navigation Drawer (Direct child of body so fixed inset spans full viewport below 76px header) -->
+  <div id="mobile-nav-drawer" style="display: none;" class="xl:hidden fixed inset-x-0 top-[76px] bottom-0 bg-white/95 dark:bg-[#0C121E]/95 backdrop-blur-lg border-t border-slate-200 dark:border-gray-800 z-[998] flex-col p-6 space-y-2 overflow-y-auto text-sm font-semibold">
+    <a href="index.html" aria-current="page" class="px-4 py-3 rounded-xl bg-primary/10 text-primary dark:text-blue-400 border border-primary/20">Home</a>
+    <a href="#homepage-plans-section" onclick="closeMobileNavDrawer()" class="px-4 py-3 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5">Investment Plans</a>
+    <a href="#how-it-works" onclick="closeMobileNavDrawer()" class="px-4 py-3 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5">How It Works</a>
+    <a href="#platform-features" onclick="closeMobileNavDrawer()" class="px-4 py-3 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5">Features</a>
+    <a href="#security-transparency" onclick="closeMobileNavDrawer()" class="px-4 py-3 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5">Security &amp; Transparency</a>
+    <a href="#faq" onclick="closeMobileNavDrawer()" class="px-4 py-3 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5">FAQ</a>
+    <a href="about.html" class="px-4 py-3 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5">About PrimeHavenCapital</a>
+    <a href="apply.html" class="px-4 py-3 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5">Partner Program</a>
+    <div id="mobile-drawer-auth" class="pt-4 mt-4 border-t border-slate-200 dark:border-gray-800 grid grid-cols-2 gap-3">
+      <a href="login.html" class="vx-btn-secondary py-3 rounded-xl text-xs text-center">Sign In</a>
+      <a href="register.html" class="vx-btn-primary py-3 rounded-xl text-xs text-center">Get Started</a>
+    </div>
+  </div>
 
   <main class="flex-1">
 
     <!-- ================================================================ -->
-    <!-- HERO SECTION                                                     -->
+    <!-- HERO SECTION (4K Blended Architectural Wealth Backdrop)          -->
     <!-- ================================================================ -->
-    <section class="relative pt-14 pb-18 sm:pt-20 sm:pb-24 border-b border-slate-200/80 dark:border-gray-800/80 overflow-hidden">
+    <section class="relative pt-14 pb-18 sm:pt-20 sm:pb-24 border-b border-slate-200/80 dark:border-gray-800/80 overflow-hidden bg-[#F8FAFC] dark:bg-[#070A11]">
+      <!-- 4K Blended Architectural Wealth Backdrop -->
+      <div class="pointer-events-none absolute inset-0 overflow-hidden select-none" aria-hidden="true">
+        <img src="images/primehaven-hero-4k.jpg" alt="" fetchpriority="high" decoding="async" width="1920" height="1072" class="w-full h-full object-cover object-right opacity-95 dark:opacity-35">
+        <div class="absolute inset-0 bg-gradient-to-r from-[#FFFFFF]/[0.94] via-[#F8FAFC]/[0.84] to-[#F8FAFC]/[0.52] dark:from-[#070A11]/[0.96] dark:via-[#070A11]/[0.88] dark:to-[#070A11]/[0.68]"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#F8FAFC] via-transparent to-[#FFFFFF]/70 dark:from-[#070A11] dark:via-transparent dark:to-[#070A11]/60"></div>
+      </div>
+
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
 
           <!-- Left Editorial Column -->
           <div class="lg:col-span-6 space-y-6 text-center lg:text-left">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white dark:bg-[#0C121E] border border-slate-200 dark:border-gray-800 shadow-sm">
-              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-              <span class="text-[11px] font-bold uppercase tracking-widest text-slate-600 dark:text-slate-300">Institutional Wealth &amp; OTC Platform</span>
-            </div>
-
             <h1 class="text-3xl sm:text-4xl lg:text-[46px] font-extrabold tracking-tight leading-[1.12] text-slate-900 dark:text-white">
               Structured Capital Allocation &amp; Transparent Simple-Interest Returns
             </h1>
 
-            <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl mx-auto lg:mx-0">
+            <p class="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed max-w-xl mx-auto lg:mx-0">
               Allocate liquid Exchange funds into Short-Term or Long-Term investment plans with locked contractual terms, real-time accrual visibility, and automated maturity settlement credited back to your wallet.
             </p>
 
@@ -140,29 +142,29 @@
               <a href="login.html" class="vx-btn-secondary w-full sm:w-auto px-6 py-3.5 rounded-xl text-sm">
                 <span>Sign In</span>
               </a>
-              <a href="#homepage-plans-section" class="text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-blue-400 px-3 py-2 transition-colors">
+              <a href="#homepage-plans-section" class="text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-blue-400 px-3 py-2 transition-colors">
                 Browse Active Plans &rarr;
               </a>
             </div>
 
             <!-- Factual Platform Architecture Strip (Zero fabricated volume/investor stats) -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-slate-200/80 dark:border-gray-800/80 text-left">
-              <div class="p-3.5 rounded-2xl bg-white dark:bg-[#0C121E] border border-slate-200/90 dark:border-gray-800/80">
+              <div class="p-3.5 rounded-2xl bg-white/92 dark:bg-[#0C121E]/90 backdrop-blur-md border border-slate-200/90 dark:border-gray-800/80 shadow-sm">
                 <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Interest Model</p>
                 <p class="text-xs font-extrabold text-slate-900 dark:text-white mt-1">Simple Interest</p>
                 <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">P &times; (ROI% / 100)</p>
               </div>
-              <div class="p-3.5 rounded-2xl bg-white dark:bg-[#0C121E] border border-slate-200/90 dark:border-gray-800/80">
+              <div class="p-3.5 rounded-2xl bg-white/92 dark:bg-[#0C121E]/90 backdrop-blur-md border border-slate-200/90 dark:border-gray-800/80 shadow-sm">
                 <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Plan Categories</p>
                 <p class="text-xs font-extrabold text-slate-900 dark:text-white mt-1">Short &amp; Long Term</p>
                 <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5" id="hero-cat-summary">Live catalogue sync</p>
               </div>
-              <div class="p-3.5 rounded-2xl bg-white dark:bg-[#0C121E] border border-slate-200/90 dark:border-gray-800/80">
+              <div class="p-3.5 rounded-2xl bg-white/92 dark:bg-[#0C121E]/90 backdrop-blur-md border border-slate-200/90 dark:border-gray-800/80 shadow-sm">
                 <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Account Structure</p>
                 <p class="text-xs font-extrabold text-slate-900 dark:text-white mt-1">Dual-Wallet</p>
                 <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Exchange + OTC Vault</p>
               </div>
-              <div class="p-3.5 rounded-2xl bg-white dark:bg-[#0C121E] border border-slate-200/90 dark:border-gray-800/80">
+              <div class="p-3.5 rounded-2xl bg-white/92 dark:bg-[#0C121E]/90 backdrop-blur-md border border-slate-200/90 dark:border-gray-800/80 shadow-sm">
                 <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Maturity Payout</p>
                 <p class="text-xs font-extrabold text-emerald-600 dark:text-emerald-400 mt-1">Atomic Credit</p>
                 <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Principal + Profit</p>
@@ -172,7 +174,7 @@
 
           <!-- Right Interactive Return Simulator & Live Catalogue Card -->
           <div class="lg:col-span-6">
-            <div class="vx-card p-6 sm:p-7 space-y-5">
+            <div class="vx-card p-6 sm:p-7 space-y-5 bg-white/94 dark:bg-[#0C121E]/92 backdrop-blur-md">
               <div class="flex items-center justify-between gap-3 border-b border-slate-200/80 dark:border-gray-800/80 pb-4">
                 <div class="flex items-center gap-3">
                   <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary dark:text-blue-400 border border-primary/20 flex items-center justify-center shrink-0">
@@ -273,7 +275,6 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <div class="max-w-2xl space-y-2.5">
-            <span class="vx-badge vx-badge-primary">Live PostgreSQL Catalogue</span>
             <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Investment Plans</h2>
             <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
               Every plan listed below is synchronized directly from our platform database. Compare Short-Term and Long-Term investment cycles with full contractual terms locked upon allocation.
@@ -304,7 +305,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <div class="max-w-2xl space-y-2.5">
           <span class="vx-badge vx-badge-primary">Execution Lifecycle</span>
-          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">How VertexCapitals Works</h2>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">How PrimeHavenCapital Works</h2>
           <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
             A disciplined four-step capital lifecycle connecting liquid wallet deposits to structured OTC maturity settlement.
           </p>
@@ -554,7 +555,7 @@
         <div class="space-y-3.5">
           <details class="vx-faq-item">
             <summary class="vx-faq-summary text-sm sm:text-base">
-              How are investment returns calculated on VertexCapitals?
+              How are investment returns calculated on PrimeHavenCapital?
             </summary>
             <div class="px-6 pb-5 pt-1 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-gray-800/60">
               All investment plans use deterministic simple interest over the plan's full duration rather than compounding. Total profit is calculated as <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-gray-800 font-semibold">principal &times; (roi_percentage / 100)</code>. Both the ROI rate and projected total payout are shown transparently before you confirm an investment.
@@ -631,12 +632,12 @@
       <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
         <div class="md:col-span-2 space-y-4">
           <a href="index.html" class="inline-block">
-            <img alt="VertexCapitals logo" loading="lazy" width="180" height="40" src="images/footerlogo.svg" class="h-8 w-auto">
+            <img alt="PrimeHavenCapital logo" loading="lazy" width="220" height="44" src="images/footerlogo.svg" class="h-9 w-auto">
           </a>
           <p class="text-xs text-slate-400 max-w-md leading-relaxed">
-            VertexCapitals provides multi-currency digital custody and structured Over-The-Counter investment plans built on transactional ledger accounting and transparent simple-interest terms.
+            PrimeHavenCapital provides multi-currency digital custody and structured Over-The-Counter investment plans built on transactional ledger accounting and transparent simple-interest terms.
           </p>
-          <p class="text-xs font-semibold text-white">Client Desk: <a href="mailto:support@vertexcapitals.ltd" class="text-blue-400 hover:underline">support@vertexcapitals.ltd</a></p>
+          <p class="text-xs font-semibold text-white">Client Desk: <a href="mailto:support@primehavencapital.ltd" class="text-blue-400 hover:underline">support@primehavencapital.ltd</a></p>
         </div>
 
         <div class="space-y-3 text-xs">
@@ -666,7 +667,7 @@
 
       <div class="pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-[11px] text-slate-500">
         <p>All active plan terms, minimums, maximums, and ROI rates are loaded live from the platform catalogue and locked on each contract at subscription.</p>
-        <p class="shrink-0 text-slate-400">Copyright &copy; 2026 VertexCapitals. All rights reserved.</p>
+        <p class="shrink-0 text-slate-400">Copyright &copy; 2026 PrimeHavenCapital. All rights reserved.</p>
       </div>
     </div>
   </footer>
@@ -686,9 +687,37 @@
         .replace(/'/g, '&#39;');
     }
 
-    function closeMobileNavDrawer() {
+    function toggleMobileNavDrawer(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      const btn = document.getElementById('mobile-menu-btn');
       const drawer = document.getElementById('mobile-nav-drawer');
-      if (drawer) drawer.style.display = 'none';
+      if (!drawer) return;
+      if (drawer.parentElement && drawer.parentElement !== document.body) {
+        document.body.appendChild(drawer);
+      }
+      const isOpen = drawer.style.display !== 'none' && !drawer.classList.contains('hidden');
+      if (isOpen) {
+        closeMobileNavDrawer();
+      } else {
+        drawer.style.display = 'flex';
+        drawer.classList.remove('hidden');
+        drawer.classList.add('flex');
+        if (btn) btn.setAttribute('aria-expanded', 'true');
+      }
+    }
+
+    function closeMobileNavDrawer() {
+      const btn = document.getElementById('mobile-menu-btn');
+      const drawer = document.getElementById('mobile-nav-drawer');
+      if (drawer) {
+        drawer.style.display = 'none';
+        drawer.classList.add('hidden');
+        drawer.classList.remove('flex');
+      }
+      if (btn) btn.setAttribute('aria-expanded', 'false');
     }
 
     function syncMobileDrawerAuthState() {

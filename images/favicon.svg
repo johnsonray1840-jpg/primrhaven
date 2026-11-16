@@ -1,18 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
   <rect width="64" height="64" rx="16" fill="#0F172A" />
   <defs>
-    <linearGradient id="favBlue" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#3B82F6" />
+    <linearGradient id="phFavSky" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7DD3FC" />
       <stop offset="100%" stop-color="#183EFA" />
     </linearGradient>
-    <linearGradient id="favWhite" x1="0%" y1="100%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#FFFFFF" />
-      <stop offset="100%" stop-color="#93C5FD" />
+    <linearGradient id="phFavLight" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#93C5FD" />
+      <stop offset="100%" stop-color="#FFFFFF" />
+    </linearGradient>
+    <linearGradient id="phFavCalm" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34D399" />
+      <stop offset="100%" stop-color="#38BDF8" />
     </linearGradient>
   </defs>
-  <g transform="translate(12, 10)">
-    <path d="M2 8 L18 42 L24 42 L10 8 Z" fill="url="#favBlue" />
-    <path d="M38 8 L22 42 L28 42 L43 8 Z" fill="url="#favWhite" />
-    <polygon points="20,2 24,8 17,8" fill="#183EFA" />
+  <g transform="translate(10, 10)">
+    <path d="M22 2 C32.5 2 40.5 9.2 40.5 20.2 C40.5 31.2 31.2 40 22 43 C12.8 40 3.5 31.2 3.5 20.2 C3.5 9.2 11.5 2 22 2 Z" fill="url(#phFavSky)" fill-opacity="0.18" stroke="url(#phFavSky)" stroke-width="2.4" />
+    <path d="M12.5 32 V19.5 C12.5 14 16.8 10.5 22 10.5 C27.2 10.5 31.5 14 31.5 19.5 V32" stroke="url(#phFavLight)" stroke-width="3.5" stroke-linecap="round" />
+    <path d="M18 32 V21.5 C18 19 19.8 17.5 22 17.5 C24.2 17.5 26 19 26 21.5 V32" stroke="url(#phFavCalm)" stroke-width="3" stroke-linecap="round" />
+    <circle cx="22" cy="6.8" r="2.4" fill="#34D399" />
   </g>
 </svg>

@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
-  <title>VertexCapitals — Institutional Partnership Program</title>
-  <meta name="description" content="Become an official VertexCapitals partner and earn 5% on OTC investments and 3% on monthly exchange volume.">
+  <title>PrimeHavenCapital — Institutional Partnership Program</title>
+  <meta name="description" content="Become an official PrimeHavenCapital partner and earn 5% on OTC investments and 3% on monthly exchange volume.">
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
   <script>
     (function() {
       try {
-        const theme = localStorage.getItem('vertexcapitals_theme');
-        if (theme === 'light') {
-          document.documentElement.classList.remove('dark');
-        } else {
+        const theme = localStorage.getItem('primehavencapital_theme');
+        if (theme === 'dark') {
           document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
         }
       } catch (e) {}
     })();
@@ -48,7 +48,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
       <div class="flex items-center gap-3">
         <a href="index.html" class="flex items-center gap-2.5">
-          <img src="images/navbarlogo.svg" alt="VertexCapitals Logo" class="h-7 sm:h-8 brand-logo-adaptive">
+          <img src="images/navbarlogo.svg" alt="PrimeHavenCapital Logo" class="h-7 sm:h-8 brand-logo-adaptive">
         </a>
         <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-primary/10 text-primary dark:text-blue-400 border border-primary/20 uppercase tracking-widest">Partner Network</span>
       </div>
@@ -72,7 +72,7 @@
           <a href="register.html" class="vx-btn-primary px-5 py-2.5 rounded-xl text-xs">Start Investing</a>
         </div>
 
-        <button class="flex xl:hidden flex-col justify-center items-center w-10 h-10 rounded-xl bg-slate-100 dark:bg-[#101726] border border-slate-200 dark:border-gray-800" aria-label="Open menu">
+        <button type="button" id="mobile-menu-btn" onclick="toggleMobileNavDrawer(event, this)" class="flex xl:hidden flex-col justify-center items-center w-10 h-10 rounded-xl bg-slate-100 dark:bg-[#101726] border border-slate-200 dark:border-gray-800" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav-drawer">
           <span class="bg-slate-800 dark:bg-slate-200 block h-0.5 w-5 rounded-sm -translate-y-0.5"></span>
           <span class="bg-slate-800 dark:bg-slate-200 block h-0.5 w-5 rounded-sm my-0.5"></span>
           <span class="bg-slate-800 dark:bg-slate-200 block h-0.5 w-5 rounded-sm translate-y-0.5"></span>
@@ -88,9 +88,9 @@
         <div class="lg:col-span-6 space-y-5">
           <span class="vx-badge vx-badge-amber">Affiliate & Introducer Program</span>
           <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">Apply for Partnership</h1>
-          <p class="text-base font-bold text-primary dark:text-blue-400">Become a Verified VertexCapitals Introducer</p>
+          <p class="text-base font-bold text-primary dark:text-blue-400">Become a Verified PrimeHavenCapital Introducer</p>
           <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-            Welcome to our institutional wealth and currency exchange partnership network. Clients holding an active VertexCapitals portfolio are automatically eligible to activate a dedicated partner referral link inside their investor dashboard and earn tiered commissions.
+            Welcome to our institutional wealth and currency exchange partnership network. Clients holding an active PrimeHavenCapital portfolio are automatically eligible to activate a dedicated partner referral link inside their investor dashboard and earn tiered commissions.
           </p>
           <div class="flex flex-wrap gap-3 pt-2">
             <a href="register.html" class="vx-btn-primary px-6 py-3 rounded-xl text-xs">Create Investor Account</a>
@@ -137,7 +137,7 @@
       <!-- Trade CTA -->
       <section class="vx-card p-8 sm:p-12 text-center space-y-4">
         <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
-          Trade & Partner with <span class="text-primary">VertexCapitals</span> Today
+          Trade & Partner with <span class="text-primary">PrimeHavenCapital</span> Today
         </h2>
         <p class="text-sm text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
           Onboard in minutes, retrieve your unique referral code, and build recurring partner income across global liquidity markets.
@@ -152,8 +152,8 @@
   <footer class="bg-[#070A11] text-slate-300 border-t border-slate-800 py-12 mt-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-6 text-xs">
       <div class="flex items-center gap-4">
-        <img alt="VertexCapitals logo" src="images/footerlogo.svg" class="h-8 w-auto">
-        <span class="text-slate-400">support@vertexcapitals.ltd</span>
+        <img alt="PrimeHavenCapital logo" src="images/footerlogo.svg" class="h-8 w-auto">
+        <span class="text-slate-400">support@primehavencapital.ltd</span>
       </div>
       <div class="flex gap-6 text-slate-400">
         <a href="index.html" class="hover:text-white transition-colors">Home</a>

@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
-  <title>VertexCapitals — About Us & Institutional Architecture</title>
-  <meta name="description" content="Learn about VertexCapitals' 25-year trading heritage, segregated vault custody, and audited multi-currency exchange and OTC yield architecture.">
+  <title>PrimeHavenCapital — About Us & Institutional Architecture</title>
+  <meta name="description" content="Learn about PrimeHavenCapital's 25-year trading heritage, segregated vault custody, and audited multi-currency exchange and OTC yield architecture.">
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
   <script>
     (function() {
       try {
-        const theme = localStorage.getItem('vertexcapitals_theme');
-        if (theme === 'light') {
-          document.documentElement.classList.remove('dark');
-        } else {
+        const theme = localStorage.getItem('primehavencapital_theme');
+        if (theme === 'dark') {
           document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
         }
       } catch (e) {}
     })();
@@ -48,7 +48,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
       <div class="flex items-center gap-3">
         <a href="index.html" class="flex items-center gap-2.5">
-          <img src="images/navbarlogo.svg" alt="VertexCapitals Logo" class="h-7 sm:h-8 brand-logo-adaptive">
+          <img src="images/navbarlogo.svg" alt="PrimeHavenCapital Logo" class="h-7 sm:h-8 brand-logo-adaptive">
         </a>
         <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-primary/10 text-primary dark:text-blue-400 border border-primary/20 uppercase tracking-widest">Institutional Desk</span>
       </div>
@@ -72,7 +72,7 @@
           <a href="register.html" class="vx-btn-primary px-5 py-2.5 rounded-xl text-xs">Start Investing</a>
         </div>
 
-        <button class="flex xl:hidden flex-col justify-center items-center w-10 h-10 rounded-xl bg-slate-100 dark:bg-[#101726] border border-slate-200 dark:border-gray-800" aria-label="Open menu">
+        <button type="button" id="mobile-menu-btn" onclick="toggleMobileNavDrawer(event, this)" class="flex xl:hidden flex-col justify-center items-center w-10 h-10 rounded-xl bg-slate-100 dark:bg-[#101726] border border-slate-200 dark:border-gray-800" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav-drawer">
           <span class="bg-slate-800 dark:bg-slate-200 block h-0.5 w-5 rounded-sm -translate-y-0.5"></span>
           <span class="bg-slate-800 dark:bg-slate-200 block h-0.5 w-5 rounded-sm my-0.5"></span>
           <span class="bg-slate-800 dark:bg-slate-200 block h-0.5 w-5 rounded-sm translate-y-0.5"></span>
@@ -87,9 +87,9 @@
       <section class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
         <div class="lg:col-span-6 space-y-5">
           <span class="vx-badge vx-badge-primary">Institutional Heritage</span>
-          <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">About VertexCapitals</h1>
+          <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">About PrimeHavenCapital</h1>
           <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-            VertexCapitals is a multi-purpose platform offering currency exchange without arbitrary transaction friction alongside transparent passive income through over-the-counter investment tranches. Founded by veteran traders in Springfield, Illinois with over twenty-five years of trading experience in collaboration with European and African specialists, we serve clients across global markets.
+            PrimeHavenCapital is a multi-purpose platform offering currency exchange without arbitrary transaction friction alongside transparent passive income through over-the-counter investment tranches. Founded by veteran traders in Springfield, Illinois with over twenty-five years of trading experience in collaboration with European and African specialists, we serve clients across global markets.
           </p>
           <div class="flex flex-wrap gap-3 pt-2">
             <a href="register.html" class="vx-btn-primary px-6 py-3 rounded-xl text-xs">Open Investor Portfolio</a>
@@ -98,7 +98,7 @@
         </div>
         <div class="lg:col-span-6 flex justify-center">
           <div class="vx-card p-6 max-w-md w-full">
-            <img alt="About VertexCapitals" width="493" height="493" src="images/aboutsecImagebg.a4b26456.png" class="w-full h-auto rounded-2xl">
+            <img alt="About PrimeHavenCapital" width="493" height="493" src="images/aboutsecImagebg.a4b26456.png" class="w-full h-auto rounded-2xl">
           </div>
         </div>
       </section>
@@ -162,7 +162,7 @@
           <span class="vx-badge vx-badge-amber">Security Governance</span>
           <h3 class="text-2xl font-extrabold">What We Expect of You</h3>
           <p class="text-sm text-slate-300 leading-relaxed">
-            Clients are expected to safeguard account credentials at all times. VertexCapitals will never request passwords by email or telephone. Please ensure accurate verification details during account onboarding.
+            Clients are expected to safeguard account credentials at all times. PrimeHavenCapital will never request passwords by email or telephone. Please ensure accurate verification details during account onboarding.
           </p>
         </div>
 
@@ -180,8 +180,8 @@
   <footer class="bg-[#070A11] text-slate-300 border-t border-slate-800 py-12 mt-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-6 text-xs">
       <div class="flex items-center gap-4">
-        <img alt="VertexCapitals logo" src="images/footerlogo.svg" class="h-8 w-auto">
-        <span class="text-slate-400">support@vertexcapitals.ltd</span>
+        <img alt="PrimeHavenCapital logo" src="images/footerlogo.svg" class="h-8 w-auto">
+        <span class="text-slate-400">support@primehavencapital.ltd</span>
       </div>
       <div class="flex gap-6 text-slate-400">
         <a href="index.html" class="hover:text-white transition-colors">Home</a>

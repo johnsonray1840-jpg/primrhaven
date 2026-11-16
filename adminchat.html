@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
-  <title>VertexCapitals — Admin Support Desk</title>
+  <title>PrimeHavenCapital — Admin Support Desk</title>
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
   <!-- Theme Early Initializer to prevent flash of wrong theme (FOUC) -->
   <script>
     (function() {
       try {
-        const theme = localStorage.getItem('vertexcapitals_theme');
-        if (theme === 'light') {
-          document.documentElement.classList.remove('dark');
-        } else {
+        const theme = localStorage.getItem('primehavencapital_theme');
+        if (theme === 'dark') {
           document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
         }
       } catch(e) {}
     })();
@@ -231,7 +231,7 @@
         return;
       }
 
-      const res = await VertexApp.adminSendEmail(selectedChatUser.email, 'Support Desk Update — VertexCapitals', val);
+      const res = await VertexApp.adminSendEmail(selectedChatUser.email, 'Support Desk Update — PrimeHavenCapital', val);
       if (!res || !res.success) {
         VertexApp.showToast((res && res.message) || 'Failed to dispatch message.', 'error');
         return;

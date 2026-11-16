@@ -1,6 +1,6 @@
 /**
- * VertexCapitals Unified Client Reactive API Layer (js/app-store.js)
- * 100% Authentic Live Synchronization with Node.js & MySQL REST Backend
+ * PrimeHavenCapital Unified Client Reactive API Layer (js/app-store.js)
+ * Live Synchronization with Node.js & Neon PostgreSQL REST Backend
  * Clean vector icons, authentic session handling, Resend Email Integration.
  */
 
@@ -10,7 +10,7 @@
   const USERS_LOCAL_KEY = 'vertexcapitals_local_users_live';
   const ADMIN_TOKEN_KEY = 'vx_admin_session_token';
   const ADMIN_TOKEN_EXPIRY_KEY = 'vx_admin_session_expiry';
-  const THEME_KEY = 'vertexcapitals_theme';
+  const THEME_KEY = 'primehavencapital_theme';
 
   // Smart API Base Resolver
   function getCandidateBases() {
@@ -93,14 +93,14 @@
     }
 
     // ==========================================
-    // THEME ENGINE (Light & Dark Mode)
+    // THEME ENGINE (Light Default & Dark Mode)
     // ==========================================
     getTheme() {
       try {
         const saved = localStorage.getItem(THEME_KEY);
         if (saved === 'light' || saved === 'dark') return saved;
       } catch (e) {}
-      return 'dark'; // Dark mode is default
+      return 'light'; // White / light theme is default
     }
 
     setTheme(mode) {
@@ -288,7 +288,7 @@
       if (document.getElementById('vx-side-nav-drawer')) return;
       if (window.location.pathname.includes('login') || window.location.pathname.includes('register') || window.location.pathname.includes('forgotpassword')) return;
 
-      const user = this.currentUser || { full_name: 'Investor Account', email: 'investor@vertexcapitals.ltd' };
+      const user = this.currentUser || { full_name: 'Investor Account', email: 'investor@primehavencapital.ltd' };
       const initials = (user.full_name || 'User').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
       const currentPath = (window.location.pathname || '').toLowerCase();
       const navItemClass = (slug) => currentPath.includes(slug)
@@ -303,7 +303,7 @@
           <!-- Drawer Header -->
           <div class="p-5 border-b border-slate-200 dark:border-gray-800/80 flex justify-between items-center bg-slate-50 dark:bg-[#070a11]/50">
             <a href="dashboard.html" class="flex items-center gap-2">
-              <img src="images/navbarlogo.svg" alt="VertexCapitals Logo" class="h-6 brand-logo-adaptive">
+              <img src="images/navbarlogo.svg" alt="PrimeHavenCapital Logo" class="h-6 brand-logo-adaptive">
             </a>
             <button onclick="VertexApp.toggleSideNav()" aria-label="Close Navigation" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center transition-colors">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -956,6 +956,7 @@
   }
 
   window.VertexApp = new VertexStore();
+  window.PrimeHavenApp = window.VertexApp;
   window.toggleSideNav = function () {
     if (window.VertexApp) window.VertexApp.toggleSideNav();
   };
