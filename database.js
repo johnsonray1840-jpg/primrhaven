@@ -550,11 +550,12 @@ async function createWallet(data) {
   return wallet;
 }
 
-async function updateWallet(userId, updates) {
+async function updateWallet(userId, updates, client = null) {
   const numId = parseInt(userId, 10);
+  const dbExecutor = client || pool;
   if (usePostgres) {
     const keys = Object.keys(updates);
-    if (keys.length === 0) return getWalletByUserId(numId);
+    if (keys.length === 0) return getWalletByUserId(numId, client);
 
     const setClauses = [];
     const values = [];
@@ -575,7 +576,7 @@ async function updateWallet(userId, updates) {
       WHERE user_id = $${idx}
       RETURNING *;
     `;
-    const res = await pool.query(query, values);
+    const res = await dbExecutor.query(query, values);
     return formatWallet(res.rows[0]) || null;
   }
 
@@ -586,6 +587,71 @@ async function updateWallet(userId, updates) {
     return wallet;
   }
   return null;
+}
+
+/**
+ * Atomic Wallet Balance Adjustment
+ * Protects against race conditions and concurrent double-spending by utilizing
+ * atomic database level arithmetic and row checks (e.g., balance = balance + $1).
+ */
+async function adjustWalletBalance(userId, { exchangeDelta = 0, otcDelta = 0, profitDelta = 0, investedDelta = 0 }, client = null) {
+  const numId = parseInt(userId, 10);
+  const dbExecutor = client || pool;
+
+  if (usePostgres) {
+    const res = await dbExecutor.query(`
+      UPDATE wallets
+      SET 
+        exchange_balance = exchange_balance + $1,
+        otc_investment_balance = otc_investment_balance + $2,
+        accrued_profit = accrued_profit + $3,
+        total_invested = total_invested + $4,
+        updated_at = NOW()
+      WHERE user_id = $5 AND (exchange_balance + $1) >= 0
+      RETURNING *;
+    `, [exchangeDelta, otcDelta, profitDelta, investedDelta, numId]);
+
+    if (res.rows.length === 0) {
+      throw new Error('Insufficient wallet balance or wallet not found');
+    }
+    return formatWallet(res.rows[0]);
+  }
+
+  // Fallback
+  let wallet = await getWalletByUserId(numId);
+  if (!wallet) throw new Error('Wallet not found');
+  if (wallet.exchange_balance + exchangeDelta < 0) {
+    throw new Error('Insufficient wallet balance');
+  }
+  wallet.exchange_balance = parseFloat((wallet.exchange_balance + exchangeDelta).toFixed(2));
+  wallet.otc_investment_balance = parseFloat((wallet.otc_investment_balance + otcDelta).toFixed(2));
+  wallet.accrued_profit = parseFloat((wallet.accrued_profit + profitDelta).toFixed(2));
+  wallet.total_invested = parseFloat((wallet.total_invested + investedDelta).toFixed(2));
+  wallet.updated_at = new Date().toISOString();
+  saveDatabaseSync();
+  return wallet;
+}
+
+/**
+ * Execute a function within a strict PostgreSQL Transaction
+ */
+async function withTransaction(callback) {
+  if (usePostgres && pool) {
+    const client = await pool.connect();
+    try {
+      await client.query('BEGIN');
+      const result = await callback(client);
+      await client.query('COMMIT');
+      return result;
+    } catch (err) {
+      await client.query('ROLLBACK');
+      throw err;
+    } finally {
+      client.release();
+    }
+  } else {
+    return callback(null);
+  }
 }
 
 async function getAllWallets() {
@@ -973,6 +1039,8 @@ module.exports = {
   getWalletByUserId,
   createWallet,
   updateWallet,
+  adjustWalletBalance,
+  withTransaction,
   getAllWallets,
 
   // OTC Plan operations
