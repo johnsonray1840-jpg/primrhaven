@@ -465,48 +465,62 @@ async function requestHandler(req, res) {
       const user = await db.findUserById(userId);
       if (!user) return sendJSON(res, { success: false, message: 'User not found' }, 404);
 
-      const [wallet, otcPlan, transactions, companyWallets] = await Promise.all([
+      const [wallet, otcPlan, allUserPlans, transactions, companyWallets] = await Promise.all([
         db.getWalletByUserId(userId),
         db.getOtcPlanByUserId(userId),
+        db.getOtcPlansByUserId(userId),
         db.getTransactionsByUserId(userId),
         db.getCompanyWallets()
       ]);
 
-      // Dynamic real-time calculation of investment progression and accrued profit
-      let dynamicPlan = otcPlan;
-      if (otcPlan && otcPlan.status === 'active') {
-        const start = otcPlan.start_date ? new Date(otcPlan.start_date).getTime() : Date.now();
-        const now = Date.now();
-        const totalDurationDays = otcPlan.duration_days || 30;
-        const totalDurationMs = totalDurationDays * 24 * 60 * 60 * 1000;
-        const elapsedMs = Math.max(0, now - start);
-        const daysElapsed = Math.min(totalDurationDays, Math.max(1, Math.floor(elapsedMs / (24 * 60 * 60 * 1000))));
-        const progressFraction = Math.min(1.0, elapsedMs / totalDurationMs);
+      const now = Date.now();
 
-        // Simple Interest calculation: Total expected profit = principal * (ROI / 100)
-        const principal = parseFloat(otcPlan.amount || 0);
-        const roiPercent = parseFloat(otcPlan.total_roi_percent || otcPlan.weekly_roi_percent || 0);
+      // Dynamic real-time calculation of investment progression and accrued profit for all plans
+      const dynamicPlans = (allUserPlans || []).map(plan => {
+        const principal = parseFloat(plan.amount || 0);
+        const roiPercent = parseFloat(plan.total_roi_percent || plan.weekly_roi_percent || 0);
         const totalExpectedProfit = parseFloat((principal * (roiPercent / 100.0)).toFixed(2));
-        const accruedProfit = parseFloat((totalExpectedProfit * progressFraction).toFixed(2));
+        const totalDurationDays = plan.duration_days || 30;
+        const totalDurationMs = totalDurationDays * 24 * 60 * 60 * 1000;
+        const start = plan.start_date ? new Date(plan.start_date).getTime() : now;
+        const elapsedMs = Math.max(0, now - start);
+        const daysElapsed = Math.min(totalDurationDays, Math.max(0, Math.floor(elapsedMs / (24 * 60 * 60 * 1000))));
         const daysRemaining = Math.max(0, totalDurationDays - daysElapsed);
+        const progressFraction = Math.min(1.0, elapsedMs / totalDurationMs);
+        const accruedProfit = plan.status === 'completed'
+          ? (plan.profit_accrued !== undefined ? plan.profit_accrued : totalExpectedProfit)
+          : parseFloat((totalExpectedProfit * progressFraction).toFixed(2));
+        const isMature = elapsedMs >= totalDurationMs;
 
-        dynamicPlan = {
-          ...otcPlan,
+        let displayStatus = plan.status;
+        if (plan.status === 'active' && isMature) {
+          displayStatus = 'awaiting_settlement';
+        }
+
+        return {
+          ...plan,
+          category: plan.category || (totalDurationDays <= 30 ? 'Short-Term' : 'Long-Term'),
           days_elapsed: daysElapsed,
           days_remaining: daysRemaining,
-          progress_percent: Math.round(progressFraction * 100),
+          progress_percent: plan.status === 'completed' ? 100 : Math.round(progressFraction * 100),
           total_expected_profit: totalExpectedProfit,
           profit_accrued: accruedProfit,
-          is_mature: elapsedMs >= totalDurationMs
+          total_payout: parseFloat((principal + totalExpectedProfit).toFixed(2)),
+          is_mature: isMature,
+          display_status: displayStatus
         };
-      }
+      });
+
+      // Maintain legacy otcPlan top card compatibility with latest active or top plan
+      const dynamicTopPlan = dynamicPlans.find(p => p.status === 'active') || dynamicPlans[0] || null;
 
       const activeWallets = (companyWallets || []).filter(w => w.is_active === 1);
       return sendJSON(res, {
         success: true,
         user,
         wallet,
-        otcPlan: dynamicPlan,
+        otcPlan: dynamicTopPlan,
+        investments: dynamicPlans,
         transactions,
         companyWallets: activeWallets
       });
@@ -1473,27 +1487,35 @@ async function requestHandler(req, res) {
       const isSecretMatch = cronSecret && authHeader === `Bearer ${cronSecret}`;
       const isAdmin = validateAdminToken(req);
 
-      if (!isVercelCron && !isSecretMatch && !isAdmin && process.env.NODE_ENV === 'production') {
-        return sendJSON(res, { success: false, message: 'Unauthorized cron invocation.' }, 401);
+      // Block unauthorized invocations in all environments if secret is set, or in production
+      if (!isVercelCron && !isSecretMatch && !isAdmin) {
+        if (cronSecret || process.env.NODE_ENV === 'production') {
+          return sendJSON(res, { success: false, message: 'Unauthorized cron invocation.' }, 401);
+        }
       }
 
-      const activePlans = await db.getAllOtcPlans();
+      const allPlans = await db.getAllOtcPlans();
       const maturedSettlements = [];
+      const skippedPlans = [];
+      const failedPlans = [];
       const now = Date.now();
 
-      for (const plan of activePlans) {
-        if (plan.status !== 'active') continue;
+      for (const plan of allPlans) {
+        if (plan.status !== 'active') {
+          skippedPlans.push({ id: plan.id, reason: `Status is ${plan.status}` });
+          continue;
+        }
 
         const start = plan.start_date ? new Date(plan.start_date).getTime() : now;
         const totalDurationDays = plan.duration_days || 30;
         const totalDurationMs = totalDurationDays * 24 * 60 * 60 * 1000;
         const elapsedMs = Math.max(0, now - start);
-        const daysElapsed = Math.min(totalDurationDays, Math.max(1, Math.floor(elapsedMs / (24 * 60 * 60 * 1000))));
+        const daysElapsed = Math.min(totalDurationDays, Math.max(0, Math.floor(elapsedMs / (24 * 60 * 60 * 1000))));
 
         // Check if plan has reached full maturity
         if (elapsedMs >= totalDurationMs) {
           try {
-            await db.withTransaction(async (client) => {
+            const settlementResult = await db.withTransaction(async (client) => {
               // Lock the plan row to prevent duplicate payouts across concurrent cron runs
               let lockedPlan;
               if (db.isPostgres()) {
@@ -1503,15 +1525,19 @@ async function requestHandler(req, res) {
                 lockedPlan = db.store.otc_plans.find(p => p.id === plan.id);
               }
 
-              if (!lockedPlan || lockedPlan.status !== 'active') return;
+              // Idempotency check: if another thread already settled or changed status, skip immediately
+              if (!lockedPlan || lockedPlan.status !== 'active' || lockedPlan.maturity_payout_ref) {
+                return { skipped: true, reason: 'Already settled or no longer active' };
+              }
 
               const principal = parseFloat(lockedPlan.amount || 0);
               const roiPercent = parseFloat(lockedPlan.total_roi_percent || lockedPlan.weekly_roi_percent || 0);
               const profit = parseFloat((principal * (roiPercent / 100.0)).toFixed(2));
-              const totalPayout = principal + profit;
-              const maturityRef = 'MAT-' + Math.floor(100000 + Math.random() * 900000);
+              const totalPayout = parseFloat((principal + profit).toFixed(2));
+              const maturityRef = 'MAT-' + lockedPlan.id + '-' + Math.floor(100000 + Math.random() * 900000);
 
-              await db.updateOtcPlan(plan.id, {
+              // 1. Mark plan completed with idempotency payout ref and settlement timestamp
+              await db.updateOtcPlan(lockedPlan.id, {
                 status: 'completed',
                 days_elapsed: totalDurationDays,
                 profit_accrued: profit,
@@ -1519,14 +1545,14 @@ async function requestHandler(req, res) {
                 matured_at: new Date().toISOString()
               }, client);
 
-              // Atomically credit full principal and profit to exchange wallet
+              // 2. Atomically credit full principal and profit to exchange wallet
               await db.adjustWalletBalance(lockedPlan.user_id, {
                 exchangeDelta: totalPayout,
                 otcDelta: -principal,
                 profitDelta: profit
               }, client);
 
-              // Record immutable ledger entry
+              // 3. Record immutable ledger transaction
               await db.createTransaction({
                 tx_ref: maturityRef,
                 user_id: lockedPlan.user_id,
@@ -1539,27 +1565,43 @@ async function requestHandler(req, res) {
                 notes: `Automated Maturity Payout: Principal ($${principal.toLocaleString()}) + Profit ($${profit.toLocaleString()})`
               }, client);
 
-              maturedSettlements.push({
-                planId: plan.id,
+              return {
+                settled: true,
+                planId: lockedPlan.id,
                 userId: lockedPlan.user_id,
-                payout: totalPayout
-              });
+                payout: totalPayout,
+                principal,
+                profit,
+                maturityRef
+              };
             });
+
+            if (settlementResult && settlementResult.settled) {
+              maturedSettlements.push(settlementResult);
+            } else if (settlementResult && settlementResult.skipped) {
+              skippedPlans.push({ id: plan.id, reason: settlementResult.reason });
+            }
           } catch (err) {
-            console.error(`Error processing maturity for plan #${plan.id}:`, err.message);
+            console.error(`Error processing maturity settlement for plan #${plan.id}:`, err.message);
+            failedPlans.push({ id: plan.id, error: err.message });
           }
         } else {
-          // Increment days_elapsed progress
+          // Lifecycle not yet mature; advance days_elapsed if necessary
           if (plan.days_elapsed !== daysElapsed) {
             await db.updateOtcPlan(plan.id, { days_elapsed: daysElapsed });
           }
+          skippedPlans.push({ id: plan.id, reason: `Not yet mature (${daysElapsed}/${totalDurationDays} days)` });
         }
       }
 
       return sendJSON(res, {
         success: true,
-        message: `Processed ${activePlans.length} active contract(s). Settled ${maturedSettlements.length} matured plan(s).`,
-        maturedSettlements
+        checked: allPlans.length,
+        settled: maturedSettlements.length,
+        skipped: skippedPlans.length,
+        failed: failedPlans.length,
+        settlements: maturedSettlements,
+        message: `Maturity check complete. Checked: ${allPlans.length}, Settled: ${maturedSettlements.length}, Skipped: ${skippedPlans.length}, Failed: ${failedPlans.length}.`
       });
     }
 

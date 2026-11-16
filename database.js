@@ -686,46 +686,80 @@ async function getAllWallets() {
 async function getOtcPlanByUserId(userId) {
   const numId = parseInt(userId, 10);
   if (usePostgres) {
-    const res = await pool.query('SELECT * FROM otc_plans WHERE user_id = $1 AND status = $2 LIMIT 1', [numId, 'active']);
+    const res = await pool.query('SELECT * FROM otc_plans WHERE user_id = $1 AND status = $2 ORDER BY id DESC LIMIT 1', [numId, 'active']);
     return formatPlan(res.rows[0]) || null;
   }
-  return store.otc_plans.find(p => p.user_id === numId && p.status === 'active') || null;
+  return store.otc_plans.filter(p => p.user_id === numId && p.status === 'active').sort((a, b) => b.id - a.id)[0] || null;
+}
+
+async function getOtcPlansByUserId(userId) {
+  const numId = parseInt(userId, 10);
+  if (usePostgres) {
+    const res = await pool.query(`
+      SELECT op.*, ip.category AS plan_category, ip.name AS catalog_plan_name
+      FROM otc_plans op
+      LEFT JOIN investment_plans ip ON op.plan_id = ip.id
+      WHERE op.user_id = $1
+      ORDER BY op.id DESC
+    `, [numId]);
+    return res.rows.map(row => {
+      const formatted = formatPlan(row);
+      return {
+        ...formatted,
+        category: row.plan_category || (row.duration_days <= 30 ? 'Short-Term' : 'Long-Term')
+      };
+    });
+  }
+  return store.otc_plans.filter(p => p.user_id === numId).map(p => ({
+    ...formatPlan(p),
+    category: p.duration_days <= 30 ? 'Short-Term' : 'Long-Term'
+  }));
 }
 
 async function createOtcPlan(data, client = null) {
   const numId = parseInt(data.user_id, 10);
+  const planId = data.plan_id ? parseInt(data.plan_id, 10) : null;
   const trancheName = data.tranche_name || 'Executive Multi-Asset Tranche';
   const amount = parseFloat(data.amount || 0);
   const weeklyRoi = parseFloat(data.weekly_roi_percent || 7.5);
+  const totalRoi = data.total_roi_percent !== undefined ? parseFloat(data.total_roi_percent) : weeklyRoi;
+  const totalExpectedProfit = data.total_expected_profit !== undefined ? parseFloat(data.total_expected_profit) : parseFloat((amount * (totalRoi / 100)).toFixed(2));
   const durationDays = parseInt(data.duration_days || 30, 10);
-  const daysElapsed = parseInt(data.days_elapsed || 1, 10);
+  const daysElapsed = parseInt(data.days_elapsed || 0, 10);
   const profitAccrued = parseFloat(data.profit_accrued || 0);
   const status = data.status || 'active';
+  const startDate = data.start_date || new Date().toISOString();
+  const endDate = data.end_date || new Date(Date.now() + durationDays * 24 * 60 * 60 * 1000).toISOString();
   const dbExecutor = client || pool;
 
   if (usePostgres) {
     const res = await dbExecutor.query(`
       INSERT INTO otc_plans (
-        user_id, tranche_name, amount, weekly_roi_percent, duration_days,
-        days_elapsed, profit_accrued, status
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+        user_id, plan_id, tranche_name, amount, weekly_roi_percent, total_roi_percent,
+        total_expected_profit, duration_days, days_elapsed, profit_accrued, status,
+        start_date, end_date
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
       RETURNING *;
-    `, [numId, trancheName, amount, weeklyRoi, durationDays, daysElapsed, profitAccrued, status]);
+    `, [numId, planId, trancheName, amount, weeklyRoi, totalRoi, totalExpectedProfit, durationDays, daysElapsed, profitAccrued, status, startDate, endDate]);
     return formatPlan(res.rows[0]);
   }
 
   const newPlan = {
     id: store.otc_plans.length ? Math.max(...store.otc_plans.map(p => p.id || 0)) + 1 : Date.now(),
     user_id: numId,
+    plan_id: planId,
     tranche_name: trancheName,
     amount,
     weekly_roi_percent: weeklyRoi,
+    total_roi_percent: totalRoi,
+    total_expected_profit: totalExpectedProfit,
     duration_days: durationDays,
     days_elapsed: daysElapsed,
     profit_accrued: profitAccrued,
     status,
     created_at: new Date().toISOString(),
-    start_date: new Date().toISOString()
+    start_date: startDate,
+    end_date: endDate
   };
   store.otc_plans.push(newPlan);
   saveDatabaseSync();
@@ -1226,6 +1260,7 @@ module.exports = {
 
   // OTC Plan operations
   getOtcPlanByUserId,
+  getOtcPlansByUserId,
   createOtcPlan,
   updateOtcPlan,
   getAllOtcPlans,

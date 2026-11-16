@@ -202,6 +202,7 @@
           </div>
         </div>
         <div class="flex items-center gap-2">
+          <span id="otc-status-pill" class="px-3 py-1 rounded-full text-xs font-bold bg-gray-800 text-gray-400 border border-gray-700">Awaiting Capital</span>
           <a href="invest-otc.html" class="px-3 py-1 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 rounded-full text-xs font-bold transition-all flex items-center gap-1">
             <span>+ Allocate / View Portal</span>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -214,19 +215,19 @@
         <div class="bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800/80 rounded-2xl p-4 space-y-1">
           <p class="text-[11px] font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider">Allocated Capital</p>
           <p class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white" id="otc-active-capital">$0.00</p>
-          <p class="text-[10px] text-slate-400 dark:text-gray-500">Locked in 30-Day Tranche</p>
+          <p class="text-[10px] text-slate-400 dark:text-gray-500" id="otc-active-capital-sub">Locked in Active Tranche</p>
         </div>
 
         <div class="bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800/80 rounded-2xl p-4 space-y-1">
           <p class="text-[11px] font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider">Accrued Return Profit</p>
           <p class="text-xl sm:text-2xl font-extrabold text-emerald-600 dark:text-emerald-400" id="otc-accrued-profit">+$0.00</p>
-          <p class="text-[10px] text-emerald-600 dark:text-emerald-500 font-medium">Ready to claim</p>
+          <p class="text-[10px] text-amber-500 dark:text-amber-400 font-semibold" id="otc-accrued-status-sub">Accruing (Paid at Maturity)</p>
         </div>
 
         <div class="bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800/80 rounded-2xl p-4 space-y-1">
-          <p class="text-[11px] font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider">Weekly ROI Rate</p>
-          <p class="text-xl sm:text-2xl font-extrabold text-amber-500 dark:text-amber-400">+7.5%</p>
-          <p class="text-[10px] text-slate-400 dark:text-gray-500">Credited Weekly</p>
+          <p class="text-[11px] font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider">Total Agreed ROI</p>
+          <p class="text-xl sm:text-2xl font-extrabold text-amber-500 dark:text-amber-400" id="otc-roi-badge">+20.00%</p>
+          <p class="text-[10px] text-slate-400 dark:text-gray-500" id="otc-roi-sub">Simple Interest at Maturity</p>
         </div>
       </div>
 
@@ -238,6 +239,33 @@
         </div>
         <div class="w-full h-3 bg-slate-200 dark:bg-gray-900 rounded-full overflow-hidden p-0.5 border border-slate-300 dark:border-gray-800">
           <div class="h-full bg-gradient-to-r from-amber-500 to-emerald-400 rounded-full transition-all duration-700" id="otc-progress-bar" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: My Investment Portfolio (Full Active & Past Tranches) -->
+    <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800/80 rounded-3xl p-6 sm:p-8 space-y-6 shadow-md dark:shadow-xl" id="portfolio-investments-section">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-4 border-b border-slate-100 dark:border-gray-800">
+        <div>
+          <div class="flex items-center gap-2">
+            <h3 class="font-extrabold text-base sm:text-lg text-slate-900 dark:text-white">My Investment Portfolio</h3>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-primary/10 text-primary border border-primary/20 uppercase" id="portfolio-count-badge">0 Tranches</span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-gray-400 mt-0.5">Track your Short-Term and Long-Term contracts, real-time simple interest accruals, and maturity settlement status.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="invest-otc.html" class="px-4 py-2 bg-primary hover:bg-[#1332c9] text-white text-xs font-bold rounded-xl shadow-md shadow-primary/20 transition-all flex items-center gap-1.5">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span>New Investment</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Dynamic Portfolio Cards Grid -->
+      <div id="portfolio-investments-grid" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <!-- Dynamically rendered via renderInvestmentsList -->
+        <div class="col-span-full py-12 text-center text-slate-400 dark:text-gray-500 text-sm">
+          Loading your active investments...
         </div>
       </div>
     </div>
@@ -375,6 +403,8 @@
     let isPrivacyMasked = false;
     let liveWalletData = { exchange_balance: 0, otc_investment_balance: 0, accrued_profit: 0 };
     let liveOtcPlan = null;
+    let liveInvestmentsList = [];
+    let isPollingInProgress = false;
 
     document.addEventListener('DOMContentLoaded', async () => {
       // 1. Verify Authentication
@@ -401,22 +431,36 @@
       // 3. Fetch Live Summary from Backend
       await reloadDashboardData();
 
-      // 4. Lightweight near-real-time polling (every 30 seconds)
+      // 4. Lightweight near-real-time polling (every 30 seconds) with overlap avoidance
       setInterval(async () => {
-        await reloadDashboardData();
+        if (isPollingInProgress) return;
+        isPollingInProgress = true;
+        try {
+          await reloadDashboardData();
+        } catch (err) {
+          console.warn('[Dashboard Auto-Refresh] Polling error handled:', err.message);
+        } finally {
+          isPollingInProgress = false;
+        }
       }, 30000);
     });
 
     async function reloadDashboardData() {
-      const summary = await VertexApp.getSummary();
-      if (!summary) return;
+      try {
+        const summary = await VertexApp.getSummary();
+        if (!summary) return;
 
-      liveWalletData = summary.wallet || { exchange_balance: 0, otc_investment_balance: 0, accrued_profit: 0 };
-      liveOtcPlan = summary.otcPlan;
+        liveWalletData = summary.wallet || { exchange_balance: 0, otc_investment_balance: 0, accrued_profit: 0 };
+        liveOtcPlan = summary.otcPlan;
+        liveInvestmentsList = summary.investments || (summary.otcPlan ? [summary.otcPlan] : []);
 
-      updateCardDisplay();
-      updateOtcCard();
-      renderRecentTransactions(summary.transactions || []);
+        updateCardDisplay();
+        updateOtcCard();
+        renderInvestmentsList(liveInvestmentsList);
+        renderRecentTransactions(summary.transactions || []);
+      } catch (e) {
+        console.error('Error refreshing dashboard data:', e);
+      }
     }
 
     function updateCardDisplay() {
@@ -481,25 +525,36 @@
       const progPercent = document.getElementById('otc-progress-percent');
       const progBar = document.getElementById('otc-progress-bar');
       const statusPill = document.getElementById('otc-status-pill');
+      const roiBadge = document.getElementById('otc-roi-badge');
 
-      const activeCapital = liveWalletData.otc_investment_balance || (liveOtcPlan ? liveOtcPlan.amount : 0);
+      const activeCapital = liveWalletData.otc_investment_balance || (liveOtcPlan && liveOtcPlan.status === 'active' ? liveOtcPlan.amount : 0);
       const accruedProfit = liveWalletData.accrued_profit || (liveOtcPlan ? liveOtcPlan.profit_accrued : 0);
 
       capEl.innerText = '$' + parseFloat(activeCapital).toLocaleString(undefined, { minimumFractionDigits: 2 });
       profEl.innerText = '+$' + parseFloat(accruedProfit).toLocaleString(undefined, { minimumFractionDigits: 2 });
 
-      if (activeCapital > 0) {
-        const daysElapsed = liveOtcPlan ? liveOtcPlan.days_elapsed : 1;
-        const totalDays = liveOtcPlan ? liveOtcPlan.duration_days : 30;
-        const daysRemaining = liveOtcPlan && liveOtcPlan.days_remaining !== undefined ? liveOtcPlan.days_remaining : Math.max(0, totalDays - daysElapsed);
-        const percent = liveOtcPlan && liveOtcPlan.progress_percent !== undefined ? liveOtcPlan.progress_percent : Math.min(100, Math.round((daysElapsed / totalDays) * 100));
-        const totalExpected = liveOtcPlan && liveOtcPlan.total_expected_profit !== undefined ? liveOtcPlan.total_expected_profit : accruedProfit;
+      if (liveOtcPlan) {
+        const roi = liveOtcPlan.total_roi_percent || liveOtcPlan.weekly_roi_percent || 20;
+        if (roiBadge) roiBadge.innerText = `+${parseFloat(roi).toFixed(2)}%`;
+      }
+
+      if (activeCapital > 0 && liveOtcPlan && liveOtcPlan.status === 'active') {
+        const daysElapsed = liveOtcPlan.days_elapsed || 1;
+        const totalDays = liveOtcPlan.duration_days || 30;
+        const daysRemaining = liveOtcPlan.days_remaining !== undefined ? liveOtcPlan.days_remaining : Math.max(0, totalDays - daysElapsed);
+        const percent = liveOtcPlan.progress_percent !== undefined ? liveOtcPlan.progress_percent : Math.min(100, Math.round((daysElapsed / totalDays) * 100));
 
         progLabel.innerText = `Day ${daysElapsed} of ${totalDays} (${percent}% Complete • ${daysRemaining} Days Left)`;
         progPercent.innerText = `${percent}%`;
         progBar.style.width = `${percent}%`;
-        statusPill.innerText = liveOtcPlan && liveOtcPlan.is_mature ? 'Matured / Pending Payout' : 'Active Cycle';
-        statusPill.className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30';
+        
+        if (liveOtcPlan.is_mature || liveOtcPlan.display_status === 'awaiting_settlement') {
+          statusPill.innerText = 'Matured / Awaiting Settlement';
+          statusPill.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-500/15 text-amber-500 border border-amber-500/30';
+        } else {
+          statusPill.innerText = 'Active Tranche';
+          statusPill.className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30';
+        }
       } else {
         progLabel.innerText = 'No active contract — Allocate capital to begin';
         progPercent.innerText = '0%';
@@ -507,6 +562,123 @@
         statusPill.innerText = 'Awaiting Capital';
         statusPill.className = 'px-3 py-1 rounded-full text-xs font-bold bg-gray-800 text-gray-400 border border-gray-700';
       }
+    }
+
+    function renderInvestmentsList(investments) {
+      const container = document.getElementById('portfolio-investments-grid');
+      const badge = document.getElementById('portfolio-count-badge');
+      if (!container) return;
+
+      if (!investments || investments.length === 0) {
+        badge.innerText = '0 Tranches';
+        container.innerHTML = `
+          <div class="col-span-full py-12 text-center text-slate-400 dark:text-gray-500 border border-dashed border-slate-200 dark:border-gray-800 rounded-2xl p-6">
+            <p class="font-bold text-sm text-slate-700 dark:text-gray-300">No investment tranches found.</p>
+            <p class="text-xs mt-1 text-slate-500 dark:text-gray-400">Allocate liquidity into Short-Term or Long-Term OTC tranches to earn simple interest returns.</p>
+            <a href="invest-otc.html" class="inline-block mt-4 px-4 py-2 bg-primary text-white text-xs font-bold rounded-xl shadow-md hover:bg-[#1332c9] transition-all">Explore Investment Catalogue</a>
+          </div>
+        `;
+        return;
+      }
+
+      badge.innerText = `${investments.length} Tranche${investments.length > 1 ? 's' : ''}`;
+
+      container.innerHTML = investments.map(inv => {
+        const principal = parseFloat(inv.amount || 0);
+        const roiPercent = parseFloat(inv.total_roi_percent || inv.weekly_roi_percent || 0);
+        const totalProfit = parseFloat(inv.total_expected_profit !== undefined ? inv.total_expected_profit : (principal * (roiPercent / 100.0)).toFixed(2));
+        const accruedProfit = parseFloat(inv.profit_accrued || 0);
+        const grossPayout = parseFloat((principal + totalProfit).toFixed(2));
+        const durationDays = inv.duration_days || 30;
+        const daysElapsed = inv.days_elapsed || 0;
+        const daysRemaining = inv.days_remaining !== undefined ? inv.days_remaining : Math.max(0, durationDays - daysElapsed);
+        const progressPercent = inv.progress_percent !== undefined ? inv.progress_percent : 0;
+        const category = inv.category || (durationDays <= 30 ? 'Short-Term' : 'Long-Term');
+        const isShort = category === 'Short-Term';
+
+        // Format dates cleanly
+        const startStr = inv.start_date ? new Date(inv.start_date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : 'Active';
+        const endStr = inv.end_date ? new Date(inv.end_date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : `${durationDays} Days`;
+
+        // Determine Status Badge & Colors
+        let statusBadge = '';
+        if (inv.status === 'completed') {
+          statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-blue-500/15 text-blue-500 dark:text-blue-400 border border-blue-500/30 uppercase tracking-wider">Completed</span>`;
+        } else if (inv.is_mature || inv.display_status === 'awaiting_settlement') {
+          statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500/15 text-amber-500 dark:text-amber-400 border border-amber-500/30 uppercase tracking-wider">Matured / Awaiting Settlement</span>`;
+        } else {
+          statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/15 text-emerald-500 dark:text-emerald-400 border border-emerald-500/30 uppercase tracking-wider">Active</span>`;
+        }
+
+        const isCompleted = inv.status === 'completed';
+
+        return `
+          <div class="bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-2xl p-5 space-y-4 hover:border-primary/40 transition-all shadow-sm">
+            <!-- Header Row -->
+            <div class="flex justify-between items-start gap-2">
+              <div class="space-y-1">
+                <div class="flex items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded-md text-[10px] font-extrabold uppercase ${isShort ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30' : 'bg-primary/15 text-primary border border-primary/30'}">
+                    ${category}
+                  </span>
+                  <span class="text-xs font-semibold text-slate-500 dark:text-gray-400">• ${durationDays} Days</span>
+                </div>
+                <h4 class="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white">${inv.tranche_name || 'Yield Tranche'}</h4>
+              </div>
+              <div>${statusBadge}</div>
+            </div>
+
+            <!-- Financial Metrics Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-1">
+              <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800/80 rounded-xl p-2.5">
+                <span class="text-[10px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider block">Principal</span>
+                <span class="text-sm font-black text-slate-900 dark:text-white">$${principal.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
+              </div>
+              <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800/80 rounded-xl p-2.5">
+                <span class="text-[10px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider block">Agreed ROI</span>
+                <span class="text-sm font-black text-emerald-600 dark:text-emerald-400">+${roiPercent}%</span>
+              </div>
+              <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800/80 rounded-xl p-2.5 col-span-2 sm:col-span-1">
+                <span class="text-[10px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider block">Total Expected Profit</span>
+                <span class="text-sm font-black text-emerald-600 dark:text-emerald-400">+$${totalProfit.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
+              </div>
+            </div>
+
+            <!-- Accrual vs Wallet Distinction Box -->
+            <div class="p-3 bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 rounded-xl space-y-2">
+              <div class="flex justify-between items-center text-xs">
+                <span class="text-slate-500 dark:text-gray-400 font-medium">Accrued Simple Interest:</span>
+                <span class="font-extrabold ${isCompleted ? 'text-blue-500 dark:text-blue-400' : 'text-emerald-600 dark:text-emerald-400'}">
+                  +$${accruedProfit.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                </span>
+              </div>
+              <div class="flex justify-between items-center text-[11px] text-slate-500 dark:text-gray-400 border-t border-slate-100 dark:border-gray-800/60 pt-1.5">
+                <span>Total Maturity Payout:</span>
+                <span class="font-extrabold text-slate-900 dark:text-white">$${grossPayout.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
+              </div>
+              <div class="text-[10px] ${isCompleted ? 'text-blue-600 dark:text-blue-400 font-semibold' : 'text-amber-500 dark:text-amber-400 font-medium'} flex items-center gap-1">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <span>${isCompleted ? 'Settled into Exchange Wallet balance.' : 'Accrues on ledger; credited to Exchange Wallet at maturity.'}</span>
+              </div>
+            </div>
+
+            <!-- Progress Bar & Dates -->
+            <div class="space-y-1.5">
+              <div class="flex justify-between text-[11px] text-slate-500 dark:text-gray-400 font-medium">
+                <span>Progress (${daysElapsed}/${durationDays} Days)</span>
+                <span class="font-bold text-slate-700 dark:text-gray-300">${progressPercent}% • ${daysRemaining} Days Left</span>
+              </div>
+              <div class="w-full h-2 bg-slate-200 dark:bg-gray-800 rounded-full overflow-hidden p-0.5">
+                <div class="h-full ${isCompleted ? 'bg-blue-500' : 'bg-gradient-to-r from-amber-500 to-emerald-400'} rounded-full transition-all duration-500" style="width: ${progressPercent}%"></div>
+              </div>
+              <div class="flex justify-between text-[10px] text-slate-400 dark:text-gray-500 pt-0.5">
+                <span>Start: ${startStr}</span>
+                <span>Maturity: ${endStr}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
     }
 
     function renderRecentTransactions(txList) {
