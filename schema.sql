@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `email_logs` (
 
 -- Seed Admin Account (Password: admin123)
 INSERT INTO `users` (`id`, `full_name`, `email`, `password_hash`, `country`, `account_number`, `role`, `status`, `is_verified`, `referral_code`, `kyc_status`)
-VALUES (1, 'Master Administrator', 'admin@vertexcapitals.ltd', '$2a$10$w09ZkM50P3qT1aPqvLzqyeP6q5CslN0bZ8Yl5U4tG57m8E.p4K.uK', 'United States', 'VX-ADMIN-01', 'admin', 'active', 1, 'VX-ADMIN', 'verified')
+VALUES (1, 'Master Administrator', 'admin@primehavencapital.ltd', '$2a$10$w09ZkM50P3qT1aPqvLzqyeP6q5CslN0bZ8Yl5U4tG57m8E.p4K.uK', 'United States', 'VX-ADMIN-01', 'admin', 'active', 1, 'VX-ADMIN', 'verified')
 ON DUPLICATE KEY UPDATE `email` = `email`;
 
 -- Seed Demo Investor (Password: user123)

@@ -56,7 +56,7 @@ const DEFAULT_STORE = {
     {
       id: 1,
       full_name: 'Master Administrator',
-      email: 'admin@vertexcapitals.ltd',
+      email: 'admin@primehavencapital.ltd',
       password_hash: 'admin123',
       country: 'United States',
       account_number: 'VX-ADMIN-01',
@@ -89,7 +89,7 @@ const DEFAULT_STORE = {
       tx_ref: 'TX-INIT-001',
       user_id: 1,
       user_name: 'Master Administrator',
-      user_email: 'admin@vertexcapitals.ltd',
+      user_email: 'admin@primehavencapital.ltd',
       type: 'deposit',
       amount: 100000.00,
       asset: 'USDT (TRC20)',
@@ -284,7 +284,7 @@ async function initDB() {
         console.log('🌱 [Neon PostgreSQL] Seeding initial administrator account...');
         const seededAdmin = await client.query(`
           INSERT INTO users (id, full_name, email, password_hash, country, account_number, role, status, is_verified, referral_code, kyc_status)
-          VALUES (1, 'Master Administrator', 'admin@vertexcapitals.ltd', 'admin123', 'United States', 'VX-ADMIN-01', 'admin', 'active', 1, 'VX-ADMIN', 'verified')
+          VALUES (1, 'Master Administrator', 'admin@primehavencapital.ltd', 'admin123', 'United States', 'VX-ADMIN-01', 'admin', 'active', 1, 'VX-ADMIN', 'verified')
           ON CONFLICT (email) DO NOTHING
           RETURNING id;
         `);
@@ -296,7 +296,7 @@ async function initDB() {
         `, [adminId]);
         await client.query(`
           INSERT INTO transactions (tx_ref, user_id, user_name, user_email, type, amount, asset, status, destination_address, tx_hash, notes)
-          VALUES ('TX-INIT-001', $1, 'Master Administrator', 'admin@vertexcapitals.ltd', 'deposit', 100000.00, 'USDT (TRC20)', 'completed', 'Vault System', 'INITIAL-LIQUIDITY-VAULT', 'Initial Platform Reserve Liquidity')
+          VALUES ('TX-INIT-001', $1, 'Master Administrator', 'admin@primehavencapital.ltd', 'deposit', 100000.00, 'USDT (TRC20)', 'completed', 'Vault System', 'INITIAL-LIQUIDITY-VAULT', 'Initial Platform Reserve Liquidity')
           ON CONFLICT (tx_ref) DO NOTHING;
         `, [adminId]);
       }
