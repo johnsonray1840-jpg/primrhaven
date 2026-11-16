@@ -30,7 +30,8 @@ CREATE TABLE IF NOT EXISTS wallets (
   otc_investment_balance NUMERIC(18, 2) DEFAULT 0.00,
   accrued_profit NUMERIC(18, 2) DEFAULT 0.00,
   total_invested NUMERIC(18, 2) DEFAULT 0.00,
-  updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT chk_wallets_non_negative CHECK (exchange_balance >= 0 AND otc_investment_balance >= 0 AND accrued_profit >= 0)
 );
 
 -- 3. OTC Investment Plans Table
