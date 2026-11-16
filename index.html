@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
-  <title>VertexCapitals — Global Asset & Wealth Exchange</title>
-  <meta name="description" content="Institutional currency exchange, segregated cold vault custody, and audited OTC investment tranches with predictable simple-interest maturity returns.">
+  <title>VertexCapitals — Institutional Wealth Management &amp; OTC Portal</title>
+  <meta name="description" content="Structured Short-Term and Long-Term investment plans backed by dual-wallet custody, immutable terms snapshots, simple-interest projections, and automated maturity settlement.">
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
   <script>
     (function() {
@@ -45,456 +45,628 @@
 </head>
 <body class="bg-[#F8FAFC] dark:bg-[#070A11] text-slate-900 dark:text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-primary selection:text-white">
 
-  <!-- Sticky Institutional Navigation Header -->
-  <header class="vx-glass-header sticky top-0 z-50 w-full transition-colors">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
-      <div class="flex items-center gap-3">
-        <a href="index.html" class="flex items-center gap-2.5">
+  <!-- Sticky Responsive Navigation -->
+  <header class="vx-glass-header sticky top-0 z-50 w-full">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[76px] flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 shrink-0">
+        <a href="index.html" class="flex items-center gap-2.5" aria-label="VertexCapitals Home">
           <img src="images/navbarlogo.svg" alt="VertexCapitals Logo" class="h-7 sm:h-8 brand-logo-adaptive">
         </a>
-        <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-primary/10 text-primary dark:text-blue-400 border border-primary/20 uppercase tracking-widest">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-          Institutional Desk
+        <span class="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-primary/10 text-primary dark:text-blue-400 border border-primary/20 uppercase tracking-widest">
+          Wealth &amp; OTC Desk
         </span>
       </div>
 
-      <!-- Desktop Navigation Links -->
-      <nav aria-label="Primary Navigation" class="hidden xl:flex items-center gap-1 text-sm font-semibold text-slate-600 dark:text-slate-300">
-        <a href="index.html" class="px-3.5 py-2 rounded-xl text-primary dark:text-white bg-primary/10 dark:bg-primary/20 border border-primary/20">Home</a>
-        <a href="#homepage-plans-section" class="px-3.5 py-2 rounded-xl hover:text-primary dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-colors">Investment Plans</a>
-        <a href="about.html" class="px-3.5 py-2 rounded-xl hover:text-primary dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-colors">About Us</a>
-        <a href="apply.html" class="px-3.5 py-2 rounded-xl hover:text-primary dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-colors">Apply for Partnership</a>
-        <a href="support.html" class="px-3.5 py-2 rounded-xl hover:text-primary dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-colors">Support</a>
+      <!-- Primary Desktop Navigation -->
+      <nav aria-label="Primary Navigation" class="hidden xl:flex items-center gap-1 text-[13px] font-semibold text-slate-600 dark:text-slate-300">
+        <a href="index.html" aria-current="page" class="vx-nav-link px-3 py-2 rounded-xl">Home</a>
+        <a href="#homepage-plans-section" class="vx-nav-link px-3 py-2 rounded-xl hover:text-primary dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-white/5">Investment Plans</a>
+        <a href="#how-it-works" class="vx-nav-link px-3 py-2 rounded-xl hover:text-primary dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-white/5">How It Works</a>
+        <a href="#platform-features" class="vx-nav-link px-3 py-2 rounded-xl hover:text-primary dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-white/5">Features</a>
+        <a href="#security-transparency" class="vx-nav-link px-3 py-2 rounded-xl hover:text-primary dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-white/5">Security</a>
+        <a href="#faq" class="vx-nav-link px-3 py-2 rounded-xl hover:text-primary dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-white/5">FAQ</a>
+        <a href="about.html" class="vx-nav-link px-3 py-2 rounded-xl hover:text-primary dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-white/5">About</a>
+        <a href="apply.html" class="vx-nav-link px-3 py-2 rounded-xl hover:text-primary dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-white/5">Partners</a>
       </nav>
 
-      <!-- Desktop Auth & Controls -->
-      <div class="flex items-center gap-2.5">
+      <!-- Auth & Theme Controls -->
+      <div class="flex items-center gap-2.5 shrink-0">
         <button onclick="VertexApp.toggleTheme()" class="theme-toggle-btn" title="Toggle Theme (Light / Dark Mode)" aria-label="Toggle color theme">
-          <svg class="sun-icon w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-          <svg class="moon-icon w-4 h-4 text-slate-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          <svg class="sun-icon w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="moon-icon w-4 h-4 text-slate-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
         </button>
 
+        <!-- Preserves nav-fix.js selector for dynamic logged-in replacement -->
         <div class="xl:flex hidden text-[17px] font-gilmerregular items-center gap-2.5">
-          <a href="login.html" class="vx-btn-secondary px-5 py-2.5 rounded-xl text-xs">Sign In</a>
-          <a href="register.html" class="vx-btn-primary px-5 py-2.5 rounded-xl text-xs">Start Investing</a>
+          <a href="login.html" class="vx-btn-secondary px-4 py-2.5 rounded-xl text-xs whitespace-nowrap">Sign In</a>
+          <a href="register.html" class="vx-btn-primary px-5 py-2.5 rounded-xl text-xs whitespace-nowrap">Get Started</a>
         </div>
 
-        <!-- Mobile Menu Trigger (Preserves nav-fix.js class selector) -->
-        <button class="flex xl:hidden flex-col justify-center items-center w-10 h-10 rounded-xl bg-slate-100 dark:bg-[#101726] border border-slate-200 dark:border-gray-800" aria-label="Open menu">
+        <!-- Mobile Menu Trigger (Preserves button.flex-col selector for nav-fix.js) -->
+        <button type="button" class="flex xl:hidden flex-col justify-center items-center w-10 h-10 rounded-xl bg-slate-100 dark:bg-[#101726] border border-slate-200 dark:border-gray-800" aria-label="Toggle mobile navigation" aria-controls="mobile-nav-drawer">
           <span class="bg-slate-800 dark:bg-slate-200 block h-0.5 w-5 rounded-sm -translate-y-0.5"></span>
           <span class="bg-slate-800 dark:bg-slate-200 block h-0.5 w-5 rounded-sm my-0.5"></span>
           <span class="bg-slate-800 dark:bg-slate-200 block h-0.5 w-5 rounded-sm translate-y-0.5"></span>
         </button>
       </div>
     </div>
+
+    <!-- Pre-rendered Adaptive Mobile Navigation Drawer (controlled cleanly by nav-fix.js) -->
+    <div id="mobile-nav-drawer" style="display: none;" class="xl:hidden fixed inset-x-0 top-[76px] bottom-0 bg-white/95 dark:bg-[#0C121E]/95 backdrop-blur-lg border-t border-slate-200 dark:border-gray-800 z-[998] flex-col p-6 space-y-2 overflow-y-auto text-sm font-semibold">
+      <a href="index.html" aria-current="page" class="px-4 py-3 rounded-xl bg-primary/10 text-primary dark:text-blue-400 border border-primary/20">Home</a>
+      <a href="#homepage-plans-section" onclick="closeMobileNavDrawer()" class="px-4 py-3 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5">Investment Plans</a>
+      <a href="#how-it-works" onclick="closeMobileNavDrawer()" class="px-4 py-3 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5">How It Works</a>
+      <a href="#platform-features" onclick="closeMobileNavDrawer()" class="px-4 py-3 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5">Features</a>
+      <a href="#security-transparency" onclick="closeMobileNavDrawer()" class="px-4 py-3 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5">Security &amp; Transparency</a>
+      <a href="#faq" onclick="closeMobileNavDrawer()" class="px-4 py-3 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5">FAQ</a>
+      <a href="about.html" class="px-4 py-3 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5">About VertexCapitals</a>
+      <a href="apply.html" class="px-4 py-3 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5">Partner Program</a>
+      <div id="mobile-drawer-auth" class="pt-4 mt-4 border-t border-slate-200 dark:border-gray-800 grid grid-cols-2 gap-3">
+        <a href="login.html" class="vx-btn-secondary py-3 rounded-xl text-xs text-center">Sign In</a>
+        <a href="register.html" class="vx-btn-primary py-3 rounded-xl text-xs text-center">Get Started</a>
+      </div>
+    </div>
   </header>
 
   <main class="flex-1">
-    <!-- Hero Section -->
-    <section class="relative overflow-hidden pt-12 pb-16 sm:pt-20 sm:pb-24">
-      <div class="absolute inset-x-0 -top-24 h-96 bg-gradient-to-b from-primary/10 via-primary/5 to-transparent blur-3xl pointer-events-none"></div>
 
+    <!-- ================================================================ -->
+    <!-- HERO SECTION                                                     -->
+    <!-- ================================================================ -->
+    <section class="relative pt-14 pb-18 sm:pt-20 sm:pb-24 border-b border-slate-200/80 dark:border-gray-800/80 overflow-hidden">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          <!-- Hero Left Copy -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+
+          <!-- Left Editorial Column -->
           <div class="lg:col-span-6 space-y-6 text-center lg:text-left">
             <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white dark:bg-[#0C121E] border border-slate-200 dark:border-gray-800 shadow-sm">
               <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-              <span class="text-[11px] font-extrabold uppercase tracking-widest text-slate-700 dark:text-slate-200">VertexCapitals — Institutional Wealth & Exchange</span>
+              <span class="text-[11px] font-bold uppercase tracking-widest text-slate-600 dark:text-slate-300">Institutional Wealth &amp; OTC Platform</span>
             </div>
 
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.08] text-slate-900 dark:text-white">
-              Precision <span class="text-primary">Exchange</span> & Audited OTC Yield
+            <h1 class="text-3xl sm:text-4xl lg:text-[46px] font-extrabold tracking-tight leading-[1.12] text-slate-900 dark:text-white">
+              Structured Capital Allocation &amp; Transparent Simple-Interest Returns
             </h1>
 
-            <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-              Seamlessly exchange multi-currency liquidity and allocate capital into fixed-term institutional OTC tranches backed by segregated cold vault custody and automated maturity settlement.
+            <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl mx-auto lg:mx-0">
+              Allocate liquid Exchange funds into Short-Term or Long-Term investment plans with locked contractual terms, real-time accrual visibility, and automated maturity settlement credited back to your wallet.
             </p>
 
-            <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-2">
-              <a href="register.html" class="vx-btn-primary w-full sm:w-auto px-7 py-3.5 rounded-2xl text-sm">
-                <span>Start Investing Today</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 pt-1">
+              <a href="register.html" class="vx-btn-primary w-full sm:w-auto px-7 py-3.5 rounded-xl text-sm">
+                <span>Get Started</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
               </a>
-              <a href="#homepage-plans-section" class="vx-btn-secondary w-full sm:w-auto px-7 py-3.5 rounded-2xl text-sm">
-                <span>Explore Yield Tiers</span>
+              <a href="login.html" class="vx-btn-secondary w-full sm:w-auto px-6 py-3.5 rounded-xl text-sm">
+                <span>Sign In</span>
+              </a>
+              <a href="#homepage-plans-section" class="text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-blue-400 px-3 py-2 transition-colors">
+                Browse Active Plans &rarr;
               </a>
             </div>
 
-            <!-- Live Institutional Trust Metrics Strip -->
+            <!-- Factual Platform Architecture Strip (Zero fabricated volume/investor stats) -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-slate-200/80 dark:border-gray-800/80 text-left">
-              <div class="p-3 rounded-2xl bg-white/80 dark:bg-[#0C121E]/80 border border-slate-200 dark:border-gray-800/80">
-                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Net Worth</p>
-                <p class="text-lg font-extrabold text-slate-900 dark:text-white stat-number">$205M+</p>
+              <div class="p-3.5 rounded-2xl bg-white dark:bg-[#0C121E] border border-slate-200/90 dark:border-gray-800/80">
+                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Interest Model</p>
+                <p class="text-xs font-extrabold text-slate-900 dark:text-white mt-1">Simple Interest</p>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">P &times; (ROI% / 100)</p>
               </div>
-              <div class="p-3 rounded-2xl bg-white/80 dark:bg-[#0C121E]/80 border border-slate-200 dark:border-gray-800/80">
-                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Transactions</p>
-                <p class="text-lg font-extrabold text-primary stat-number">150K+</p>
+              <div class="p-3.5 rounded-2xl bg-white dark:bg-[#0C121E] border border-slate-200/90 dark:border-gray-800/80">
+                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Plan Categories</p>
+                <p class="text-xs font-extrabold text-slate-900 dark:text-white mt-1">Short &amp; Long Term</p>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5" id="hero-cat-summary">Live catalogue sync</p>
               </div>
-              <div class="p-3 rounded-2xl bg-white/80 dark:bg-[#0C121E]/80 border border-slate-200 dark:border-gray-800/80">
-                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Investors</p>
-                <p class="text-lg font-extrabold text-slate-900 dark:text-white stat-number">50K+</p>
+              <div class="p-3.5 rounded-2xl bg-white dark:bg-[#0C121E] border border-slate-200/90 dark:border-gray-800/80">
+                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Account Structure</p>
+                <p class="text-xs font-extrabold text-slate-900 dark:text-white mt-1">Dual-Wallet</p>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Exchange + OTC Vault</p>
               </div>
-              <div class="p-3 rounded-2xl bg-white/80 dark:bg-[#0C121E]/80 border border-slate-200 dark:border-gray-800/80">
-                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Min Deposit</p>
-                <p class="text-lg font-extrabold text-emerald-600 dark:text-emerald-400 stat-number">$100</p>
+              <div class="p-3.5 rounded-2xl bg-white dark:bg-[#0C121E] border border-slate-200/90 dark:border-gray-800/80">
+                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Maturity Payout</p>
+                <p class="text-xs font-extrabold text-emerald-600 dark:text-emerald-400 mt-1">Atomic Credit</p>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Principal + Profit</p>
               </div>
             </div>
           </div>
 
-          <!-- Hero Right Visual & Institutional Portfolio Telemetry Card -->
-          <div class="lg:col-span-6 relative">
-            <div class="vx-card p-6 sm:p-7 space-y-5 relative overflow-hidden">
-              <div class="flex items-center justify-between border-b border-slate-200 dark:border-gray-800 pb-4">
-                <div class="flex items-center gap-2.5">
-                  <div class="w-9 h-9 rounded-xl bg-primary text-white flex items-center justify-center shadow-md shadow-primary/25">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          <!-- Right Interactive Return Simulator & Live Catalogue Card -->
+          <div class="lg:col-span-6">
+            <div class="vx-card p-6 sm:p-7 space-y-5">
+              <div class="flex items-center justify-between gap-3 border-b border-slate-200/80 dark:border-gray-800/80 pb-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary dark:text-blue-400 border border-primary/20 flex items-center justify-center shrink-0">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
                   </div>
                   <div>
-                    <p class="text-xs font-extrabold text-slate-900 dark:text-white">Institutional Vault Terminal</p>
-                    <p class="text-[11px] text-slate-500 dark:text-slate-400">Simple-Interest OTC Lifecycle Engine</p>
+                    <h2 class="text-sm font-extrabold text-slate-900 dark:text-white">Simple-Interest Yield Simulator</h2>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400">Interactive payout calculation from active PostgreSQL plans</p>
                   </div>
                 </div>
-                <span class="vx-badge vx-badge-emerald">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Audited
-                </span>
+                <span id="hero-live-plan-count" class="vx-badge vx-badge-emerald shrink-0">Loading...</span>
               </div>
 
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
-                <div class="space-y-4">
-                  <div class="p-4 rounded-2xl bg-gradient-to-br from-[#183EFA] via-[#102DA8] to-[#07134D] text-white shadow-xl">
-                    <p class="text-[10px] uppercase tracking-widest text-white/75 font-bold">Platform Exchange Liquidity</p>
-                    <p class="text-2xl sm:text-3xl font-extrabold mt-1 stat-number">$20,000,000+</p>
-                    <div class="mt-3 pt-2.5 border-t border-white/15 flex justify-between text-[11px] text-white/85">
-                      <span>OTC Pool Volume</span>
-                      <span class="font-bold text-emerald-300">$858K+ Active</span>
-                    </div>
-                  </div>
-
-                  <div class="p-4 rounded-2xl bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 space-y-2.5">
-                    <div class="flex justify-between items-center text-xs">
-                      <span class="font-semibold text-slate-600 dark:text-slate-300">Vault Allocation Mix</span>
-                      <span class="font-bold text-primary stat-number">100% Tracked</span>
-                    </div>
-                    <div class="vx-allocation-bar">
-                      <div class="vx-allocation-seg bg-primary" style="width: 58%"></div>
-                      <div class="vx-allocation-seg bg-emerald-500" style="width: 30%"></div>
-                      <div class="vx-allocation-seg bg-amber-500" style="width: 12%"></div>
-                    </div>
-                    <div class="flex justify-between text-[10px] text-slate-500 dark:text-slate-400 font-semibold">
-                      <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary"></span>OTC Capital</span>
-                      <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>Liquid Vault</span>
-                      <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-500"></span>Maturity Yield</span>
-                    </div>
-                  </div>
+              <!-- Live Category Breakdown Pills -->
+              <div class="grid grid-cols-2 gap-3 text-xs">
+                <div class="p-3 rounded-xl bg-slate-50 dark:bg-[#101726] border border-slate-200/80 dark:border-gray-800 flex items-center justify-between">
+                  <span class="font-semibold text-slate-600 dark:text-slate-300">Short-Term Plans</span>
+                  <span id="hero-short-count" class="font-extrabold text-amber-600 dark:text-amber-400 stat-number">--</span>
                 </div>
-
-                <div class="rounded-2xl bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 p-3 flex items-center justify-center">
-                  <img alt="VertexCapitals Global Exchange Illustration" width="420" height="420" src="images/heroImageBg.33a626a6.png" class="w-full max-w-[260px] h-auto object-contain">
+                <div class="p-3 rounded-xl bg-slate-50 dark:bg-[#101726] border border-slate-200/80 dark:border-gray-800 flex items-center justify-between">
+                  <span class="font-semibold text-slate-600 dark:text-slate-300">Long-Term Plans</span>
+                  <span id="hero-long-count" class="font-extrabold text-primary dark:text-blue-400 stat-number">--</span>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- Core Institutional Pillars -->
-    <section class="py-10 bg-slate-900 text-white dark:bg-[#0C121E] border-y border-slate-800">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="p-5 rounded-2xl bg-white/5 border border-white/10 flex items-start gap-4">
-          <div class="w-11 h-11 rounded-xl bg-primary/20 text-blue-300 flex items-center justify-center shrink-0 border border-primary/30">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-          </div>
-          <div>
-            <h2 class="text-sm font-bold text-white">Flexible Capital Entry</h2>
-            <p class="text-xs text-slate-300 mt-1">Min Deposit: $100 with transparent multi-chain custody funding and instant balance verification.</p>
-          </div>
-        </div>
+              <!-- Simulator Inputs -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="hero-calc-plan" class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">Active Investment Plan</label>
+                  <select id="hero-calc-plan" onchange="onSimulatorPlanChange()" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-primary">
+                    <option value="">Loading live plans...</option>
+                  </select>
+                </div>
 
-        <div class="p-5 rounded-2xl bg-white/5 border border-white/10 flex items-start gap-4">
-          <div class="w-11 h-11 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center shrink-0 border border-emerald-500/30">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
-          </div>
-          <div>
-            <h2 class="text-sm font-bold text-white">Audited Simple-Interest ROI</h2>
-            <p class="text-xs text-slate-300 mt-1">Earn transparent fixed returns across Short-Term and Long-Term tranches credited atomically at maturity.</p>
-          </div>
-        </div>
-
-        <div class="p-5 rounded-2xl bg-white/5 border border-white/10 flex items-start gap-4">
-          <div class="w-11 h-11 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center shrink-0 border border-amber-500/30">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
-          </div>
-          <div>
-            <h2 class="text-sm font-bold text-white">24/7 Institutional Desk</h2>
-            <p class="text-xs text-slate-300 mt-1">Dedicated advisory via <span class="font-semibold text-white">support@vertexcapitals.ltd</span> and real-time portfolio reporting.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Core Services Section -->
-    <section class="py-16 sm:py-20">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          <div class="lg:col-span-4 bg-slate-900 dark:bg-[#0C121E] border border-slate-800 rounded-3xl p-8 text-white flex flex-col justify-between space-y-6">
-            <div class="space-y-3">
-              <span class="vx-badge vx-badge-primary">Core Infrastructure</span>
-              <h2 class="text-2xl sm:text-3xl font-extrabold">Our Services</h2>
-              <p class="text-xs uppercase tracking-widest text-blue-300 font-bold">Major Financial Activities</p>
-              <p class="text-sm text-slate-300 leading-relaxed">
-                As an exchange and investment institution, VertexCapitals delivers currency exchange liquidity and over-the-counter yield tranches built for predictable wealth preservation and growth.
-              </p>
-            </div>
-            <a href="about.html" class="vx-btn-primary px-5 py-3 rounded-xl text-xs w-fit">Explore Our Architecture</a>
-          </div>
-
-          <div class="lg:col-span-4 vx-card-interactive p-7 flex flex-col justify-between space-y-6">
-            <div class="space-y-4">
-              <div class="w-12 h-12 rounded-2xl bg-primary/10 text-primary border border-primary/20 flex items-center justify-center">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+                <div>
+                  <div class="flex items-center justify-between mb-1.5">
+                    <label for="hero-calc-amount" class="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Principal (USD)</label>
+                    <span id="hero-calc-limits" class="text-[10px] font-semibold text-slate-500 dark:text-slate-400 stat-number">Range: --</span>
+                  </div>
+                  <div class="relative">
+                    <span class="absolute left-3.5 top-2.5 text-xs font-bold text-slate-400">$</span>
+                    <input type="number" id="hero-calc-amount" min="0" step="50" value="0" oninput="updateSimulatorOutput()" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl pl-7 pr-3.5 py-2.5 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-primary stat-number">
+                  </div>
+                </div>
               </div>
-              <h3 class="text-xl font-extrabold text-slate-900 dark:text-white">Global Currency Exchange</h3>
-              <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                Convert local currencies and digital assets into your preferred settlement currency swiftly, safely, and with low institutional fee spreads.
-              </p>
-            </div>
-            <a href="about.html" class="vx-btn-secondary px-5 py-2.5 rounded-xl text-xs w-fit">Learn More</a>
-          </div>
 
-          <div class="lg:col-span-4 vx-card-interactive p-7 flex flex-col justify-between space-y-6">
-            <div class="space-y-4">
-              <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 flex items-center justify-center">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+              <!-- Projection Output Metrics -->
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+                <div class="p-3 rounded-xl bg-slate-50 dark:bg-[#101726] border border-slate-200/80 dark:border-gray-800">
+                  <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Term ROI</p>
+                  <p id="hero-calc-roi" class="text-sm font-extrabold text-primary dark:text-blue-400 mt-1 stat-number">--</p>
+                </div>
+                <div class="p-3 rounded-xl bg-slate-50 dark:bg-[#101726] border border-slate-200/80 dark:border-gray-800">
+                  <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Duration</p>
+                  <p id="hero-calc-duration" class="text-sm font-extrabold text-slate-900 dark:text-white mt-1 stat-number">--</p>
+                </div>
+                <div class="p-3 rounded-xl bg-slate-50 dark:bg-[#101726] border border-slate-200/80 dark:border-gray-800">
+                  <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Total Profit</p>
+                  <p id="hero-calc-profit" class="text-sm font-extrabold text-emerald-600 dark:text-emerald-400 mt-1 stat-number">--</p>
+                </div>
+                <div class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/25">
+                  <p class="text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300">Maturity Total</p>
+                  <p id="hero-calc-payout" class="text-sm font-extrabold text-slate-900 dark:text-white mt-1 stat-number">--</p>
+                </div>
               </div>
-              <h3 class="text-xl font-extrabold text-slate-900 dark:text-white">OTC Yield Investment</h3>
-              <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                Allocate liquid capital into company-managed market-maker tranches with fixed cycle durations, real-time accrual tracking, and atomic maturity settlement.
-              </p>
+
+              <!-- Principal vs Return Visual Breakdown -->
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-[#101726] border border-slate-200/80 dark:border-gray-800 space-y-2.5">
+                <div class="flex justify-between items-center text-[11px] font-semibold text-slate-600 dark:text-slate-300">
+                  <span>Maturity Composition (Principal + Simple Interest)</span>
+                  <span id="hero-bar-ratio" class="font-bold text-slate-900 dark:text-white stat-number">--</span>
+                </div>
+                <div class="vx-allocation-bar">
+                  <div id="hero-bar-principal" class="vx-allocation-seg bg-primary" style="width: 80%"></div>
+                  <div id="hero-bar-profit" class="vx-allocation-seg bg-emerald-500" style="width: 20%"></div>
+                </div>
+                <div class="flex justify-between text-[11px] font-semibold text-slate-500 dark:text-slate-400">
+                  <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-primary"></span><span id="hero-legend-principal">Principal</span></span>
+                  <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span><span id="hero-legend-profit">Simple-Interest Profit</span></span>
+                </div>
+              </div>
+
+              <a id="hero-calc-cta" href="invest-otc.html" class="vx-plan-cta vx-btn-primary w-full py-3.5 rounded-xl text-xs">
+                <span>Invest in Selected Plan</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
             </div>
-            <a href="invest-otc.html" class="vx-btn-emerald px-5 py-2.5 rounded-xl text-xs w-fit">Open OTC Desk</a>
           </div>
+
         </div>
       </div>
     </section>
 
-    <!-- Dynamic Public Investment Plans Catalogue (Preserved DOM Contract) -->
-    <section id="homepage-plans-section" class="py-16 sm:py-20 bg-slate-100/70 dark:bg-[#0A0F1A] border-y border-slate-200/80 dark:border-gray-800/80">
+    <!-- ================================================================ -->
+    <!-- DYNAMIC INVESTMENT PLANS CATALOGUE (Neon PostgreSQL /api/plans/active) -->
+    <!-- ================================================================ -->
+    <section id="homepage-plans-section" class="py-16 sm:py-24 bg-slate-100/70 dark:bg-[#0A0F1A] border-b border-slate-200/80 dark:border-gray-800/80">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center max-w-2xl mx-auto space-y-3 mb-10">
-          <span class="vx-badge vx-badge-primary">Audited Investment Plans</span>
-          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Choose Your Investment Tier</h2>
-          <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300">
-            Transparent capital growth backed by institutional liquidity. Filter Short-Term and Long-Term plans starting from $500 and $1,000+.
-          </p>
-        </div>
-
-        <!-- Category Switcher Tabs -->
-        <div class="flex flex-wrap justify-center items-center gap-2 mb-10" role="tablist" aria-label="Investment plan categories">
-          <button type="button" onclick="switchHomepageCategory('ALL')" id="home-cat-all" class="px-5 py-2.5 rounded-full text-xs font-bold transition-all bg-primary text-white shadow-md shadow-primary/25">All Plans</button>
-          <button type="button" onclick="switchHomepageCategory('Short-Term')" id="home-cat-short" class="px-5 py-2.5 rounded-full text-xs font-bold transition-all bg-white dark:bg-[#0C121E] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-gray-800 hover:border-primary/40">Short-Term Plans</button>
-          <button type="button" onclick="switchHomepageCategory('Long-Term')" id="home-cat-long" class="px-5 py-2.5 rounded-full text-xs font-bold transition-all bg-white dark:bg-[#0C121E] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-gray-800 hover:border-primary/40">Long-Term Plans</button>
-        </div>
-
-        <div id="homepage-plans-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="col-span-full py-12 text-center text-slate-500 dark:text-slate-400 font-medium">Loading active investment plans...</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- About & Platform Advantage -->
-    <section class="py-16 sm:py-20">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
-        <!-- About Split -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-          <div class="lg:col-span-6 space-y-5">
-            <span class="vx-badge vx-badge-primary">25+ Years Trading Heritage</span>
-            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">About VertexCapitals</h2>
-            <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-              Founded by veteran traders in Springfield, Illinois alongside European and African market specialists, VertexCapitals delivers reliable multi-currency exchange and over-the-counter investment services without needless friction.
-            </p>
-            <div class="flex flex-wrap gap-3 pt-2">
-              <a href="about.html" class="vx-btn-primary px-6 py-3 rounded-xl text-xs">Read Our Story</a>
-              <a href="apply.html" class="vx-btn-secondary px-6 py-3 rounded-xl text-xs">Partner Program</a>
-            </div>
-          </div>
-          <div class="lg:col-span-6 flex justify-center">
-            <div class="vx-card p-6 max-w-md w-full">
-              <img alt="About VertexCapitals" loading="lazy" width="493" height="493" src="images/aboutsecImagebg.a4b26456.png" class="w-full h-auto rounded-2xl">
-            </div>
-          </div>
-        </div>
-
-        <!-- Investing & Trading Features -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-          <div class="lg:col-span-6 order-2 lg:order-1 flex justify-center">
-            <div class="vx-card p-6 max-w-lg w-full">
-              <img alt="Investing and Trading Terminal" loading="lazy" width="627" height="627" src="images/tradinsec.60ed5efa.png" class="w-full h-auto rounded-2xl">
-            </div>
-          </div>
-          <div class="lg:col-span-6 order-1 lg:order-2 space-y-5">
-            <span class="vx-badge vx-badge-emerald">Security & Execution</span>
-            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Built for Institutional Clarity</h2>
-            <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-              Our platform combines tight currency conversion spreads with immutable transaction ledgers, segregated vault accounting, and clear fixed-duration returns.
-            </p>
-            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200 pt-2">
-              <li class="flex items-center gap-2.5 p-3 rounded-xl bg-white dark:bg-[#0C121E] border border-slate-200 dark:border-gray-800">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-primary shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Zero account opening fees</span>
-              </li>
-              <li class="flex items-center gap-2.5 p-3 rounded-xl bg-white dark:bg-[#0C121E] border border-slate-200 dark:border-gray-800">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-primary shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Fast crypto custody deposits</span>
-              </li>
-              <li class="flex items-center gap-2.5 p-3 rounded-xl bg-white dark:bg-[#0C121E] border border-slate-200 dark:border-gray-800">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-primary shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Priority maturity settlement</span>
-              </li>
-              <li class="flex items-center gap-2.5 p-3 rounded-xl bg-white dark:bg-[#0C121E] border border-slate-200 dark:border-gray-800">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-primary shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Audited PostgreSQL ledger</span>
-              </li>
-            </ul>
-            <div class="flex flex-wrap gap-3 pt-2">
-              <a href="dashboard.html" class="vx-btn-primary px-6 py-3 rounded-xl text-xs">Open Dashboard</a>
-              <a href="about.html" class="vx-btn-secondary px-6 py-3 rounded-xl text-xs">Learn More</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Academy & Research Section -->
-    <section class="py-16 sm:py-20 bg-slate-900 dark:bg-[#0C121E] text-white border-y border-slate-800">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-10">
-          <div class="space-y-2 max-w-xl">
-            <span class="vx-badge vx-badge-amber">Investor Academy</span>
-            <h2 class="text-3xl font-extrabold text-white">Market Intelligence & Training</h2>
-            <p class="text-sm text-slate-300">Structured guides and trading research designed for both new entrants and seasoned capital allocators.</p>
-          </div>
-          <a href="about.html" class="vx-btn-primary px-5 py-2.5 rounded-xl text-xs">Explore Academy</a>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="rounded-2xl overflow-hidden bg-[#101726] border border-white/10 flex flex-col justify-between">
-            <img alt="Video Tutorials" loading="lazy" src="images/videotutorial.e55e63db.png" class="w-full h-48 object-cover">
-            <div class="p-6 space-y-3">
-              <h3 class="text-lg font-bold text-white">Video Tutorials</h3>
-              <p class="text-xs text-slate-300 leading-relaxed">See how to configure custody deposits, allocate tranches, and monitor maturity progress smoothly.</p>
-              <a href="about.html" class="inline-flex items-center text-xs font-bold text-blue-400 hover:text-blue-300">Learn More -></a>
-            </div>
-          </div>
-
-          <div class="rounded-2xl overflow-hidden bg-[#101726] border border-white/10 flex flex-col justify-between">
-            <img alt="Vertex Academy" loading="lazy" src="images/academy.7b8bbe6c.png" class="w-full h-48 object-cover">
-            <div class="p-6 space-y-3">
-              <h3 class="text-lg font-bold text-white">Academy</h3>
-              <p class="text-xs text-slate-300 leading-relaxed">Build disciplined portfolio sizing and risk strategies suited for short-term and long-term yield cycles.</p>
-              <a href="about.html" class="inline-flex items-center text-xs font-bold text-blue-400 hover:text-blue-300">Learn More -></a>
-            </div>
-          </div>
-
-          <div class="rounded-2xl overflow-hidden bg-[#101726] border border-white/10 flex flex-col justify-between">
-            <img alt="Market News" loading="lazy" src="images/news.acfb6647.png" class="w-full h-48 object-cover">
-            <div class="p-6 space-y-3">
-              <h3 class="text-lg font-bold text-white">Market News</h3>
-              <p class="text-xs text-slate-300 leading-relaxed">Stay informed on macroeconomic liquidity shifts, FX volatility, and institutional treasury flows.</p>
-              <a href="about.html" class="inline-flex items-center text-xs font-bold text-blue-400 hover:text-blue-300">Learn More -></a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Testimonials & Location Section -->
-    <section class="py-16 sm:py-20">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-        <div>
-          <div class="text-center max-w-xl mx-auto mb-10 space-y-2">
-            <span class="vx-badge vx-badge-primary">Market Perspectives</span>
-            <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white">Testimonials & Principles</h2>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="vx-card p-6 space-y-4">
-              <p class="text-sm text-slate-700 dark:text-slate-200 leading-relaxed">"We know that investment causes growth but it is also true that growth causes investment."</p>
-              <p class="text-xs font-bold text-primary dark:text-blue-400">Jim Stanford</p>
-            </div>
-            <div class="vx-card p-6 space-y-4">
-              <p class="text-sm text-slate-700 dark:text-slate-200 leading-relaxed">"Look at market fluctuations as your friend rather than your enemy. Profit from folly rather than participate in it."</p>
-              <p class="text-xs font-bold text-primary dark:text-blue-400">Warren Buffett</p>
-            </div>
-            <div class="vx-card p-6 space-y-4">
-              <p class="text-sm text-slate-700 dark:text-slate-200 leading-relaxed">"Gold is a great way to preserve wealth, but it is hard to move around. You do need some kind of alternative, and digital assets fit the bill."</p>
-              <p class="text-xs font-bold text-primary dark:text-blue-400">Jim Richards</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Global Presence -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <div class="lg:col-span-7 vx-card overflow-hidden p-2">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d429174.12177355035!2d-97.06122195188222!3d32.82080972372844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864c19f77b45974b%3A0xb9ec9ba4f647678f!2sDallas%2C%20TX%2C%20USA!5e0!3m2!1sen!2sng!4v1685782923328!5m2!1sen!2sng"
-              width="100%" height="340" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-              class="w-full rounded-2xl border-0" title="VertexCapitals US Desk Location"></iframe>
-          </div>
-          <div class="lg:col-span-5 space-y-4">
-            <span class="vx-badge vx-badge-primary">Global Operations</span>
-            <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white">Our Location</h2>
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+          <div class="max-w-2xl space-y-2.5">
+            <span class="vx-badge vx-badge-primary">Live PostgreSQL Catalogue</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Investment Plans</h2>
             <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-              Serving institutional and individual clients across North America, Europe, Asia, Africa, and Australia with 24/7 digital custody and multi-currency exchange infrastructure.
+              Every plan listed below is synchronized directly from our platform database. Compare Short-Term and Long-Term investment cycles with full contractual terms locked upon allocation.
             </p>
+          </div>
+
+          <!-- Category Filter Controls (Preserved IDs) -->
+          <div class="flex flex-wrap items-center gap-1.5 p-1.5 rounded-2xl bg-white dark:bg-[#0C121E] border border-slate-200 dark:border-gray-800 shadow-sm shrink-0" role="tablist" aria-label="Investment plan categories">
+            <button type="button" onclick="switchHomepageCategory('ALL')" id="home-cat-all" class="px-4 py-2 rounded-xl text-xs font-bold transition-colors bg-primary text-white">All Categories</button>
+            <button type="button" onclick="switchHomepageCategory('Short-Term')" id="home-cat-short" class="px-4 py-2 rounded-xl text-xs font-bold transition-colors text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">Short-Term</button>
+            <button type="button" onclick="switchHomepageCategory('Long-Term')" id="home-cat-long" class="px-4 py-2 rounded-xl text-xs font-bold transition-colors text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">Long-Term</button>
           </div>
         </div>
 
-        <!-- CTA Banner -->
-        <div class="vx-card p-8 sm:p-12 text-center space-y-5 bg-gradient-to-br from-white via-slate-50 to-blue-50/70 dark:from-[#0C121E] dark:via-[#101726] dark:to-[#070A11]">
-          <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">
-            Trade with <span class="text-primary">VertexCapitals</span> Today
-          </h2>
-          <p class="text-sm text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
-            Verified exchange and OTC investment infrastructure built with minimal transaction friction, cold vault security, and transparent portfolio tracking.
-          </p>
-          <div class="pt-2">
-            <a href="register.html" class="vx-btn-primary px-8 py-4 rounded-2xl text-sm">Create Your Investor Account</a>
+        <!-- Dynamic Category Container (No hardcoded plan items) -->
+        <div id="homepage-plans-container" class="space-y-12">
+          <div class="vx-card p-10 text-center text-sm font-medium text-slate-500 dark:text-slate-400">
+            Loading active Short-Term and Long-Term investment plans...
           </div>
         </div>
       </div>
     </section>
+
+    <!-- ================================================================ -->
+    <!-- HOW IT WORKS SECTION                                             -->
+    <!-- ================================================================ -->
+    <section id="how-it-works" class="py-16 sm:py-24 border-b border-slate-200/80 dark:border-gray-800/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        <div class="max-w-2xl space-y-2.5">
+          <span class="vx-badge vx-badge-primary">Execution Lifecycle</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">How VertexCapitals Works</h2>
+          <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+            A disciplined four-step capital lifecycle connecting liquid wallet deposits to structured OTC maturity settlement.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="vx-card p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold tracking-widest text-primary dark:text-blue-400 uppercase stat-number">Step 01</span>
+              <div class="w-9 h-9 rounded-xl bg-primary/10 text-primary dark:text-blue-400 flex items-center justify-center">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>
+              </div>
+            </div>
+            <h3 class="text-base font-extrabold text-slate-900 dark:text-white">Register &amp; Verify</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              Open an investor profile and complete mandatory 6-digit email OTP verification before accessing portfolio tools.
+            </p>
+          </div>
+
+          <div class="vx-card p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold tracking-widest text-primary dark:text-blue-400 uppercase stat-number">Step 02</span>
+              <div class="w-9 h-9 rounded-xl bg-primary/10 text-primary dark:text-blue-400 flex items-center justify-center">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+              </div>
+            </div>
+            <h3 class="text-base font-extrabold text-slate-900 dark:text-white">Fund Exchange Wallet</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              Transfer digital assets via verified custody addresses and submit the proof hash for settlement into your Exchange Wallet.
+            </p>
+          </div>
+
+          <div class="vx-card p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold tracking-widest text-primary dark:text-blue-400 uppercase stat-number">Step 03</span>
+              <div class="w-9 h-9 rounded-xl bg-primary/10 text-primary dark:text-blue-400 flex items-center justify-center">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </div>
+            </div>
+            <h3 class="text-base font-extrabold text-slate-900 dark:text-white">Select Plan &amp; Allocate</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              Choose an active Short-Term or Long-Term tranche, review ROI and maturity projections, and confirm allocation atomically.
+            </p>
+          </div>
+
+          <div class="vx-card p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold tracking-widest text-emerald-600 dark:text-emerald-400 uppercase stat-number">Step 04</span>
+              <div class="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+              </div>
+            </div>
+            <h3 class="text-base font-extrabold text-slate-900 dark:text-white">Track &amp; Settle at Maturity</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              Monitor timestamp-derived progress in your dashboard until scheduled settlement credits principal plus simple-interest profit.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- PLATFORM FEATURES SECTION                                        -->
+    <!-- ================================================================ -->
+    <section id="platform-features" class="py-16 sm:py-24 bg-slate-100/70 dark:bg-[#0A0F1A] border-b border-slate-200/80 dark:border-gray-800/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        <div class="max-w-2xl space-y-2.5">
+          <span class="vx-badge vx-badge-primary">Platform Architecture</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Built for Financial Precision</h2>
+          <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+            Engineered to separate liquid spendable funds from allocated investment principal while keeping every calculation deterministic and auditable.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="vx-card p-6 space-y-3">
+            <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary dark:text-blue-400 flex items-center justify-center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            </div>
+            <h3 class="text-base font-extrabold text-slate-900 dark:text-white">Dual-Wallet Custody Segregation</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              Liquid Exchange balances (for deposits and withdrawals) remain strictly segregated from locked OTC investment principal until contract maturity.
+            </p>
+          </div>
+
+          <div class="vx-card p-6 space-y-3">
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            </div>
+            <h3 class="text-base font-extrabold text-slate-900 dark:text-white">Deterministic Simple-Interest Math</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              Returns follow straightforward full-duration simple interest (`principal × (ROI / 100)`) with elapsed accrual derived from authoritative timestamps.
+            </p>
+          </div>
+
+          <div class="vx-card p-6 space-y-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <h3 class="text-base font-extrabold text-slate-900 dark:text-white">Immutable Purchase Snapshot</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              Each customer contract stores a permanent snapshot of agreed ROI, duration, start time, and maturity time—unaffected by future catalogue edits.
+            </p>
+          </div>
+
+          <div class="vx-card p-6 space-y-3">
+            <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary dark:text-blue-400 flex items-center justify-center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <h3 class="text-base font-extrabold text-slate-900 dark:text-white">Near-Real-Time Portfolio Sync</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              Dashboards reflect active allocations immediately after confirmation, showing elapsed cycle days, accrued profit, and full transaction ledger entries.
+            </p>
+          </div>
+
+          <div class="vx-card p-6 space-y-3">
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <h3 class="text-base font-extrabold text-slate-900 dark:text-white">Automated Maturity Settlement</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              Scheduled serverless settlement checks matured contracts, locks records against duplicate execution, and credits principal plus profit atomically.
+            </p>
+          </div>
+
+          <div class="vx-card p-6 space-y-3">
+            <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary dark:text-blue-400 flex items-center justify-center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3 class="text-base font-extrabold text-slate-900 dark:text-white">Introducing Broker Program</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              Institutional and wealth partners gain dedicated referral attribution and multi-tier volume reporting through our partner portal.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- SECURITY & TRANSPARENCY SECTION                                  -->
+    <!-- ================================================================ -->
+    <section id="security-transparency" class="py-16 sm:py-24 border-b border-slate-200/80 dark:border-gray-800/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          <div class="lg:col-span-6 space-y-6">
+            <div class="space-y-2.5">
+              <span class="vx-badge vx-badge-emerald">Security &amp; Auditability</span>
+              <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Engineered for Ledger Integrity</h2>
+              <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                Every balance movement, investment subscription, and maturity payout is enforced inside Neon PostgreSQL transactions with strict validation and duplicate protection.
+              </p>
+            </div>
+
+            <div class="space-y-4">
+              <div class="p-4 rounded-2xl bg-white dark:bg-[#0C121E] border border-slate-200 dark:border-gray-800 flex items-start gap-3.5">
+                <div class="w-8 h-8 rounded-lg bg-primary/10 text-primary dark:text-blue-400 flex items-center justify-center shrink-0 mt-0.5">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div>
+                  <h3 class="text-sm font-extrabold text-slate-900 dark:text-white">ACID Database Transactions</h3>
+                  <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">Plan validation, wallet debits, investment record creation, and ledger writes commit together or roll back cleanly on any failure.</p>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-white dark:bg-[#0C121E] border border-slate-200 dark:border-gray-800 flex items-start gap-3.5">
+                <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </div>
+                <div>
+                  <h3 class="text-sm font-extrabold text-slate-900 dark:text-white">Idempotent Requests &amp; Concurrency Locks</h3>
+                  <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">Unique transaction references and row-level database locks prevent double debits, overlapping cron runs, or duplicate settlement credits.</p>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-white dark:bg-[#0C121E] border border-slate-200 dark:border-gray-800 flex items-start gap-3.5">
+                <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 mt-0.5">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                </div>
+                <div>
+                  <h3 class="text-sm font-extrabold text-slate-900 dark:text-white">Fixed-Point Precision &amp; Audit Trail</h3>
+                  <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">Financial values use exact PostgreSQL numeric columns alongside integer-cent settlement arithmetic to prevent floating-point rounding drift.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Illustrative Contract Lifecycle Schema (Clearly labeled architectural visualization) -->
+          <div class="lg:col-span-6">
+            <div class="vx-card p-6 sm:p-7 space-y-5">
+              <div class="flex items-center justify-between border-b border-slate-200/80 dark:border-gray-800/80 pb-4">
+                <div>
+                  <p class="text-[11px] font-bold uppercase tracking-widest text-primary dark:text-blue-400">Architecture Specification</p>
+                  <h3 class="text-base font-extrabold text-slate-900 dark:text-white mt-0.5">Investment Record &amp; Lifecycle Flow</h3>
+                </div>
+                <span class="vx-badge vx-badge-primary">Schema View</span>
+              </div>
+
+              <div class="space-y-3 text-xs">
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 space-y-2">
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-slate-900 dark:text-white">1. Allocation Transaction</span>
+                    <span class="vx-badge vx-badge-primary">Atomic Lock</span>
+                  </div>
+                  <p class="text-slate-600 dark:text-slate-300">Verifies active plan limits, checks liquid balance, debits <code class="px-1.5 py-0.5 rounded bg-slate-200/70 dark:bg-gray-800 text-[11px]">exchange_balance</code>, and inserts an immutable ledger entry.</p>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 space-y-2">
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-slate-900 dark:text-white">2. Immutable Contract Snapshot</span>
+                    <span class="vx-badge vx-badge-amber">Locked Terms</span>
+                  </div>
+                  <div class="grid grid-cols-2 gap-2 pt-1 font-mono text-[11px] text-slate-700 dark:text-slate-300">
+                    <div class="px-2.5 py-1.5 rounded-lg bg-white dark:bg-[#070A11] border border-slate-200 dark:border-gray-800">principal_amount</div>
+                    <div class="px-2.5 py-1.5 rounded-lg bg-white dark:bg-[#070A11] border border-slate-200 dark:border-gray-800">roi_percentage</div>
+                    <div class="px-2.5 py-1.5 rounded-lg bg-white dark:bg-[#070A11] border border-slate-200 dark:border-gray-800">duration_days</div>
+                    <div class="px-2.5 py-1.5 rounded-lg bg-white dark:bg-[#070A11] border border-slate-200 dark:border-gray-800">start_at &rarr; matures_at</div>
+                  </div>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 space-y-2">
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-slate-900 dark:text-white">3. Automated Maturity Settlement</span>
+                    <span class="vx-badge vx-badge-emerald">Idempotent</span>
+                  </div>
+                  <p class="text-slate-600 dark:text-slate-300">When <code class="px-1.5 py-0.5 rounded bg-slate-200/70 dark:bg-gray-800 text-[11px]">NOW() &ge; matures_at</code>, the settlement job credits principal + <code class="px-1.5 py-0.5 rounded bg-slate-200/70 dark:bg-gray-800 text-[11px]">profit</code> back to your Exchange Wallet and marks <code class="px-1.5 py-0.5 rounded bg-slate-200/70 dark:bg-gray-800 text-[11px]">status = completed</code>.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- FREQUENTLY ASKED QUESTIONS (Accessible native <details> accordion) -->
+    <!-- ================================================================ -->
+    <section id="faq" aria-labelledby="faq-heading" class="py-16 sm:py-24 bg-slate-100/70 dark:bg-[#0A0F1A] border-b border-slate-200/80 dark:border-gray-800/80">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        <div class="text-center max-w-2xl mx-auto space-y-2.5">
+          <span class="vx-badge vx-badge-primary">Client Information</span>
+          <h2 id="faq-heading" class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Frequently Asked Questions</h2>
+          <p class="text-sm text-slate-600 dark:text-slate-300">
+            Clear answers covering plan mechanics, simple-interest calculations, wallet custody, and maturity settlement.
+          </p>
+        </div>
+
+        <div class="space-y-3.5">
+          <details class="vx-faq-item">
+            <summary class="vx-faq-summary text-sm sm:text-base">
+              How are investment returns calculated on VertexCapitals?
+            </summary>
+            <div class="px-6 pb-5 pt-1 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-gray-800/60">
+              All investment plans use deterministic simple interest over the plan's full duration rather than compounding. Total profit is calculated as <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-gray-800 font-semibold">principal &times; (roi_percentage / 100)</code>. Both the ROI rate and projected total payout are shown transparently before you confirm an investment.
+            </div>
+          </details>
+
+          <details class="vx-faq-item">
+            <summary class="vx-faq-summary text-sm sm:text-base">
+              What is the difference between Short-Term and Long-Term plans?
+            </summary>
+            <div class="px-6 pb-5 pt-1 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-gray-800/60">
+              Short-Term plans are designed for shorter investment durations with lower minimum commitments, while Long-Term plans carry extended contract durations and higher capital limits. Active plans in both categories are published directly from our PostgreSQL plan catalogue above.
+            </div>
+          </details>
+
+          <details class="vx-faq-item">
+            <summary class="vx-faq-summary text-sm sm:text-base">
+              Will my investment terms change if an administrator edits a plan later?
+            </summary>
+            <div class="px-6 pb-5 pt-1 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-gray-800/60">
+              No. At the exact moment your investment is confirmed, the platform saves an immutable snapshot of your plan's <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-gray-800 font-semibold">roi_percentage</code>, <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-gray-800 font-semibold">duration_days</code>, start timestamp, and maturity timestamp on your contract record. Subsequent plan updates only affect new subscriptions.
+            </div>
+          </details>
+
+          <details class="vx-faq-item">
+            <summary class="vx-faq-summary text-sm sm:text-base">
+              How does automatic maturity settlement work?
+            </summary>
+            <div class="px-6 pb-5 pt-1 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-gray-800/60">
+              Once an investment contract reaches or passes its maturity timestamp, scheduled settlement processing verifies eligibility under a database transaction lock, credits your principal and simple-interest profit back to your liquid Exchange Wallet, creates an auditable ledger record, and marks the contract as completed.
+            </div>
+          </details>
+
+          <details class="vx-faq-item">
+            <summary class="vx-faq-summary text-sm sm:text-base">
+              How do Exchange Wallet and OTC Investment balances work together?
+            </summary>
+            <div class="px-6 pb-5 pt-1 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-gray-800/60">
+              Confirmed deposits credit your spendable Exchange Wallet. When you subscribe to a plan, the principal transfers into your active OTC allocation while staying visible in your dashboard. Once the contract settles at maturity, your funds return to your Exchange Wallet, where they can be reinvested or withdrawn.
+            </div>
+          </details>
+
+          <details class="vx-faq-item">
+            <summary class="vx-faq-summary text-sm sm:text-base">
+              How do I begin if I do not have an account yet?
+            </summary>
+            <div class="px-6 pb-5 pt-1 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-gray-800/60">
+              Click <strong>Get Started</strong> to create an account and verify your email with the 6-digit code. Once signed in, fund your Exchange Wallet via the Deposit desk, then click <strong>Invest Now</strong> on any active Short-Term or Long-Term plan to allocate capital immediately.
+            </div>
+          </details>
+        </div>
+
+        <!-- Restrained Final CTA Banner -->
+        <div class="vx-card p-8 sm:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div class="space-y-2 max-w-xl">
+            <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Ready to Configure Your Portfolio?</h3>
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+              Sign in to access your investor dashboard or open a verified account to explore live investment tiers.
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-3 shrink-0">
+            <a href="login.html" class="vx-btn-secondary px-5 py-3 rounded-xl text-xs">Sign In</a>
+            <a href="register.html" class="vx-btn-primary px-6 py-3 rounded-xl text-xs">Get Started</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <!-- Institutional Footer -->
-  <footer class="bg-[#070A11] text-slate-300 border-t border-slate-800 py-14">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10">
-      <div class="md:col-span-2 space-y-4">
-        <img alt="VertexCapitals logo" loading="lazy" width="180" height="40" src="images/footerlogo.svg" class="h-9 w-auto">
-        <p class="text-xs text-slate-400 max-w-sm leading-relaxed">
-          Global currency exchange and audited institutional OTC capital management platform.
-        </p>
-        <p class="text-xs font-semibold text-white">Contact Us: support@vertexcapitals.ltd</p>
-        <p class="text-[11px] text-slate-500">Copyright © 2026 VertexCapitals International. All rights reserved.</p>
+  <!-- Professional Institutional Footer -->
+  <footer class="bg-[#070A11] text-slate-300 border-t border-slate-800/90 py-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+        <div class="md:col-span-2 space-y-4">
+          <a href="index.html" class="inline-block">
+            <img alt="VertexCapitals logo" loading="lazy" width="180" height="40" src="images/footerlogo.svg" class="h-8 w-auto">
+          </a>
+          <p class="text-xs text-slate-400 max-w-md leading-relaxed">
+            VertexCapitals provides multi-currency digital custody and structured Over-The-Counter investment plans built on transactional ledger accounting and transparent simple-interest terms.
+          </p>
+          <p class="text-xs font-semibold text-white">Client Desk: <a href="mailto:support@vertexcapitals.ltd" class="text-blue-400 hover:underline">support@vertexcapitals.ltd</a></p>
+        </div>
+
+        <div class="space-y-3 text-xs">
+          <p class="font-bold text-white uppercase tracking-wider">Platform</p>
+          <ul class="space-y-2 text-slate-400">
+            <li><a href="#homepage-plans-section" class="hover:text-white transition-colors">Investment Plans</a></li>
+            <li><a href="#how-it-works" class="hover:text-white transition-colors">How It Works</a></li>
+            <li><a href="#platform-features" class="hover:text-white transition-colors">Platform Features</a></li>
+            <li><a href="#security-transparency" class="hover:text-white transition-colors">Security &amp; Transparency</a></li>
+            <li><a href="#faq" class="hover:text-white transition-colors">FAQ</a></li>
+          </ul>
+        </div>
+
+        <div class="space-y-3 text-xs">
+          <p class="font-bold text-white uppercase tracking-wider">Client Portal</p>
+          <ul class="space-y-2 text-slate-400">
+            <li><a href="login.html" class="hover:text-white transition-colors">Sign In</a></li>
+            <li><a href="register.html" class="hover:text-white transition-colors">Get Started</a></li>
+            <li><a href="dashboard.html" class="hover:text-white transition-colors">Investor Dashboard</a></li>
+            <li><a href="invest-otc.html" class="hover:text-white transition-colors">OTC Allocation Desk</a></li>
+            <li><a href="about.html" class="hover:text-white transition-colors">About Us</a></li>
+            <li><a href="apply.html" class="hover:text-white transition-colors">Partner Program</a></li>
+            <li><a href="support.html" class="hover:text-white transition-colors">Contact Support</a></li>
+          </ul>
+        </div>
       </div>
 
-      <div class="space-y-3 text-xs">
-        <p class="font-bold text-white uppercase tracking-wider">Platform</p>
-        <ul class="space-y-2 text-slate-400">
-          <li><a href="about.html" class="hover:text-white transition-colors">About Us</a></li>
-          <li><a href="invest-otc.html" class="hover:text-white transition-colors">OTC Investment Desk</a></li>
-          <li><a href="apply.html" class="hover:text-white transition-colors">Apply for Partnership</a></li>
-        </ul>
-      </div>
-
-      <div class="space-y-3 text-xs">
-        <p class="font-bold text-white uppercase tracking-wider">Client Access</p>
-        <ul class="space-y-2 text-slate-400">
-          <li><a href="login.html" class="hover:text-white transition-colors">Investor Sign In</a></li>
-          <li><a href="register.html" class="hover:text-white transition-colors">Open Portfolio</a></li>
-          <li><a href="support.html" class="hover:text-white transition-colors">Contact Support</a></li>
-        </ul>
+      <div class="pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-[11px] text-slate-500">
+        <p>All active plan terms, minimums, maximums, and ROI rates are loaded live from the platform catalogue and locked on each contract at subscription.</p>
+        <p class="shrink-0 text-slate-400">Copyright &copy; 2026 VertexCapitals. All rights reserved.</p>
       </div>
     </div>
   </footer>
@@ -514,18 +686,139 @@
         .replace(/'/g, '&#39;');
     }
 
+    function closeMobileNavDrawer() {
+      const drawer = document.getElementById('mobile-nav-drawer');
+      if (drawer) drawer.style.display = 'none';
+    }
+
+    function syncMobileDrawerAuthState() {
+      try {
+        const raw = localStorage.getItem('vertexcapitals_auth_user_live');
+        const adminToken = sessionStorage.getItem('vx_admin_session_token');
+        const authBox = document.getElementById('mobile-drawer-auth');
+        if (!authBox) return;
+
+        if (raw || adminToken) {
+          let user = null;
+          try { if (raw) user = JSON.parse(raw); } catch (e) {}
+          const target = (user && user.role === 'admin') || adminToken ? 'admin.html' : 'dashboard.html';
+          authBox.className = 'pt-4 mt-4 border-t border-slate-200 dark:border-gray-800';
+          authBox.innerHTML = `<a href="${target}" class="vx-btn-primary w-full py-3.5 rounded-xl text-xs text-center">Go to Dashboard</a>`;
+        }
+      } catch (e) {}
+    }
+
+    function calcSimpleInterestCents(amountUsd, roiPercent) {
+      const principalCents = Math.max(0, Math.round(Number(amountUsd || 0) * 100));
+      const roiBps = Math.max(0, Math.round(Number(roiPercent || 0) * 100));
+      const profitCents = Math.round((principalCents * roiBps) / 10000);
+      const payoutCents = principalCents + profitCents;
+      return {
+        principal: principalCents / 100,
+        profit: profitCents / 100,
+        payout: payoutCents / 100
+      };
+    }
+
+    function formatCurrency(val) {
+      return '$' + Number(val || 0).toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    }
+
+    function renderPlanCard(p) {
+      const isShort = p.category === 'Short-Term';
+      const minAmt = Number(p.min_amount || 0);
+      const maxAmt = Number(p.max_amount || 0);
+      const roiPct = Number(p.roi_percentage || 0);
+      const days = parseInt(p.duration_days || 0, 10);
+      const sample = calcSimpleInterestCents(minAmt, roiPct);
+
+      return `
+        <article class="vx-card-interactive p-6 sm:p-7 flex flex-col justify-between text-left space-y-6">
+          <div class="space-y-4">
+            <div class="flex justify-between items-center gap-2">
+              <span class="vx-badge ${isShort ? 'vx-badge-amber' : 'vx-badge-primary'}">
+                <span class="w-1.5 h-1.5 rounded-full ${isShort ? 'bg-amber-500' : 'bg-primary'}"></span>
+                ${escapePlanHtml(p.category)}
+              </span>
+              <span class="text-xs font-bold text-slate-500 dark:text-slate-400 stat-number">${days} Days</span>
+            </div>
+
+            <div>
+              <h4 class="text-lg font-extrabold text-slate-900 dark:text-white tracking-tight">${escapePlanHtml(p.name)}</h4>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-1.5 leading-relaxed min-h-[2.5rem]">${escapePlanHtml(p.description || 'Structured fixed-duration allocation with simple-interest maturity settlement.')}</p>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-[#101726] border border-slate-200/80 dark:border-gray-800/80 flex items-center justify-between gap-3">
+              <div>
+                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Total Simple ROI</p>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Over ${days}-day cycle</p>
+              </div>
+              <div class="text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 stat-number">+${roiPct}%</div>
+            </div>
+
+            <dl class="space-y-2.5 text-xs pt-1">
+              <div class="flex justify-between items-center pb-2 border-b border-slate-100 dark:border-gray-800/70">
+                <dt class="text-slate-500 dark:text-slate-400">Minimum Investment</dt>
+                <dd class="font-bold text-slate-900 dark:text-white stat-number">$${minAmt.toLocaleString()} USD</dd>
+              </div>
+              <div class="flex justify-between items-center pb-2 border-b border-slate-100 dark:border-gray-800/70">
+                <dt class="text-slate-500 dark:text-slate-400">Maximum Investment</dt>
+                <dd class="font-bold text-slate-900 dark:text-white stat-number">$${maxAmt.toLocaleString()} USD</dd>
+              </div>
+              <div class="flex justify-between items-center pb-2 border-b border-slate-100 dark:border-gray-800/70">
+                <dt class="text-slate-500 dark:text-slate-400">Maturity Example (at Min)</dt>
+                <dd class="font-bold text-emerald-600 dark:text-emerald-400 stat-number">${formatCurrency(sample.payout)}</dd>
+              </div>
+              <div class="flex justify-between items-center">
+                <dt class="text-slate-500 dark:text-slate-400">Settlement Profit (at Min)</dt>
+                <dd class="font-semibold text-slate-700 dark:text-slate-200 stat-number">+${formatCurrency(sample.profit)}</dd>
+              </div>
+            </dl>
+          </div>
+
+          <a href="invest-otc.html?plan_id=${encodeURIComponent(p.id)}" class="vx-plan-cta vx-btn-primary w-full py-3.5 rounded-xl text-xs">
+            <span>Invest Now</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </article>
+      `;
+    }
+
+    function renderCategoryBlock(title, subtitle, badgeClass, plans, gridId) {
+      if (!plans.length) return '';
+      return `
+        <div class="space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-200 dark:border-gray-800">
+            <div>
+              <div class="flex items-center gap-2.5">
+                <h3 class="text-xl font-extrabold text-slate-900 dark:text-white tracking-tight">${escapePlanHtml(title)}</h3>
+                <span class="vx-badge ${badgeClass} stat-number">${plans.length} Active</span>
+              </div>
+              <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">${escapePlanHtml(subtitle)}</p>
+            </div>
+          </div>
+          <div id="${gridId}" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            ${plans.map(renderPlanCard).join('')}
+          </div>
+        </div>
+      `;
+    }
+
     function switchHomepageCategory(category) {
       currentHomepageCategory = category;
       ['all', 'short', 'long'].forEach(c => {
         const btn = document.getElementById(`home-cat-${c}`);
         if (!btn) return;
-        btn.className = 'px-5 py-2.5 rounded-full text-xs font-bold transition-all bg-white dark:bg-[#0C121E] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-gray-800 hover:border-primary/40';
+        btn.className = 'px-4 py-2 rounded-xl text-xs font-bold transition-colors text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white';
       });
 
       const activeId = category === 'ALL' ? 'home-cat-all' : category === 'Short-Term' ? 'home-cat-short' : 'home-cat-long';
       const activeBtn = document.getElementById(activeId);
       if (activeBtn) {
-        activeBtn.className = 'px-5 py-2.5 rounded-full text-xs font-bold transition-all bg-primary text-white shadow-md shadow-primary/25';
+        activeBtn.className = 'px-4 py-2 rounded-xl text-xs font-bold transition-colors bg-primary text-white shadow-sm';
       }
       renderHomepagePlans();
     }
@@ -536,72 +829,148 @@
 
       if (!homepagePlansLoaded) {
         container.innerHTML = homepagePlansError
-          ? `<div class="col-span-full py-10 text-center text-rose-500 font-semibold text-sm">${escapePlanHtml(homepagePlansError)}</div>`
-          : '<div class="col-span-full py-10 text-center text-slate-500 dark:text-slate-400 font-medium text-sm">Loading active investment plans...</div>';
+          ? `<div class="vx-card p-10 text-center text-rose-500 font-semibold text-sm">${escapePlanHtml(homepagePlansError)}</div>`
+          : '<div class="vx-card p-10 text-center text-slate-500 dark:text-slate-400 font-medium text-sm">Loading active investment plans...</div>';
         return;
       }
 
-      const filtered = currentHomepageCategory === 'ALL'
-        ? homepagePlans
-        : homepagePlans.filter(p => p.category === currentHomepageCategory);
-
-      if (filtered.length === 0) {
-        container.innerHTML = '<div class="col-span-full py-10 text-center text-slate-500 dark:text-slate-400 font-medium text-sm">No active investment plans in this category.</div>';
+      if (homepagePlansError) {
+        container.innerHTML = `<div class="vx-card p-10 text-center text-rose-500 font-semibold text-sm">${escapePlanHtml(homepagePlansError)}</div>`;
         return;
       }
 
-      container.innerHTML = filtered.map(p => {
-        const isShort = p.category === 'Short-Term';
-        const minAmt = Number(p.min_amount || 0);
-        const maxAmt = Number(p.max_amount || 0);
-        const roiPct = Number(p.roi_percentage || 0);
-        const days = parseInt(p.duration_days || 0, 10);
-        const minProfit = parseFloat((minAmt * (roiPct / 100)).toFixed(2));
-        return `
-          <div class="vx-card-interactive p-7 flex flex-col justify-between text-left space-y-5">
-            <div class="space-y-4">
-              <div class="flex justify-between items-center gap-2">
-                <span class="vx-badge ${isShort ? 'vx-badge-amber' : 'vx-badge-primary'}">
-                  <span class="w-1.5 h-1.5 rounded-full ${isShort ? 'bg-amber-500' : 'bg-primary'}"></span>
-                  ${escapePlanHtml(p.category)}
-                </span>
-                <span class="text-xs font-bold text-slate-500 dark:text-slate-400 stat-number">${days} Days Cycle</span>
-              </div>
+      const shortPlans = homepagePlans.filter(p => p.category === 'Short-Term');
+      const longPlans = homepagePlans.filter(p => p.category === 'Long-Term');
 
-              <div>
-                <h3 class="text-xl font-extrabold text-slate-900 dark:text-white">${escapePlanHtml(p.name)}</h3>
-                <p class="text-xs text-slate-600 dark:text-slate-300 mt-1.5 leading-relaxed line-clamp-2">${escapePlanHtml(p.description || 'Institutional investment tier with guaranteed maturity settlement.')}</p>
-              </div>
+      if (currentHomepageCategory === 'Short-Term') {
+        container.innerHTML = shortPlans.length
+          ? renderCategoryBlock('Short-Term Plans', 'Shorter contractual cycles for agile capital deployment and quicker maturity turnaround.', 'vx-badge-amber', shortPlans, 'homepage-short-term-grid')
+          : '<div class="vx-card p-10 text-center text-slate-500 dark:text-slate-400 font-medium text-sm">No active Short-Term investment plans available right now.</div>';
+        return;
+      }
 
-              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800/80 text-center space-y-0.5">
-                <span class="text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400 tracking-wider block">Fixed Total Payout</span>
-                <div class="text-3xl font-black text-emerald-600 dark:text-emerald-400 stat-number">+${roiPct}%</div>
-                <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">Simple Interest • Min Return +$${minProfit.toLocaleString()}</p>
-              </div>
+      if (currentHomepageCategory === 'Long-Term') {
+        container.innerHTML = longPlans.length
+          ? renderCategoryBlock('Long-Term Plans', 'Extended institutional cycles structured for larger capital mandates and total-term yield.', 'vx-badge-primary', longPlans, 'homepage-long-term-grid')
+          : '<div class="vx-card p-10 text-center text-slate-500 dark:text-slate-400 font-medium text-sm">No active Long-Term investment plans available right now.</div>';
+        return;
+      }
 
-              <div class="space-y-2 text-xs text-slate-600 dark:text-slate-300 pt-1">
-                <div class="flex justify-between border-b border-slate-100 dark:border-gray-800/70 pb-1.5">
-                  <span>Minimum Capital:</span>
-                  <strong class="text-slate-900 dark:text-white stat-number">$${minAmt.toLocaleString()} USD</strong>
-                </div>
-                <div class="flex justify-between border-b border-slate-100 dark:border-gray-800/70 pb-1.5">
-                  <span>Maximum Capital:</span>
-                  <strong class="text-slate-900 dark:text-white stat-number">$${maxAmt.toLocaleString()} USD</strong>
-                </div>
-                <div class="flex justify-between">
-                  <span>Duration Lifecycle:</span>
-                  <strong class="text-slate-900 dark:text-white stat-number">${days} Calendar Days</strong>
-                </div>
-              </div>
-            </div>
+      if (shortPlans.length === 0 && longPlans.length === 0) {
+        container.innerHTML = '<div class="vx-card p-10 text-center text-slate-500 dark:text-slate-400 font-medium text-sm">No active investment plans published at this time.</div>';
+        return;
+      }
 
-            <a href="invest-otc.html?plan_id=${encodeURIComponent(p.id)}" class="vx-plan-cta vx-btn-primary w-full py-3.5 rounded-xl text-xs">
-              <span>Invest Now</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-          </div>
-        `;
-      }).join('');
+      const sections = [
+        renderCategoryBlock('Short-Term Plans', 'Shorter contractual cycles for agile capital deployment and quicker maturity turnaround.', 'vx-badge-amber', shortPlans, 'homepage-short-term-grid'),
+        renderCategoryBlock('Long-Term Plans', 'Extended institutional cycles structured for larger capital mandates and total-term yield.', 'vx-badge-primary', longPlans, 'homepage-long-term-grid')
+      ].filter(Boolean);
+
+      container.innerHTML = sections.join('');
+    }
+
+    function populateSimulator() {
+      const selectEl = document.getElementById('hero-calc-plan');
+      const liveBadge = document.getElementById('hero-live-plan-count');
+      const shortCountEl = document.getElementById('hero-short-count');
+      const longCountEl = document.getElementById('hero-long-count');
+      const catSummaryEl = document.getElementById('hero-cat-summary');
+
+      const shortCount = homepagePlans.filter(p => p.category === 'Short-Term').length;
+      const longCount = homepagePlans.filter(p => p.category === 'Long-Term').length;
+
+      if (shortCountEl) shortCountEl.innerText = `${shortCount}`;
+      if (longCountEl) longCountEl.innerText = `${longCount}`;
+      if (catSummaryEl) catSummaryEl.innerText = `${homepagePlans.length} Active Plans`;
+      if (liveBadge) liveBadge.innerText = `${homepagePlans.length} Active`;
+
+      if (!selectEl) return;
+      if (homepagePlans.length === 0) {
+        selectEl.innerHTML = '<option value="">No active plans</option>';
+        updateSimulatorOutput();
+        return;
+      }
+
+      selectEl.innerHTML = homepagePlans.map(p => (
+        `<option value="${escapePlanHtml(p.id)}">${escapePlanHtml(p.name)} (${escapePlanHtml(p.category)} • +${Number(p.roi_percentage || 0)}%)</option>`
+      )).join('');
+
+      onSimulatorPlanChange();
+    }
+
+    function onSimulatorPlanChange() {
+      const selectEl = document.getElementById('hero-calc-plan');
+      const amountEl = document.getElementById('hero-calc-amount');
+      const limitsEl = document.getElementById('hero-calc-limits');
+      if (!selectEl || !amountEl) return;
+
+      const plan = homepagePlans.find(p => String(p.id) === String(selectEl.value));
+      if (!plan) {
+        updateSimulatorOutput();
+        return;
+      }
+
+      const minAmt = Number(plan.min_amount || 0);
+      const maxAmt = Number(plan.max_amount || 0);
+      amountEl.min = minAmt;
+      amountEl.max = maxAmt;
+      amountEl.value = minAmt;
+      if (limitsEl) limitsEl.innerText = `$${minAmt.toLocaleString()} – $${maxAmt.toLocaleString()}`;
+
+      updateSimulatorOutput();
+    }
+
+    function updateSimulatorOutput() {
+      const selectEl = document.getElementById('hero-calc-plan');
+      const amountEl = document.getElementById('hero-calc-amount');
+      const roiEl = document.getElementById('hero-calc-roi');
+      const durEl = document.getElementById('hero-calc-duration');
+      const profitEl = document.getElementById('hero-calc-profit');
+      const payoutEl = document.getElementById('hero-calc-payout');
+      const ctaEl = document.getElementById('hero-calc-cta');
+      const barPrinEl = document.getElementById('hero-bar-principal');
+      const barProfEl = document.getElementById('hero-bar-profit');
+      const barRatioEl = document.getElementById('hero-bar-ratio');
+      const legPrinEl = document.getElementById('hero-legend-principal');
+      const legProfEl = document.getElementById('hero-legend-profit');
+
+      const plan = selectEl ? homepagePlans.find(p => String(p.id) === String(selectEl.value)) : null;
+      if (!plan) {
+        if (roiEl) roiEl.innerText = '--';
+        if (durEl) durEl.innerText = '--';
+        if (profitEl) profitEl.innerText = '--';
+        if (payoutEl) payoutEl.innerText = '--';
+        if (ctaEl) ctaEl.setAttribute('href', 'invest-otc.html');
+        return;
+      }
+
+      const roiPct = Number(plan.roi_percentage || 0);
+      const days = parseInt(plan.duration_days || 0, 10);
+      const rawAmount = parseFloat(amountEl ? amountEl.value : 0);
+      const safeAmount = Number.isFinite(rawAmount) && rawAmount > 0 ? rawAmount : 0;
+      const calc = calcSimpleInterestCents(safeAmount, roiPct);
+
+      if (roiEl) roiEl.innerText = `+${roiPct}%`;
+      if (durEl) durEl.innerText = `${days} Days`;
+      if (profitEl) profitEl.innerText = `+${formatCurrency(calc.profit)}`;
+      if (payoutEl) payoutEl.innerText = formatCurrency(calc.payout);
+      if (ctaEl) ctaEl.setAttribute('href', `invest-otc.html?plan_id=${encodeURIComponent(plan.id)}`);
+
+      if (calc.payout > 0) {
+        const prinPct = (calc.principal / calc.payout) * 100;
+        const profPct = (calc.profit / calc.payout) * 100;
+        if (barPrinEl) barPrinEl.style.width = `${prinPct.toFixed(1)}%`;
+        if (barProfEl) barProfEl.style.width = `${profPct.toFixed(1)}%`;
+        if (barRatioEl) barRatioEl.innerText = `${prinPct.toFixed(0)}% / ${profPct.toFixed(0)}%`;
+        if (legPrinEl) legPrinEl.innerText = `Principal (${formatCurrency(calc.principal)})`;
+        if (legProfEl) legProfEl.innerText = `Profit (+${formatCurrency(calc.profit)})`;
+      } else {
+        if (barPrinEl) barPrinEl.style.width = '100%';
+        if (barProfEl) barProfEl.style.width = '0%';
+        if (barRatioEl) barRatioEl.innerText = '--';
+        if (legPrinEl) legPrinEl.innerText = 'Principal';
+        if (legProfEl) legProfEl.innerText = 'Simple-Interest Profit';
+      }
     }
 
     async function fetchHomepagePlans() {
@@ -614,7 +983,7 @@
           homepagePlansError = null;
         } else {
           homepagePlans = [];
-          homepagePlansError = data.message || 'Unable to load public investment plans.';
+          homepagePlansError = data.message || 'Unable to load active investment plans.';
         }
       } catch (err) {
         console.error('Error fetching homepage plans:', err);
@@ -622,6 +991,7 @@
         homepagePlansError = 'Unable to connect to investment catalogue.';
       }
       renderHomepagePlans();
+      populateSimulator();
     }
 
     window.addEventListener('click', function(e) {
@@ -633,7 +1003,10 @@
       }
     }, true);
 
-    document.addEventListener('DOMContentLoaded', fetchHomepagePlans);
+    document.addEventListener('DOMContentLoaded', () => {
+      syncMobileDrawerAuthState();
+      fetchHomepagePlans();
+    });
   </script>
 </body>
 </html>
