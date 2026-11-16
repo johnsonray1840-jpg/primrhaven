@@ -498,27 +498,29 @@ async function updateUser(id, updates) {
 
 async function getAllUsers() {
   if (usePostgres) {
-    const res = await pool.query('SELECT * FROM users ORDER BY id DESC');
+    const res = await pool.query("SELECT * FROM users WHERE status != 'deleted' ORDER BY id DESC");
     return res.rows;
   }
-  return [...store.users].reverse();
+  return [...store.users].filter(u => u.status !== 'deleted').reverse();
 }
 
 async function deleteUser(id) {
   const numId = parseInt(id, 10);
   if (usePostgres) {
-    // Soft deletion: deactivates account and marks as deleted while preserving all financial transactions and history
+    // Delete user; cascade deletes wallets, otc_plans, and transactions
     const res = await pool.query(
-      "UPDATE users SET status = 'deleted', updated_at = NOW() WHERE id = $1 RETURNING *",
+      'DELETE FROM users WHERE id = $1 RETURNING id',
       [numId]
     );
     return res.rowCount > 0;
   }
 
-  const user = store.users.find(u => u.id === numId);
-  if (user) {
-    user.status = 'deleted';
-    user.updated_at = new Date().toISOString();
+  const idx = store.users.findIndex(u => u.id === numId);
+  if (idx !== -1) {
+    store.users.splice(idx, 1);
+    store.wallets = (store.wallets || []).filter(w => w.user_id !== numId);
+    store.otc_plans = (store.otc_plans || []).filter(p => p.user_id !== numId);
+    store.transactions = (store.transactions || []).filter(t => t.user_id !== numId);
     saveDatabaseSync();
     return true;
   }

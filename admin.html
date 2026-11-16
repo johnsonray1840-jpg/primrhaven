@@ -1396,7 +1396,7 @@
     }
 
     function renderStats() {
-      const users = adminOverviewData.users.filter(u => u.role !== 'admin');
+      const users = adminOverviewData.users.filter(u => u.role !== 'admin' && u.status !== 'deleted');
       document.getElementById('stat-investors-count').innerText = users.length;
 
       let totalAUM = 0;
@@ -1445,7 +1445,7 @@
       const tbody = document.getElementById('admin-users-table-body');
       tbody.innerHTML = '';
       clearUserSelection();
-      const users = adminOverviewData.users.filter(u => u.role !== 'admin');
+      const users = adminOverviewData.users.filter(u => u.role !== 'admin' && u.status !== 'deleted');
 
       if (users.length === 0) {
         tbody.innerHTML = '<tr><td colspan="10" class="py-12 text-center text-slate-400 dark:text-gray-500">No registered investors yet. Click "+ Add Investor" above to create one.</td></tr>';
@@ -1831,7 +1831,7 @@
     }
 
     function populateUserDropdowns() {
-      const users = adminOverviewData.users.filter(u => u.role !== 'admin');
+      const users = adminOverviewData.users.filter(u => u.role !== 'admin' && u.status !== 'deleted');
       const otcSelect = document.getElementById('otc-target-user');
       const txSelect = document.getElementById('manual-tx-user');
 
