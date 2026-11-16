@@ -62,13 +62,13 @@
       var displayName = currentUser.full_name ? currentUser.full_name.split(' ')[0] : 'Account';
       
       // Find desktop auth buttons container in header
-      var headerNavContainers = document.querySelectorAll('header .xl\\:flex.hidden.text-\\[17px\\].font-gilmerregular');
+      var headerNavContainers = document.querySelectorAll('header .xl\\:flex.hidden');
       headerNavContainers.forEach(function(container) {
         // If container contains login.html or register.html links
         if (container.querySelector('a[href*="login.html"], a[href*="register.html"]')) {
           container.innerHTML = `
-            <a href="${targetDashboard}" class="flex items-center gap-2.5 bg-primary text-white hover:bg-blue-700 px-6 h-[54px] rounded-[10px] shadow-xl font-gilmerbold text-[16px] transition-all duration-200 transform hover:scale-[1.02] border border-blue-400/20">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <a href="${targetDashboard}" class="vx-btn-primary px-5 py-2.5 rounded-xl text-xs font-bold inline-flex items-center gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <rect x="3" y="3" width="7" height="7"></rect>
                 <rect x="14" y="3" width="7" height="7"></rect>
                 <rect x="14" y="14" width="7" height="7"></rect>
@@ -81,9 +81,10 @@
       });
     }
 
-    // Mobile Drawer Toggle
+    // Mobile Drawer Toggle (skip pages that declare their own onclick handler like index.html)
     var menuButtons = document.querySelectorAll('button.flex-col');
     menuButtons.forEach(function(btn) {
+      if (btn.getAttribute('onclick')) return;
       btn.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -91,14 +92,14 @@
         if (!drawer) {
           drawer = document.createElement('div');
           drawer.id = 'mobile-nav-drawer';
-          drawer.className = 'fixed inset-0 top-[88px] bg-white z-[998] flex flex-col p-8 space-y-6 font-gilmerregular text-xl shadow-2xl';
+          drawer.className = 'fixed inset-x-0 top-20 bottom-0 bg-white/95 dark:bg-[#0C121E]/95 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800 z-[998] flex flex-col p-6 space-y-3 text-base font-semibold text-slate-900 dark:text-white shadow-2xl overflow-y-auto';
           
           var authMobileLinks = '';
           if (currentUser) {
             var targetDashboard = (currentUser.role === 'admin') ? 'admin.html' : 'dashboard.html';
             authMobileLinks = `
-              <a href="${targetDashboard}" class="bg-primary text-white text-center py-4 rounded-[8px] shadow-lg font-gilmermedium flex items-center justify-center gap-2">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <a href="${targetDashboard}" class="vx-btn-primary text-center py-3.5 rounded-xl text-sm flex items-center justify-center gap-2 mt-2">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <rect x="3" y="3" width="7" height="7"></rect>
                   <rect x="14" y="3" width="7" height="7"></rect>
                   <rect x="14" y="14" width="7" height="7"></rect>
@@ -109,20 +110,22 @@
             `;
           } else {
             authMobileLinks = `
-              <a href="login.html" class="py-2 border-b border-gray-200 text-dark">Login</a>
-              <a href="register.html" class="bg-primary text-white text-center py-4 rounded-[8px] shadow-lg font-gilmermedium">Start Investing</a>
+              <a href="login.html" class="vx-btn-secondary text-center py-3 rounded-xl text-sm mt-2">Sign In</a>
+              <a href="register.html" class="vx-btn-primary text-center py-3 rounded-xl text-sm">Get Started</a>
             `;
           }
 
           drawer.innerHTML = `
-            <a href="index.html" class="py-2 border-b border-gray-200 text-dark">Home</a>
-            <a href="about.html" class="py-2 border-b border-gray-200 text-dark">About Us</a>
-            <a href="apply.html" class="py-2 border-b border-gray-200 text-dark">Apply for Partnership</a>
+            <a href="index.html" class="vx-sidebar-link py-3 px-4 rounded-xl">Home</a>
+            <a href="index.html#homepage-plans-section" class="vx-sidebar-link py-3 px-4 rounded-xl">Investment Plans</a>
+            <a href="about.html" class="vx-sidebar-link py-3 px-4 rounded-xl">About Us</a>
+            <a href="apply.html" class="vx-sidebar-link py-3 px-4 rounded-xl">Apply for Partnership</a>
+            <a href="support.html" class="vx-sidebar-link py-3 px-4 rounded-xl">Support</a>
             ${authMobileLinks}
           `;
           document.body.appendChild(drawer);
         } else {
-          drawer.style.display = (drawer.style.display === 'none' || !drawer.style.display) ? 'flex' : 'none';
+          drawer.classList.toggle('hidden');
         }
       });
     });

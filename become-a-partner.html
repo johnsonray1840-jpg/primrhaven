@@ -114,7 +114,7 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
         </div>
-        <h3 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">0 Clients</h3>
+        <h3 id="partner-referrals-count" class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight tabular-nums">0 Clients</h3>
         <p class="text-xs text-slate-500 dark:text-gray-400 mt-1">Verified funded investor accounts</p>
       </div>
 
@@ -125,7 +125,7 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
           </div>
         </div>
-        <h3 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">$0.00</h3>
+        <h3 id="partner-network-volume" class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight tabular-nums">$0.00</h3>
         <p class="text-xs text-slate-500 dark:text-gray-400 mt-1">Aggregate referred OTC capital</p>
       </div>
 
@@ -136,7 +136,7 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
           </div>
         </div>
-        <h3 class="text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 tracking-tight">$0.00</h3>
+        <h3 id="partner-earned-commission" class="text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 tracking-tight tabular-nums">$0.00</h3>
         <p class="text-xs text-slate-500 dark:text-gray-400 mt-1">Settled directly to Exchange Vault</p>
       </div>
     </div>
@@ -231,7 +231,7 @@
               <th class="px-6 py-3.5 text-right">Status</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-slate-100 dark:divide-gray-800/60">
+          <tbody id="partner-ledger-body" class="divide-y divide-slate-100 dark:divide-gray-800/60">
             <tr class="vx-empty-row">
               <td colspan="5" class="p-6">
                 <div class="vx-empty-state">
@@ -268,15 +268,21 @@
       }
     }
 
-    function initPartner() {
+    async function initPartner() {
       if (typeof VertexApp === 'undefined') return;
-      const user = VertexApp.currentUser;
+      let user = VertexApp.currentUser;
       const origin = (window.location && window.location.origin && window.location.origin !== 'null')
         ? window.location.origin
         : 'https://vertexcapitals.com';
 
+      let transactions = [];
       if (user) {
-        const accountRef = user.accountNumber || user.account_number || user.id || 'VX-PARTNER';
+        const summary = await VertexApp.getSummary();
+        if (summary) {
+          if (summary.user) user = summary.user;
+          if (Array.isArray(summary.transactions)) transactions = summary.transactions;
+        }
+        const accountRef = user.referral_code || user.accountNumber || user.account_number || user.id || 'VX-PARTNER';
         const input = document.getElementById('partner-link-input');
         if (input) {
           input.value = `${origin}/register.html?ref=${encodeURIComponent(accountRef)}`;
@@ -288,6 +294,28 @@
         if (initialsEl) {
           const initials = displayName.trim().split(/\s+/).map(n => n[0]).join('').substring(0, 2).toUpperCase();
           initialsEl.innerText = initials || 'VX';
+        }
+
+        const partnerTxs = transactions.filter(t => {
+          const tp = (t.type || '').toLowerCase();
+          return tp.includes('referral') || tp.includes('commission') || tp.includes('partner');
+        });
+        const totalCommission = partnerTxs.reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
+        const countEl = document.getElementById('partner-referrals-count');
+        const commEl = document.getElementById('partner-earned-commission');
+        const tbody = document.getElementById('partner-ledger-body');
+        if (countEl) countEl.innerText = `${partnerTxs.length} ${partnerTxs.length === 1 ? 'Payout' : 'Payouts'}`;
+        if (commEl) commEl.innerText = `$${totalCommission.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        if (tbody && partnerTxs.length > 0) {
+          tbody.innerHTML = partnerTxs.map(tx => `
+            <tr class="hover:bg-slate-50/80 dark:hover:bg-gray-800/30">
+              <td data-label="Date" class="px-6 py-4 text-xs text-slate-600 dark:text-gray-300">${new Date(tx.created_at || Date.now()).toLocaleDateString()}</td>
+              <td data-label="Referred Client ID" class="px-6 py-4 text-xs font-bold text-slate-900 dark:text-white">${tx.tx_ref}</td>
+              <td data-label="Allocation Volume" class="px-6 py-4 text-xs text-slate-600 dark:text-gray-300">${tx.asset || 'USD'}</td>
+              <td data-label="Rebate" class="px-6 py-4 text-xs font-bold text-emerald-600 dark:text-emerald-400 tabular-nums">+$${parseFloat(tx.amount || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}</td>
+              <td data-label="Status" class="px-6 py-4 text-right"><span class="vx-badge vx-badge-emerald">${tx.status || 'completed'}</span></td>
+            </tr>
+          `).join('');
         }
       }
     }

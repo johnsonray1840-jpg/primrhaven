@@ -67,30 +67,14 @@
     
     <!-- Sidebar Active Investor Threads -->
     <div class="w-full md:w-80 vx-card flex flex-col overflow-hidden max-h-72 md:max-h-none">
-      <div class="p-4 border-b border-slate-200 dark:border-gray-800/80">
-        <h3 class="text-sm font-extrabold text-slate-900 dark:text-white">Active Investor Inquiries</h3>
+      <div class="p-4 border-b border-slate-200 dark:border-gray-800/80 flex items-center justify-between">
+        <h3 class="text-sm font-extrabold text-slate-900 dark:text-white">Registered Client Threads</h3>
+        <span id="admin-chat-count" class="vx-badge vx-badge-primary">0</span>
       </div>
-      <div class="flex-1 overflow-y-auto divide-y divide-slate-100 dark:divide-gray-800/60 text-xs">
-        <div class="p-4 bg-primary/10 border-l-4 border-primary cursor-pointer">
-          <div class="flex justify-between items-center">
-            <span class="font-bold text-slate-900 dark:text-white">Alexander Wright</span>
-            <span class="vx-badge vx-badge-emerald">Online</span>
-          </div>
-          <p class="text-slate-600 dark:text-gray-400 truncate mt-1">Hello, I have submitted a deposit for OTC trading...</p>
-        </div>
-        <div class="p-4 hover:bg-slate-50 dark:hover:bg-gray-800/50 cursor-pointer">
-          <div class="flex justify-between items-center">
-            <span class="font-bold text-slate-700 dark:text-gray-300">Elena Rostova</span>
-            <span class="text-[10px] text-slate-400 dark:text-gray-500">1h ago</span>
-          </div>
-          <p class="text-slate-500 dark:text-gray-500 truncate mt-1">Weekly OTC return received, thanks!</p>
-        </div>
-        <div class="p-4 hover:bg-slate-50 dark:hover:bg-gray-800/50 cursor-pointer">
-          <div class="flex justify-between items-center">
-            <span class="font-bold text-slate-700 dark:text-gray-300">David Reynolds</span>
-            <span class="text-[10px] text-slate-400 dark:text-gray-500">3h ago</span>
-          </div>
-          <p class="text-slate-500 dark:text-gray-500 truncate mt-1">Inquiry on Bitcoin withdrawal status.</p>
+      <div id="admin-chat-threads-list" class="flex-1 overflow-y-auto divide-y divide-slate-100 dark:divide-gray-800/60 text-xs">
+        <div class="p-4 space-y-2" aria-hidden="true">
+          <div class="vx-skeleton vx-skeleton-line w-32"></div>
+          <div class="vx-skeleton vx-skeleton-line w-48"></div>
         </div>
       </div>
     </div>
@@ -98,40 +82,31 @@
     <!-- Live Conversation Thread -->
     <div class="flex flex-1 min-h-[24rem] vx-card flex-col overflow-hidden">
       <!-- Chat Head -->
-      <div class="p-4 bg-slate-50/80 dark:bg-[#0B111E] border-b border-slate-200 dark:border-gray-800/80 flex justify-between items-center">
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-xs">AW</div>
-          <div>
-            <h4 class="font-bold text-slate-900 dark:text-white text-xs">Alexander Wright (Account #8776)</h4>
-            <p class="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">● Active Session</p>
+      <div class="p-4 bg-slate-50/80 dark:bg-[#0B111E] border-b border-slate-200 dark:border-gray-800/80 flex justify-between items-center gap-3">
+        <div class="flex items-center gap-3 min-w-0">
+          <div id="chat-head-initials" class="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-white font-bold text-xs shrink-0">VX</div>
+          <div class="min-w-0">
+            <h4 id="chat-head-name" class="font-bold text-slate-900 dark:text-white text-xs truncate">Select an investor account</h4>
+            <p id="chat-head-meta" class="text-[10px] text-slate-500 dark:text-gray-400 font-semibold truncate">Requires active administrator session</p>
           </div>
         </div>
-        <span class="vx-badge vx-badge-emerald">Verified Account</span>
+        <span id="chat-head-badge" class="vx-badge vx-badge-neutral shrink-0">Support Desk</span>
       </div>
 
-      <!-- Messages Area -->
+      <!-- Messages / Account Activity Area -->
       <div class="flex-1 p-4 sm:p-6 overflow-y-auto space-y-4 text-xs" id="chat-messages-container">
-        <div class="flex items-start gap-2.5">
-          <div class="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-[10px]">AW</div>
-          <div class="bg-slate-100 dark:bg-gray-800 border border-slate-200 dark:border-gray-700 p-3.5 rounded-2xl rounded-tl-none max-w-md text-slate-800 dark:text-gray-200 leading-relaxed shadow-sm">
-            Hello, I have submitted a deposit for $5,000 USDT (TRC20). Could you please confirm when it will be allocated to my OTC trading portfolio?
-          </div>
-        </div>
-
-        <div class="flex items-start gap-2.5 justify-end">
-          <div class="bg-primary text-white p-3.5 rounded-2xl rounded-tr-none max-w-md leading-relaxed shadow-lg shadow-blue-500/10">
-            Hello Alexander, your transaction has been verified on-chain. Your Exchange Wallet is credited, and you can now allocate the capital directly into the active OTC Yield pool via your dashboard!
-          </div>
-          <div class="w-7 h-7 rounded-full bg-purple-600 flex items-center justify-center text-white font-bold text-[10px]">AD</div>
+        <div class="vx-empty-state">
+          <p class="vx-empty-title">Loading client correspondence desk</p>
+          <p class="vx-empty-desc">Authenticate as administrator in Admin Center to inspect live client threads and dispatch Resend correspondence.</p>
         </div>
       </div>
 
       <!-- Input Bar -->
       <form onsubmit="handleSendReply(event)" class="p-4 bg-slate-50 dark:bg-gray-950/80 border-t border-slate-200 dark:border-gray-800 flex flex-col sm:flex-row gap-2">
         <label for="admin-chat-input" class="sr-only">Message to investor</label>
-        <input type="text" id="admin-chat-input" placeholder="Type response to investor..." class="vx-input flex-1 px-4 py-3 text-xs">
+        <input type="text" id="admin-chat-input" placeholder="Send direct email message to selected investor..." class="vx-input flex-1 px-4 py-3 text-xs">
         <button type="submit" class="vx-btn-primary px-6 py-3 font-bold text-xs rounded-2xl">
-          Send Reply
+          Send Dispatch
         </button>
       </form>
     </div>
@@ -139,26 +114,149 @@
   </main>
 
   <script>
-    function handleSendReply(e) {
+    let chatUsers = [];
+    let chatEmails = [];
+    let chatTransactions = [];
+    let selectedChatUser = null;
+
+    async function initAdminChatDesk() {
+      const token = VertexApp.getAdminToken ? VertexApp.getAdminToken() : null;
+      const threadsEl = document.getElementById('admin-chat-threads-list');
+      const container = document.getElementById('chat-messages-container');
+
+      if (!token) {
+        if (threadsEl) {
+          threadsEl.innerHTML = `<div class="p-5 text-center space-y-2"><p class="font-bold text-slate-700 dark:text-gray-300">Admin Session Required</p><a href="admin.html" class="vx-btn-primary px-4 py-2 rounded-xl text-xs inline-flex">Sign In at Admin Desk</a></div>`;
+        }
+        return;
+      }
+
+      const data = await VertexApp.getAdminOverview();
+      if (!data || !data.success) {
+        if (threadsEl) threadsEl.innerHTML = `<div class="p-4 text-xs text-rose-500">Session expired or unauthorized. Please re-authenticate in Admin Center.</div>`;
+        return;
+      }
+
+      chatUsers = (data.users || []).filter(u => u.role !== 'admin');
+      chatEmails = data.emailLogs || [];
+      chatTransactions = data.transactions || [];
+      document.getElementById('admin-chat-count').innerText = chatUsers.length;
+
+      if (chatUsers.length === 0) {
+        threadsEl.innerHTML = `<div class="p-5 text-center text-slate-400">No registered investor accounts yet.</div>`;
+        container.innerHTML = VertexApp.renderEmptyState({ title: 'No client threads', description: 'Client accounts will populate here automatically once registered.' });
+        return;
+      }
+
+      selectInvestorThread(chatUsers[0].id);
+    }
+
+    function selectInvestorThread(userId) {
+      selectedChatUser = chatUsers.find(u => u.id === userId) || chatUsers[0];
+      renderThreadList();
+      renderSelectedThread();
+    }
+
+    function renderThreadList() {
+      const threadsEl = document.getElementById('admin-chat-threads-list');
+      if (!threadsEl) return;
+      threadsEl.innerHTML = chatUsers.map(u => {
+        const isSelected = selectedChatUser && selectedChatUser.id === u.id;
+        return `
+          <button type="button" onclick="selectInvestorThread(${u.id})" class="w-full text-left p-4 transition-colors ${isSelected ? 'bg-primary/10 border-l-4 border-primary' : 'hover:bg-slate-50 dark:hover:bg-gray-800/50'}">
+            <div class="flex justify-between items-center gap-2">
+              <span class="font-bold text-slate-900 dark:text-white truncate">${u.full_name}</span>
+              <span class="vx-badge ${u.status === 'active' ? 'vx-badge-emerald' : 'vx-badge-neutral'} shrink-0">${u.status || 'active'}</span>
+            </div>
+            <p class="text-slate-500 dark:text-gray-400 truncate mt-1">${u.email}</p>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function renderSelectedThread() {
+      if (!selectedChatUser) return;
+      const u = selectedChatUser;
+      const initials = (u.full_name || 'VX').split(/\s+/).map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'VX';
+      document.getElementById('chat-head-initials').innerText = initials;
+      document.getElementById('chat-head-name').innerText = `${u.full_name} (${u.account_number || 'Acct #' + u.id})`;
+      document.getElementById('chat-head-meta').innerText = `${u.email} • ${u.country || 'International'}`;
+      const badge = document.getElementById('chat-head-badge');
+      badge.className = u.kyc_status === 'verified' ? 'vx-badge vx-badge-emerald shrink-0' : 'vx-badge vx-badge-amber shrink-0';
+      badge.innerText = u.kyc_status === 'verified' ? 'KYC Verified' : 'Standard Account';
+
+      const container = document.getElementById('chat-messages-container');
+      const userEmails = chatEmails.filter(e => (e.recipient_email || '').toLowerCase() === (u.email || '').toLowerCase());
+      const userTxs = chatTransactions.filter(t => t.user_id === u.id).slice(0, 4);
+
+      if (userEmails.length === 0 && userTxs.length === 0) {
+        container.innerHTML = VertexApp.renderEmptyState({
+          title: `No dispatches recorded for ${u.full_name}`,
+          description: 'Send a direct correspondence update below using the Resend email gateway.'
+        });
+        return;
+      }
+
+      const itemsHtml = [
+        ...userTxs.map(tx => `
+          <div class="flex items-start gap-2.5">
+            <div class="w-7 h-7 rounded-full bg-primary/15 text-primary flex items-center justify-center font-bold text-[10px] shrink-0">${initials}</div>
+            <div class="bg-slate-100 dark:bg-gray-800 border border-slate-200 dark:border-gray-700 p-3.5 rounded-2xl rounded-tl-none max-w-md text-slate-800 dark:text-gray-200 leading-relaxed shadow-sm">
+              <span class="block text-[10px] uppercase font-bold text-primary mb-1">${tx.type} • ${tx.status}</span>
+              Amount: $${parseFloat(tx.amount || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })} (${tx.asset || 'USD'}) — Ref ${tx.tx_ref}
+            </div>
+          </div>
+        `),
+        ...userEmails.map(em => `
+          <div class="flex items-start gap-2.5 justify-end">
+            <div class="bg-primary text-white p-3.5 rounded-2xl rounded-tr-none max-w-md leading-relaxed shadow-lg shadow-blue-500/10">
+              <span class="block text-[10px] uppercase font-bold text-blue-100 mb-1">${em.event_type || 'Admin Email'} • ${em.subject}</span>
+              Dispatched to ${em.recipient_email} on ${new Date(em.created_at || Date.now()).toLocaleDateString()}
+            </div>
+            <div class="w-7 h-7 rounded-full bg-purple-600 flex items-center justify-center text-white font-bold text-[10px] shrink-0">AD</div>
+          </div>
+        `)
+      ].join('');
+      container.innerHTML = itemsHtml;
+      container.scrollTop = container.scrollHeight;
+    }
+
+    async function handleSendReply(e) {
       e.preventDefault();
       const input = document.getElementById('admin-chat-input');
       const val = input.value.trim();
       if (!val) return;
+      if (!selectedChatUser) {
+        VertexApp.showToast('Please select a registered investor first.', 'error');
+        return;
+      }
+
+      const res = await VertexApp.adminSendEmail(selectedChatUser.email, 'Support Desk Update — VertexCapitals', val);
+      if (!res || !res.success) {
+        VertexApp.showToast((res && res.message) || 'Failed to dispatch message.', 'error');
+        return;
+      }
 
       const container = document.getElementById('chat-messages-container');
+      const emptyBox = container.querySelector('.vx-empty-state');
+      if (emptyBox) container.innerHTML = '';
+
       const div = document.createElement('div');
       div.className = 'flex items-start gap-2.5 justify-end';
-      div.innerHTML = `
-        <div class="bg-primary text-white p-3.5 rounded-2xl rounded-tr-none max-w-md leading-relaxed shadow-lg shadow-blue-500/10">
-          ${val}
-        </div>
-        <div class="w-7 h-7 rounded-full bg-purple-600 flex items-center justify-center text-white font-bold text-[10px]">AD</div>
-      `;
+      const bubble = document.createElement('div');
+      bubble.className = 'bg-primary text-white p-3.5 rounded-2xl rounded-tr-none max-w-md leading-relaxed shadow-lg shadow-blue-500/10';
+      bubble.textContent = val;
+      const avatar = document.createElement('div');
+      avatar.className = 'w-7 h-7 rounded-full bg-purple-600 flex items-center justify-center text-white font-bold text-[10px] shrink-0';
+      avatar.textContent = 'AD';
+      div.appendChild(bubble);
+      div.appendChild(avatar);
       container.appendChild(div);
       input.value = '';
       container.scrollTop = container.scrollHeight;
-      VertexApp.showToast('Message sent to investor.', 'success');
     }
+
+    document.addEventListener('DOMContentLoaded', initAdminChatDesk);
   </script>
 </body>
 </html>

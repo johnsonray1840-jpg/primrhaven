@@ -112,7 +112,7 @@
           </h4>
           <p class="text-[11px] text-slate-500 dark:text-gray-400">Earn 5% affiliate commission on all OTC capital allocated by referred accounts.</p>
           <div class="bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 p-2.5 rounded-xl text-xs font-mono text-primary dark:text-blue-200 break-all select-all font-semibold" id="profile-referral-link">
-            https://vertexcapitals.ltd/register.html?ref=VX-8776
+            Loading partner link...
           </div>
           <button type="button" onclick="copyRefLink()" class="vx-btn-primary w-full py-2.5 font-bold text-xs rounded-xl flex items-center justify-center gap-1.5">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
@@ -206,25 +206,47 @@
       btn.querySelector('.pw-icon-show')?.classList.toggle('hidden', !revealed);
       btn.querySelector('.pw-icon-hide')?.classList.toggle('hidden', revealed);
     }
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
       if (!VertexApp.currentUser) {
         window.location.href = 'login.html';
         return;
       }
 
-      const user = VertexApp.currentUser;
-      const initials = (user.full_name || 'User').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+      const summary = await VertexApp.getSummary();
+      const user = (summary && summary.user) ? summary.user : VertexApp.currentUser;
+      if (summary && summary.user) {
+        VertexApp.setAuthUser(summary.user);
+      }
+
+      const fullName = user.full_name || 'Investor Account';
+      const initials = fullName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'VX';
+      const acctNum = user.account_number || (user.id ? `VX-${user.id}` : 'Pending');
 
       document.getElementById('profile-avatar-initials').innerText = initials;
-      document.getElementById('profile-name').innerText = user.full_name;
-      document.getElementById('profile-email').innerText = user.email;
-      document.getElementById('info-name').value = user.full_name;
-      document.getElementById('info-email').value = user.email;
-      document.getElementById('info-account-number').value = user.account_number || '8776';
-      document.getElementById('info-country').value = user.country || 'United States';
+      document.getElementById('profile-name').innerText = fullName;
+      document.getElementById('profile-email').innerText = user.email || '';
+      document.getElementById('info-name').value = fullName;
+      document.getElementById('info-email').value = user.email || '';
+      document.getElementById('info-account-number').value = acctNum;
+      document.getElementById('info-country').value = user.country || '';
+
+      const kycBadge = document.getElementById('profile-kyc-badge');
+      if (kycBadge) {
+        const kyc = (user.kyc_status || 'unverified').toLowerCase();
+        if (kyc === 'verified') {
+          kycBadge.className = 'vx-badge vx-badge-emerald inline-flex items-center gap-1.5';
+          kycBadge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> KYC Verified';
+        } else if (kyc === 'pending') {
+          kycBadge.className = 'vx-badge vx-badge-amber inline-flex items-center gap-1.5';
+          kycBadge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> KYC Pending Review';
+        } else {
+          kycBadge.className = 'vx-badge vx-badge-neutral inline-flex items-center gap-1.5';
+          kycBadge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> Standard Verification';
+        }
+      }
 
       const origin = window.location.origin.includes('http') ? window.location.origin : 'https://vertexcapitals.ltd';
-      document.getElementById('profile-referral-link').innerText = `${origin}/register.html?ref=${user.referral_code || 'VX-' + user.account_number}`;
+      document.getElementById('profile-referral-link').innerText = `${origin}/register.html?ref=${encodeURIComponent(user.referral_code || acctNum)}`;
     });
 
     function copyRefLink() {
