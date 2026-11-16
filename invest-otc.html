@@ -139,27 +139,6 @@
         <!-- Rendered Dynamically from /api/plans/active -->
       </div>
     </div>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-purple-500"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Maximum Capital: <strong>$500,000+ USD</strong></span>
-              </li>
-              <li class="flex items-center gap-2">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-purple-500"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Dedicated Institutional Desk Manager</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-purple-500"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Private Syndicate Profit Share</span>
-              </li>
-            </ul>
-          </div>
-
-          <button onclick="selectTranche('Prime Sovereign Whale Tranche', 10.0, 50000, 500000, 60)" class="w-full py-3.5 bg-slate-100 dark:bg-[#101726] hover:bg-primary hover:text-white border border-slate-200 dark:border-gray-700 hover:border-primary text-slate-800 dark:text-gray-200 font-extrabold text-xs rounded-2xl transition-all shadow-sm">
-            Select Prime Whale Tranche
-          </button>
-        </div>
-
-      </div>
-    </div>
 
     <!-- Interactive Live Allocation Form & Return Calculator -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -559,6 +538,11 @@
 
       if (amount < currentSelectedTranche.min) {
         VertexApp.showToast(`Minimum allocation for ${currentSelectedTranche.name} is $${currentSelectedTranche.min.toLocaleString()}.`, 'error');
+        return;
+      }
+
+      if (currentSelectedTranche.max && amount > currentSelectedTranche.max) {
+        VertexApp.showToast(`Maximum allocation for ${currentSelectedTranche.name} is $${currentSelectedTranche.max.toLocaleString()}.`, 'error');
         return;
       }
 
