@@ -290,6 +290,10 @@
 
       const user = this.currentUser || { full_name: 'Investor Account', email: 'investor@vertexcapitals.ltd' };
       const initials = (user.full_name || 'User').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+      const currentPath = (window.location.pathname || '').toLowerCase();
+      const navItemClass = (slug) => currentPath.includes(slug)
+        ? 'flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary dark:text-blue-400 border border-primary/25 font-bold transition-all group'
+        : 'flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#101726] border border-transparent transition-all group';
 
       const navHtml = `
         <div id="vx-side-nav-backdrop" class="fixed inset-0 bg-slate-900/60 dark:bg-[#070a11]/85 backdrop-blur-xl z-[99998] transition-opacity duration-300 opacity-0 pointer-events-none" onclick="VertexApp.toggleSideNav()"></div>
@@ -300,7 +304,7 @@
             <a href="dashboard.html" class="flex items-center gap-2">
               <img src="images/navbarlogo.svg" alt="VertexCapitals Logo" class="h-6 brand-logo-adaptive">
             </a>
-            <button onclick="VertexApp.toggleSideNav()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center transition-colors">
+            <button onclick="VertexApp.toggleSideNav()" aria-label="Close Navigation" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center transition-colors">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
           </div>
@@ -330,45 +334,52 @@
 
             <!-- Navigation Links -->
             <nav class="space-y-1 text-xs font-medium">
-              <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#101726] transition-colors group">
+              <a href="dashboard.html" class="${navItemClass('dashboard')}">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary group-hover:scale-105 transition-transform"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                 <span>Investor Dashboard</span>
               </a>
 
-              <a href="invest-otc.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#101726] transition-colors group">
+              <a href="invest-otc.html" class="${navItemClass('invest-otc')}">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-500 group-hover:scale-105 transition-transform"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                 <span>Invest in OTC Tranches</span>
               </a>
 
-              <a href="deposit.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#101726] transition-colors group">
+              <a href="deposit.html" class="${navItemClass('deposit')}">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary group-hover:scale-105 transition-transform"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 <span>Deposit Funds</span>
               </a>
 
-              <a href="withdrawal.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#101726] transition-colors group">
+              <a href="withdrawal.html" class="${navItemClass('withdrawal')}">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary group-hover:scale-105 transition-transform"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                 <span>Withdraw Liquidity</span>
               </a>
 
-              <a href="transactions.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#101726] transition-colors group">
+              <a href="transactions.html" class="${navItemClass('transactions')}">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary group-hover:scale-105 transition-transform"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
                 <span>Transactions Ledger</span>
               </a>
 
-              <a href="become-a-partner.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#101726] transition-colors group">
+              <a href="become-a-partner.html" class="${navItemClass('become-a-partner')}">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary group-hover:scale-105 transition-transform"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                 <span>Partner Referral Program</span>
               </a>
 
-              <a href="profile-settings.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#101726] transition-colors group">
+              <a href="profile-settings.html" class="${navItemClass('profile-settings')}">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary group-hover:scale-105 transition-transform"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                 <span>Profile & Security</span>
               </a>
 
-              <a href="support.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#101726] transition-colors group">
+              <a href="support.html" class="${navItemClass('support')}">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary group-hover:scale-105 transition-transform"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                 <span>24/7 Support Desk</span>
               </a>
+
+              <div class="pt-2 mt-2 border-t border-slate-200 dark:border-gray-800/80">
+                <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-gray-400 hover:text-primary dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#101726] transition-all group">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400 group-hover:text-primary transition-colors"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                  <span>Public Homepage</span>
+                </a>
+              </div>
             </nav>
           </div>
 

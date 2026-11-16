@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VertexCapitals - Investor Dashboard</title>
+  <meta name="color-scheme" content="light dark">
+  <title>VertexCapitals — Investor Portfolio Dashboard</title>
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/d2685dbffe5d4b04.css">
   <link rel="stylesheet" href="css/theme-engine.css">
   <script>
-    // Inline Theme Pre-initializer to eliminate FOUC (flash of unstyled content)
     (function() {
       try {
         const theme = localStorage.getItem('vertexcapitals_theme');
@@ -40,31 +40,37 @@
   <script src="js/nav-fix.js"></script>
   <script src="js/app-store.js"></script>
 </head>
-<body class="bg-[#f8fafc] dark:bg-[#070a11] text-slate-800 dark:text-gray-100 min-h-screen flex flex-col font-sans antialiased selection:bg-primary selection:text-white transition-colors duration-300">
+<body class="bg-[#F8FAFC] dark:bg-[#070A11] text-slate-900 dark:text-gray-100 min-h-screen flex flex-col font-sans antialiased selection:bg-primary selection:text-white transition-colors duration-300">
 
-  <!-- Top Application Bar -->
-  <header class="sticky top-0 z-40 bg-white/85 dark:bg-[#0c121e]/90 backdrop-blur-md border-b border-slate-200/80 dark:border-gray-800/80 px-4 sm:px-8 py-3.5 flex justify-between items-center transition-colors shadow-sm dark:shadow-none">
-    <!-- Brand Logo & Side Nav Trigger -->
+  <!-- Top Institutional Application Bar -->
+  <header class="vx-glass-header sticky top-0 z-40 px-4 sm:px-8 py-3.5 flex justify-between items-center gap-4">
     <div class="flex items-center gap-3">
-      <button onclick="VertexApp.toggleSideNav()" class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 hover:border-primary/50 flex items-center justify-center text-slate-600 dark:text-gray-300 hover:text-primary transition-all shadow-sm" title="Toggle Navigation">
+      <button onclick="VertexApp.toggleSideNav()" aria-label="Toggle Navigation" class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 hover:border-primary/50 flex items-center justify-center text-slate-700 dark:text-gray-300 hover:text-primary transition-all shadow-sm">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       </button>
       <a href="dashboard.html" class="flex items-center gap-2">
         <img src="images/navbarlogo.svg" alt="VertexCapitals Logo" class="h-7 brand-logo-adaptive">
       </a>
-      <span class="hidden sm:inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-primary/10 text-primary border border-primary/20 uppercase tracking-wider">Institutional OTC</span>
+      <span class="hidden sm:inline-block vx-badge vx-badge-primary">Wealth Desk</span>
     </div>
 
-    <!-- User Profile & Action Controls -->
+    <!-- Quick Workspace Navigation Pills -->
+    <nav aria-label="Workspace Navigation" class="hidden lg:flex items-center gap-1 bg-slate-100/80 dark:bg-[#101726] p-1 rounded-xl border border-slate-200 dark:border-gray-800 text-xs font-bold">
+      <a href="dashboard.html" class="px-3.5 py-1.5 rounded-lg bg-primary text-white shadow-sm">Overview</a>
+      <a href="invest-otc.html" class="px-3.5 py-1.5 rounded-lg text-slate-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Invest OTC</a>
+      <a href="deposit.html" class="px-3.5 py-1.5 rounded-lg text-slate-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Deposit</a>
+      <a href="withdrawal.html" class="px-3.5 py-1.5 rounded-lg text-slate-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Withdraw</a>
+      <a href="transactions.html" class="px-3.5 py-1.5 rounded-lg text-slate-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">Ledger</a>
+    </nav>
+
+    <!-- User Profile & Controls -->
     <div class="flex items-center gap-2.5 sm:gap-3">
-      <!-- Theme Switcher Button -->
-      <button onclick="VertexApp.toggleTheme()" class="theme-toggle-btn shadow-sm" title="Toggle Theme">
-        <!-- Icon synced dynamically by app-store.js -->
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle></svg>
+      <button onclick="VertexApp.toggleTheme()" class="theme-toggle-btn shadow-sm" title="Toggle Theme" aria-label="Toggle color theme">
+        <svg class="sun-icon w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle></svg>
+        <svg class="moon-icon w-4 h-4 text-slate-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
       </button>
 
-      <!-- User Greeting & Avatar -->
-      <a href="profile-settings.html" class="flex items-center gap-2.5 bg-slate-100 dark:bg-[#101726] hover:bg-slate-200 dark:hover:bg-gray-800/80 px-3.5 py-1.5 rounded-full transition-all border border-slate-200 dark:border-gray-800">
+      <a href="profile-settings.html" class="flex items-center gap-2.5 bg-slate-100 dark:bg-[#101726] hover:bg-slate-200 dark:hover:bg-gray-800/80 px-3 py-1.5 rounded-full transition-all border border-slate-200 dark:border-gray-800">
         <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-extrabold text-xs shadow-md shadow-primary/20">
           <span id="user-avatar-initials">VX</span>
         </div>
@@ -76,124 +82,165 @@
         </div>
       </a>
 
-      <!-- Logout Button -->
-      <button onclick="VertexApp.logout()" class="text-xs font-semibold text-slate-500 dark:text-gray-400 hover:text-rose-600 dark:hover:text-red-400 px-3 py-2 bg-slate-100 dark:bg-gray-900/80 hover:bg-rose-50 dark:hover:bg-red-500/10 border border-slate-200 dark:border-gray-800 hover:border-rose-300 dark:hover:border-red-500/30 rounded-xl transition-all flex items-center gap-1.5" title="Sign Out">
+      <button onclick="VertexApp.logout()" class="text-xs font-semibold text-slate-600 dark:text-gray-300 hover:text-rose-600 dark:hover:text-rose-400 px-3 py-2 bg-slate-100 dark:bg-[#101726] hover:bg-rose-50 dark:hover:bg-rose-500/10 border border-slate-200 dark:border-gray-800 hover:border-rose-300 dark:hover:border-rose-500/30 rounded-xl transition-all flex items-center gap-1.5" title="Sign Out">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
         <span class="hidden sm:inline">Logout</span>
       </button>
     </div>
   </header>
 
-  <!-- Main Dashboard Container -->
-  <main class="flex-1 max-w-5xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
-    
-    <!-- Top Greeting Header -->
+  <!-- Main Workspace -->
+  <main class="flex-1 max-w-6xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
+
+    <!-- Top Greeting & Portfolio Sync Status -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
       <div>
-        <p class="text-xs text-slate-500 dark:text-gray-400 font-semibold tracking-wider uppercase" id="greeting-time">Good Day</p>
+        <p class="text-[11px] text-slate-500 dark:text-gray-400 font-bold tracking-widest uppercase" id="greeting-time">Good Day</p>
         <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight" id="main-user-name">Investor Account</h1>
       </div>
-      <div class="flex items-center gap-2 text-xs text-slate-700 dark:text-gray-300 bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 px-3.5 py-2 rounded-xl shadow-sm">
-        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-        <span>OTC Yield Benchmark: <strong class="text-emerald-600 dark:text-emerald-400 font-bold">+7.5% Weekly</strong></span>
+      <div class="flex items-center gap-2.5">
+        <div class="flex items-center gap-2 text-xs text-slate-700 dark:text-gray-200 bg-white dark:bg-[#0C121E] border border-slate-200 dark:border-gray-800 px-3.5 py-2 rounded-xl shadow-sm">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>Live Polling: <strong class="text-emerald-600 dark:text-emerald-400 font-bold">30s Sync</strong></span>
+        </div>
+        <a href="invest-otc.html" class="vx-btn-primary px-4 py-2 rounded-xl text-xs">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span>Invest</span>
+        </a>
       </div>
     </div>
 
-    <!-- Virtual Account Card (Dual-Wallet Switcher) -->
-    <div class="relative overflow-hidden rounded-3xl p-6 sm:p-8 text-white transition-all duration-500 shadow-2xl border border-white/10" id="main-card-container">
-      <div class="absolute -right-16 -top-16 w-56 h-56 rounded-full bg-white/10 blur-2xl pointer-events-none"></div>
-      <div class="absolute -left-16 -bottom-16 w-56 h-56 rounded-full bg-black/30 blur-2xl pointer-events-none"></div>
+    <!-- Executive Wealth Overview Grid (Vault Card + Portfolio Asset Mix & Actions) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
 
-      <div class="relative z-10 flex flex-col justify-between h-full space-y-6">
-        <!-- Card Top Bar -->
-        <div class="flex justify-between items-start">
-          <div>
-            <div class="flex items-center gap-2">
-              <span class="font-black text-xs sm:text-sm tracking-widest uppercase opacity-90" id="card-badge">VERTEXCAPITALS OTC</span>
-              <span class="px-2.5 py-0.5 rounded text-[10px] font-bold bg-white/20 backdrop-blur-md uppercase tracking-wider" id="card-type-label">EXCHANGE WALLET</span>
+      <!-- Left 7 Cols: Signature Dual-Wallet Institutional Vault Card -->
+      <div class="lg:col-span-7 flex flex-col justify-between space-y-4">
+        <div class="relative overflow-hidden rounded-3xl p-6 sm:p-8 text-white transition-all duration-500 shadow-2xl border border-white/10 flex-1 flex flex-col justify-between bg-gradient-to-br from-[#183EFA] via-[#102da8] to-[#07134d]" id="main-card-container">
+          <div class="absolute -right-16 -top-16 w-56 h-56 rounded-full bg-white/10 blur-2xl pointer-events-none"></div>
+          <div class="absolute -left-16 -bottom-16 w-56 h-56 rounded-full bg-black/30 blur-2xl pointer-events-none"></div>
+
+          <div class="relative z-10 flex flex-col justify-between h-full space-y-6">
+            <div class="flex justify-between items-start gap-2">
+              <div>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="font-black text-xs sm:text-sm tracking-widest uppercase opacity-90" id="card-badge">VERTEXCAPITALS OTC</span>
+                  <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-white/20 backdrop-blur-md uppercase tracking-wider" id="card-type-label">EXCHANGE WALLET</span>
+                </div>
+                <p class="text-xs text-white/90 font-medium mt-1" id="card-holder-name"></p>
+              </div>
+              <span class="px-2.5 py-1 rounded-xl text-[10px] font-bold bg-white/10 border border-white/15 uppercase tracking-wider">Segregated Vault</span>
             </div>
-            <p class="text-xs text-white/90 font-medium mt-1" id="card-holder-name"></p>
+
+            <div class="my-1">
+              <div class="flex items-center gap-2">
+                <p class="text-xs text-white/80 font-medium tracking-wide uppercase" id="card-balance-title">Available Liquid Balance</p>
+                <button onclick="toggleBalancePrivacy()" class="text-white/80 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/10" title="Toggle balance privacy" aria-label="Toggle balance privacy">
+                  <span id="eye-icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </span>
+                </button>
+              </div>
+              <div class="flex items-baseline gap-2 mt-1">
+                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight" id="display-balance">$0.00</h2>
+              </div>
+            </div>
+
+            <div class="flex justify-between items-center pt-3 border-t border-white/15 text-xs text-white/80 font-medium">
+              <div class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                <span>Audited Custody Ledger</span>
+              </div>
+              <span id="last-updated-text">Live Node Sync</span>
+            </div>
           </div>
         </div>
 
-        <!-- Card Balance Display with Privacy Eye Toggle -->
-        <div class="my-2">
-          <div class="flex items-center gap-2">
-            <p class="text-xs text-white/80 font-medium tracking-wide uppercase" id="card-balance-title">Available Liquid Balance</p>
-            <button onclick="toggleBalancePrivacy()" class="text-white/80 hover:text-white transition-colors p-1" title="Toggle balance privacy">
-              <span id="eye-icon">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              </span>
-            </button>
-          </div>
-          <div class="flex items-baseline gap-2 mt-1">
-            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight" id="display-balance">$0.00</h2>
-          </div>
-        </div>
-
-        <!-- Card Bottom Status & Last Updated -->
-        <div class="flex justify-between items-center pt-2 border-t border-white/15 text-xs text-white/80 font-medium">
-          <div class="flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-            <span>Segregated Custody Vault</span>
-          </div>
-          <span id="last-updated-text">Live Node Sync</span>
+        <!-- Dual Wallet Switcher Pills -->
+        <div class="flex items-center gap-2.5">
+          <button onclick="switchWallet('exchange')" id="tab-exchange" class="flex-1 sm:flex-none px-5 py-2.5 rounded-full text-xs font-bold transition-all bg-primary text-white shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+            Exchange Wallet (Liquid)
+          </button>
+          <button onclick="switchWallet('otc')" id="tab-otc" class="flex-1 sm:flex-none px-5 py-2.5 rounded-full text-xs font-bold transition-all bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center gap-2 shadow-sm">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            OTC Capital Allocation
+          </button>
         </div>
       </div>
-    </div>
 
-    <!-- Dual Wallet Switcher Pills -->
-    <div class="flex justify-center items-center gap-3">
-      <button onclick="switchWallet('exchange')" id="tab-exchange" class="px-5 py-2 rounded-full text-xs font-bold transition-all bg-primary text-white shadow-lg shadow-primary/20 flex items-center gap-2">
-        <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
-        Exchange Wallet (Liquid)
-      </button>
-      <button onclick="switchWallet('otc')" id="tab-otc" class="px-5 py-2 rounded-full text-xs font-bold transition-all bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-2 shadow-sm">
-        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-        OTC Investment Allocation
-      </button>
-    </div>
+      <!-- Right 5 Cols: Portfolio Net Worth & Allocation Mix + Quick Actions -->
+      <div class="lg:col-span-5 vx-card p-6 flex flex-col justify-between space-y-5">
+        <div class="space-y-4">
+          <div class="flex justify-between items-start gap-2">
+            <div>
+              <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-gray-400">Total Portfolio Value</p>
+              <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-0.5" id="portfolio-total-networth">$0.00</h2>
+            </div>
+            <span class="vx-badge vx-badge-emerald">Simple Yield</span>
+          </div>
 
-    <!-- 4 Dedicated Quick Action Buttons -->
-    <div class="grid grid-cols-4 gap-3 sm:gap-6 py-2">
-      <!-- 1. Deposit Button -->
-      <a href="deposit.html" class="flex flex-col items-center gap-2 group">
-        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-primary text-white flex items-center justify-center shadow-lg shadow-primary/25 group-hover:scale-105 transition-transform duration-200">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <!-- 3-Segment Allocation Bar -->
+          <div class="space-y-2.5">
+            <div class="vx-allocation-bar" aria-label="Portfolio Asset Allocation">
+              <div id="alloc-bar-exchange" class="vx-allocation-seg bg-primary" style="width: 100%"></div>
+              <div id="alloc-bar-otc" class="vx-allocation-seg bg-emerald-500" style="width: 0%"></div>
+              <div id="alloc-bar-profit" class="vx-allocation-seg bg-amber-500" style="width: 0%"></div>
+            </div>
+            <div class="grid grid-cols-3 gap-2 text-[11px]">
+              <div class="p-2 rounded-xl bg-slate-50 dark:bg-[#101726] border border-slate-200/80 dark:border-gray-800">
+                <span class="flex items-center gap-1 text-slate-500 dark:text-gray-400 font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span>Liquid</span>
+                <strong class="text-slate-900 dark:text-white block mt-0.5 truncate" id="summary-exchange-mini">$0.00</strong>
+              </div>
+              <div class="p-2 rounded-xl bg-slate-50 dark:bg-[#101726] border border-slate-200/80 dark:border-gray-800">
+                <span class="flex items-center gap-1 text-slate-500 dark:text-gray-400 font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>OTC Pool</span>
+                <strong class="text-emerald-600 dark:text-emerald-400 block mt-0.5 truncate" id="summary-otc-mini">$0.00</strong>
+              </div>
+              <div class="p-2 rounded-xl bg-slate-50 dark:bg-[#101726] border border-slate-200/80 dark:border-gray-800">
+                <span class="flex items-center gap-1 text-slate-500 dark:text-gray-400 font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>Yield</span>
+                <strong class="text-amber-600 dark:text-amber-400 block mt-0.5 truncate" id="summary-profit-mini">+$0.00</strong>
+              </div>
+            </div>
+          </div>
         </div>
-        <span class="text-xs sm:text-sm font-bold text-slate-700 dark:text-gray-200 group-hover:text-primary transition-colors">Deposit</span>
-      </a>
 
-      <!-- 2. Withdraw Button -->
-      <a href="withdrawal.html" class="flex flex-col items-center gap-2 group">
-        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 text-slate-700 dark:text-gray-200 flex items-center justify-center shadow-md dark:shadow-lg group-hover:border-primary group-hover:text-primary group-hover:scale-105 transition-all duration-200">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-        </div>
-        <span class="text-xs sm:text-sm font-bold text-slate-700 dark:text-gray-200 group-hover:text-primary transition-colors">Withdraw</span>
-      </a>
+        <!-- 4 Quick Action Buttons -->
+        <div class="grid grid-cols-4 gap-2.5 pt-2 border-t border-slate-100 dark:border-gray-800">
+          <a href="deposit.html" class="flex flex-col items-center gap-1.5 group">
+            <div class="w-12 h-12 rounded-2xl bg-primary text-white flex items-center justify-center shadow-lg shadow-primary/25 group-hover:scale-105 transition-transform">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </div>
+            <span class="text-[11px] font-bold text-slate-700 dark:text-gray-200 group-hover:text-primary transition-colors">Deposit</span>
+          </a>
 
-      <!-- 3. Invest OTC Button -->
-      <a href="invest-otc.html" class="flex flex-col items-center gap-2 group">
-        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shadow-md dark:shadow-lg group-hover:border-emerald-500 group-hover:bg-emerald-50 dark:group-hover:bg-emerald-500/10 group-hover:scale-105 transition-all duration-200">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        </div>
-        <span class="text-xs sm:text-sm font-bold text-slate-700 dark:text-gray-200 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">Invest OTC</span>
-      </a>
+          <a href="withdrawal.html" class="flex flex-col items-center gap-1.5 group">
+            <div class="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 text-slate-700 dark:text-gray-200 flex items-center justify-center shadow-sm group-hover:border-primary group-hover:text-primary group-hover:scale-105 transition-all">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </div>
+            <span class="text-[11px] font-bold text-slate-700 dark:text-gray-200 group-hover:text-primary transition-colors">Withdraw</span>
+          </a>
 
-      <!-- 4. History Button -->
-      <a href="transactions.html" class="flex flex-col items-center gap-2 group">
-        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 text-slate-700 dark:text-gray-300 flex items-center justify-center shadow-md dark:shadow-lg group-hover:border-primary group-hover:text-primary group-hover:scale-105 transition-all duration-200">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <a href="invest-otc.html" class="flex flex-col items-center gap-1.5 group">
+            <div class="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shadow-sm group-hover:border-emerald-500 group-hover:scale-105 transition-all">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <span class="text-[11px] font-bold text-slate-700 dark:text-gray-200 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">Invest OTC</span>
+          </a>
+
+          <a href="transactions.html" class="flex flex-col items-center gap-1.5 group">
+            <div class="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 text-slate-700 dark:text-gray-300 flex items-center justify-center shadow-sm group-hover:border-primary group-hover:text-primary group-hover:scale-105 transition-all">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <span class="text-[11px] font-bold text-slate-700 dark:text-gray-200 group-hover:text-primary transition-colors">History</span>
+          </a>
         </div>
-        <span class="text-xs sm:text-sm font-bold text-slate-700 dark:text-gray-200 group-hover:text-primary transition-colors">History</span>
-      </a>
+      </div>
     </div>
 
     <!-- Active OTC Yield Contract Tracker -->
-    <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800/80 rounded-3xl p-6 sm:p-8 space-y-6 shadow-md dark:shadow-xl" id="otc-contract-card">
-      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pb-4 border-b border-slate-100 dark:border-gray-800">
-        <div class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-lg bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+    <div class="vx-card p-6 sm:p-8 space-y-6" id="otc-contract-card">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-4 border-b border-slate-100 dark:border-gray-800">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
           </div>
           <div>
@@ -201,41 +248,39 @@
             <p class="text-xs text-slate-500 dark:text-gray-400">Capital actively traded in company market tranches.</p>
           </div>
         </div>
-        <div class="flex items-center gap-2">
-          <span id="otc-status-pill" class="px-3 py-1 rounded-full text-xs font-bold bg-gray-800 text-gray-400 border border-gray-700">Awaiting Capital</span>
-          <a href="invest-otc.html" class="px-3 py-1 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 rounded-full text-xs font-bold transition-all flex items-center gap-1">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span id="otc-status-pill" class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 dark:bg-gray-800 text-slate-600 dark:text-gray-300 border border-slate-200 dark:border-gray-700">Awaiting Capital</span>
+          <a href="invest-otc.html" class="px-3.5 py-1.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 rounded-full text-xs font-bold transition-all flex items-center gap-1">
             <span>+ Allocate / View Portal</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
         </div>
       </div>
 
-      <!-- OTC Stats Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" id="otc-stats-container">
-        <div class="bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800/80 rounded-2xl p-4 space-y-1">
+        <div class="vx-kpi-card bg-slate-50 dark:bg-[#101726] p-4 space-y-1">
           <p class="text-[11px] font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider">Allocated Capital</p>
           <p class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white" id="otc-active-capital">$0.00</p>
-          <p class="text-[10px] text-slate-400 dark:text-gray-500" id="otc-active-capital-sub">Locked in Active Tranche</p>
+          <p class="text-[10px] text-slate-500 dark:text-gray-400" id="otc-active-capital-sub">Locked in Active Tranche</p>
         </div>
 
-        <div class="bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800/80 rounded-2xl p-4 space-y-1">
+        <div class="vx-kpi-card bg-slate-50 dark:bg-[#101726] p-4 space-y-1">
           <p class="text-[11px] font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider">Accrued Return Profit</p>
           <p class="text-xl sm:text-2xl font-extrabold text-emerald-600 dark:text-emerald-400" id="otc-accrued-profit">+$0.00</p>
-          <p class="text-[10px] text-amber-500 dark:text-amber-400 font-semibold" id="otc-accrued-status-sub">Accruing (Paid at Maturity)</p>
+          <p class="text-[10px] text-amber-600 dark:text-amber-400 font-semibold" id="otc-accrued-status-sub">Accruing (Paid at Maturity)</p>
         </div>
 
-        <div class="bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800/80 rounded-2xl p-4 space-y-1">
+        <div class="vx-kpi-card bg-slate-50 dark:bg-[#101726] p-4 space-y-1">
           <p class="text-[11px] font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider">Total Agreed ROI</p>
-          <p class="text-xl sm:text-2xl font-extrabold text-amber-500 dark:text-amber-400" id="otc-roi-badge">+20.00%</p>
-          <p class="text-[10px] text-slate-400 dark:text-gray-500" id="otc-roi-sub">Simple Interest at Maturity</p>
+          <p class="text-xl sm:text-2xl font-extrabold text-amber-600 dark:text-amber-400" id="otc-roi-badge">+20.00%</p>
+          <p class="text-[10px] text-slate-500 dark:text-gray-400" id="otc-roi-sub">Simple Interest at Maturity</p>
         </div>
       </div>
 
-      <!-- Contract Progress Bar (Only shown if active plan exists) -->
       <div class="space-y-2" id="otc-progress-container">
-        <div class="flex justify-between text-xs text-slate-500 dark:text-gray-400 font-medium">
+        <div class="flex justify-between text-xs text-slate-600 dark:text-gray-300 font-medium">
           <span id="otc-progress-label">Investment Cycle Status</span>
-          <span id="otc-progress-percent" class="text-amber-500 dark:text-amber-400 font-bold">0%</span>
+          <span id="otc-progress-percent" class="text-amber-600 dark:text-amber-400 font-bold">0%</span>
         </div>
         <div class="w-full h-3 bg-slate-200 dark:bg-gray-900 rounded-full overflow-hidden p-0.5 border border-slate-300 dark:border-gray-800">
           <div class="h-full bg-gradient-to-r from-amber-500 to-emerald-400 rounded-full transition-all duration-700" id="otc-progress-bar" style="width: 0%"></div>
@@ -243,27 +288,25 @@
       </div>
     </div>
 
-    <!-- Section: My Investment Portfolio (Full Active & Past Tranches) -->
-    <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800/80 rounded-3xl p-6 sm:p-8 space-y-6 shadow-md dark:shadow-xl" id="portfolio-investments-section">
+    <!-- My Investment Portfolio -->
+    <div class="vx-card p-6 sm:p-8 space-y-6" id="portfolio-investments-section">
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-4 border-b border-slate-100 dark:border-gray-800">
         <div>
           <div class="flex items-center gap-2">
             <h3 class="font-extrabold text-base sm:text-lg text-slate-900 dark:text-white">My Investment Portfolio</h3>
-            <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-primary/10 text-primary border border-primary/20 uppercase" id="portfolio-count-badge">0 Tranches</span>
+            <span class="vx-badge vx-badge-primary" id="portfolio-count-badge">0 Tranches</span>
           </div>
           <p class="text-xs text-slate-500 dark:text-gray-400 mt-0.5">Track your Short-Term and Long-Term contracts, real-time simple interest accruals, and maturity settlement status.</p>
         </div>
         <div class="flex items-center gap-2">
-          <a href="invest-otc.html" class="px-4 py-2 bg-primary hover:bg-[#1332c9] text-white text-xs font-bold rounded-xl shadow-md shadow-primary/20 transition-all flex items-center gap-1.5">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <a href="invest-otc.html" class="vx-btn-primary px-4 py-2 text-xs rounded-xl">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             <span>New Investment</span>
           </a>
         </div>
       </div>
 
-      <!-- Dynamic Portfolio Cards Grid -->
       <div id="portfolio-investments-grid" class="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <!-- Dynamically rendered via renderInvestmentsList -->
         <div class="col-span-full py-12 text-center text-slate-400 dark:text-gray-500 text-sm">
           Loading your active investments...
         </div>
@@ -271,59 +314,53 @@
     </div>
 
     <!-- Recent Transactions & Audit Table -->
-    <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800/80 rounded-3xl p-6 sm:p-8 space-y-4 shadow-md dark:shadow-xl">
+    <div class="vx-card p-6 sm:p-8 space-y-4">
       <div class="flex justify-between items-center pb-3 border-b border-slate-100 dark:border-gray-800">
         <h3 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white">Recent Account Activity</h3>
-        <a href="transactions.html" class="text-xs text-primary dark:text-amber-400 hover:underline font-semibold transition-colors flex items-center gap-1">
+        <a href="transactions.html" class="text-xs text-primary dark:text-blue-400 hover:underline font-semibold transition-colors flex items-center gap-1">
           <span>View Full Ledger</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
         </a>
       </div>
 
-      <div class="overflow-x-auto">
+      <div tabindex="0" role="region" aria-label="Recent Account Activity" class="vx-table-wrap rounded-2xl border border-slate-200 dark:border-gray-800/80">
         <table class="w-full text-left text-xs">
           <thead>
-            <tr class="text-slate-500 dark:text-gray-400 border-b border-slate-200 dark:border-gray-800/80">
-              <th class="pb-3 font-semibold">Reference</th>
-              <th class="pb-3 font-semibold">Type</th>
-              <th class="pb-3 font-semibold">Asset / Note</th>
-              <th class="pb-3 font-semibold text-right">Amount</th>
-              <th class="pb-3 font-semibold text-right">Status</th>
+            <tr class="text-slate-500 dark:text-gray-400 uppercase tracking-wider">
+              <th class="py-3 px-4 font-bold">Reference</th>
+              <th class="py-3 px-4 font-bold">Type</th>
+              <th class="py-3 px-4 font-bold">Asset / Note</th>
+              <th class="py-3 px-4 font-bold text-right">Amount</th>
+              <th class="py-3 px-4 font-bold text-right">Status</th>
             </tr>
           </thead>
-          <tbody id="recent-tx-body" class="divide-y divide-slate-100 dark:divide-gray-800/50">
+          <tbody id="recent-tx-body" class="divide-y divide-slate-100 dark:divide-gray-800/60">
             <tr>
-              <td colspan="5" class="py-8 text-center text-gray-500">Loading ledger records...</td>
+              <td colspan="5" class="py-8 text-center text-slate-500 dark:text-gray-400">Loading ledger records...</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <!-- Silent Investor & Institutional Patron Showcase -->
-    <div class="relative overflow-hidden bg-gradient-to-br from-white via-slate-50 to-blue-50/40 dark:from-[#0c121e] dark:via-[#0f172a]/90 dark:to-[#070a11] border border-slate-200 dark:border-gray-800/90 rounded-3xl p-6 sm:p-8 shadow-md dark:shadow-2xl transition-all">
-      <!-- Subtle Decorative Background Glow -->
+    <!-- Silent Investor & Institutional Patron Showcase (Preserved Section & Image) -->
+    <div class="relative overflow-hidden vx-card bg-gradient-to-br from-white via-slate-50 to-blue-50/40 dark:from-[#0c121e] dark:via-[#0f172a]/90 dark:to-[#070a11] p-6 sm:p-8">
       <div class="absolute -right-16 -bottom-16 w-56 h-56 bg-primary/10 dark:bg-primary/15 rounded-full blur-3xl pointer-events-none"></div>
-      
       <div class="relative z-10 flex flex-col md:flex-row items-center md:items-start gap-6 sm:gap-7 text-center md:text-left">
-        <!-- Investor Portrait -->
         <div class="relative shrink-0">
           <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl sm:rounded-3xl overflow-hidden p-0.5 bg-gradient-to-b from-primary/60 via-blue-400/40 to-emerald-400/40 shadow-xl shadow-primary/15">
             <img src="images/investor-charlize.jpg" alt="Charlize Theron - Silent Investor" class="w-full h-full object-cover object-top rounded-[22px] sm:rounded-[26px]">
           </div>
-          <!-- Verified Shield Badge -->
           <div class="absolute -bottom-1.5 -right-1.5 w-7 h-7 rounded-full bg-primary text-white border-2 border-white dark:border-[#0c121e] flex items-center justify-center shadow-md" title="Verified Strategic Patron">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
         </div>
 
-        <!-- Investor Biography & Fiduciary Note -->
         <div class="flex-1 space-y-3">
           <div class="flex flex-wrap items-center justify-center md:justify-start gap-2">
-            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-primary/10 dark:bg-primary/20 text-primary border border-primary/20">Strategic Capital Patron</span>
-            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20">Private Endowment Backer</span>
+            <span class="vx-badge vx-badge-primary">Strategic Capital Patron</span>
+            <span class="vx-badge vx-badge-emerald">Private Endowment Backer</span>
           </div>
-
           <div>
             <h4 class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center justify-center md:justify-start gap-2">
               <span>Charlize Theron</span>
@@ -331,48 +368,36 @@
             </h4>
             <p class="text-xs font-medium text-slate-500 dark:text-gray-400">Principal Private Equity Patron & Global Strategic Benefactor</p>
           </div>
-
           <p class="text-xs sm:text-[13px] leading-relaxed text-slate-600 dark:text-gray-300">
-            As a discreet private equity patron and silent cornerstone benefactor of VertexCapitals, Charlize brings global vision, philanthropic stewardship, and long-term capital backing to our institutional digital liquidity reserves. Her non-executive endorsement reinforces our dedication to institutional-grade asset custody, high-integrity governance, and calm, predictable capital growth for every investor on our network.
+            As a discreet private equity patron and silent cornerstone benefactor of VertexCapitals, Charlize brings global vision, philanthropic stewardship, and long-term capital backing to our institutional digital liquidity reserves.
           </p>
-
-          <!-- Core Pillars -->
           <div class="pt-2 flex flex-wrap items-center justify-center md:justify-start gap-4 sm:gap-6 text-[11px] text-slate-500 dark:text-gray-400 border-t border-slate-200/80 dark:border-gray-800/70">
-            <div class="flex items-center gap-1.5">
-              <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
-              <span class="font-semibold text-slate-700 dark:text-gray-200">Segregated Custody Backing</span>
-            </div>
-            <div class="flex items-center gap-1.5">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-              <span class="font-semibold text-slate-700 dark:text-gray-200">Private Capital Reserves</span>
-            </div>
-            <div class="flex items-center gap-1.5">
-              <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-              <span class="font-semibold text-slate-700 dark:text-gray-200">Institutional Governance</span>
-            </div>
+            <div class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span class="font-semibold text-slate-700 dark:text-gray-200">Segregated Custody Backing</span></div>
+            <div class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span class="font-semibold text-slate-700 dark:text-gray-200">Private Capital Reserves</span></div>
+            <div class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span><span class="font-semibold text-slate-700 dark:text-gray-200">Institutional Governance</span></div>
           </div>
         </div>
       </div>
     </div>
   </main>
 
-  <!-- Invest OTC Modal -->
+  <!-- Invest OTC Quick Modal -->
   <div id="invest-otc-modal" class="hidden fixed inset-0 bg-slate-900/60 dark:bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-6 shadow-2xl relative text-slate-800 dark:text-gray-200">
+    <div class="vx-card max-w-md w-full p-6 sm:p-8 space-y-6 shadow-2xl relative text-slate-800 dark:text-gray-200">
       <div class="flex justify-between items-center pb-4 border-b border-slate-100 dark:border-gray-800">
         <div class="flex items-center gap-2">
           <div class="w-8 h-8 rounded-lg bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
           </div>
           <h3 class="font-bold text-slate-900 dark:text-white text-base">Allocate to OTC Tranche</h3>
         </div>
-        <button onclick="closeInvestModal()" class="text-slate-400 hover:text-slate-900 dark:hover:text-white text-lg">✕</button>
+        <button onclick="closeInvestModal()" aria-label="Close modal" class="text-slate-400 hover:text-slate-900 dark:hover:text-white text-lg">✕</button>
       </div>
 
       <div class="space-y-4">
         <div>
           <label class="block text-xs font-semibold text-slate-500 dark:text-gray-400 mb-1">Available Liquid Balance</label>
-          <div class="text-lg font-bold text-amber-500 dark:text-amber-400" id="modal-available-balance">$0.00</div>
+          <div class="text-lg font-bold text-amber-600 dark:text-amber-400" id="modal-available-balance">$0.00</div>
         </div>
 
         <div>
@@ -382,8 +407,8 @@
 
         <div class="p-4 bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl space-y-2 text-xs">
           <div class="flex justify-between text-slate-500 dark:text-gray-400">
-            <span>Weekly Estimated ROI:</span>
-            <span class="text-emerald-600 dark:text-emerald-400 font-bold">+7.50% / week</span>
+            <span>Estimated Total Return:</span>
+            <span class="text-emerald-600 dark:text-emerald-400 font-bold">Simple Interest</span>
           </div>
           <div class="flex justify-between text-slate-500 dark:text-gray-400">
             <span>Contract Duration:</span>
@@ -391,7 +416,7 @@
           </div>
         </div>
 
-        <button onclick="handleConfirmInvest()" class="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-sm rounded-xl shadow-lg shadow-emerald-500/25 transition-all">
+        <button onclick="handleConfirmInvest()" class="vx-btn-emerald w-full py-3.5 text-sm rounded-xl">
           Confirm Capital Allocation
         </button>
       </div>
@@ -407,13 +432,11 @@
     let isPollingInProgress = false;
 
     document.addEventListener('DOMContentLoaded', async () => {
-      // 1. Verify Authentication
       if (!VertexApp.currentUser) {
         window.location.href = 'login.html';
         return;
       }
 
-      // 2. Set Header Information
       const user = VertexApp.currentUser;
       const initials = (user.full_name || 'User').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
       document.getElementById('user-avatar-initials').innerText = initials;
@@ -421,17 +444,14 @@
       document.getElementById('main-user-name').innerText = user.full_name;
       document.getElementById('card-holder-name').innerText = user.full_name;
 
-      // Set Dynamic Greeting without emojis
       const hour = new Date().getHours();
       let greeting = 'Good Evening';
       if (hour < 12) greeting = 'Good Morning';
       else if (hour < 18) greeting = 'Good Afternoon';
       document.getElementById('greeting-time').innerText = greeting;
 
-      // 3. Fetch Live Summary from Backend
       await reloadDashboardData();
 
-      // 4. Lightweight near-real-time polling (every 30 seconds) with overlap avoidance
       setInterval(async () => {
         if (isPollingInProgress) return;
         isPollingInProgress = true;
@@ -465,31 +485,73 @@
 
     function updateCardDisplay() {
       const balanceEl = document.getElementById('display-balance');
-      const badgeEl = document.getElementById('card-badge');
       const typeLabelEl = document.getElementById('card-type-label');
       const titleEl = document.getElementById('card-balance-title');
       const containerEl = document.getElementById('main-card-container');
 
+      const exBal = parseFloat(liveWalletData.exchange_balance || 0);
+      const otcBal = parseFloat(liveWalletData.otc_investment_balance || 0);
+      const activeAccrued = (liveInvestmentsList || [])
+        .filter(i => i.status === 'active')
+        .reduce((acc, i) => acc + parseFloat(i.profit_accrued || 0), 0);
+      const dispProfit = activeAccrued || parseFloat(liveWalletData.accrued_profit || 0);
+      const totalPortfolio = exBal + otcBal + activeAccrued;
+
       let rawVal = 0;
       if (activeWalletMode === 'exchange') {
-        rawVal = liveWalletData.exchange_balance || 0;
+        rawVal = exBal;
         typeLabelEl.innerText = 'EXCHANGE WALLET';
         titleEl.innerText = 'Available Liquid Balance';
-        containerEl.className = 'relative overflow-hidden rounded-3xl p-6 sm:p-8 text-white transition-all duration-500 shadow-2xl border border-white/10 bg-gradient-to-br from-[#183EFA] via-[#102da8] to-[#07134d]';
+        containerEl.className = 'relative overflow-hidden rounded-3xl p-6 sm:p-8 text-white transition-all duration-500 shadow-2xl border border-white/10 flex-1 flex flex-col justify-between bg-gradient-to-br from-[#183EFA] via-[#102da8] to-[#07134d]';
       } else {
-        rawVal = liveWalletData.otc_investment_balance || 0;
+        rawVal = otcBal;
         typeLabelEl.innerText = 'OTC INVESTMENT WALLET';
         titleEl.innerText = 'Active Allocated Capital';
-        containerEl.className = 'relative overflow-hidden rounded-3xl p-6 sm:p-8 text-white transition-all duration-500 shadow-2xl border border-white/10 bg-gradient-to-br from-emerald-800 via-teal-900 to-[#070a11]';
+        containerEl.className = 'relative overflow-hidden rounded-3xl p-6 sm:p-8 text-white transition-all duration-500 shadow-2xl border border-white/10 flex-1 flex flex-col justify-between bg-gradient-to-br from-emerald-800 via-teal-900 to-[#070a11]';
       }
+
+      const netWorthEl = document.getElementById('portfolio-total-networth');
+      const miniExEl = document.getElementById('summary-exchange-mini');
+      const miniOtcEl = document.getElementById('summary-otc-mini');
+      const miniProfEl = document.getElementById('summary-profit-mini');
 
       if (isPrivacyMasked) {
         balanceEl.innerText = '••••••••';
+        if (netWorthEl) netWorthEl.innerText = '••••••••';
+        if (miniExEl) miniExEl.innerText = '••••••';
+        if (miniOtcEl) miniOtcEl.innerText = '••••••';
+        if (miniProfEl) miniProfEl.innerText = '••••••';
       } else {
-        balanceEl.innerText = '$' + parseFloat(rawVal).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        balanceEl.innerText = '$' + rawVal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        if (netWorthEl) netWorthEl.innerText = '$' + totalPortfolio.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        if (miniExEl) miniExEl.innerText = '$' + exBal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        if (miniOtcEl) miniOtcEl.innerText = '$' + otcBal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        if (miniProfEl) miniProfEl.innerText = '+$' + dispProfit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
       }
 
-      document.getElementById('modal-available-balance').innerText = '$' + parseFloat(liveWalletData.exchange_balance || 0).toLocaleString(undefined, { minimumFractionDigits: 2 });
+      // Allocation bar widths
+      const allocDenom = exBal + otcBal + activeAccrued;
+      const barEx = document.getElementById('alloc-bar-exchange');
+      const barOtc = document.getElementById('alloc-bar-otc');
+      const barProf = document.getElementById('alloc-bar-profit');
+      if (barEx && barOtc && barProf) {
+        if (allocDenom > 0) {
+          barEx.style.width = `${((exBal / allocDenom) * 100).toFixed(1)}%`;
+          barOtc.style.width = `${((otcBal / allocDenom) * 100).toFixed(1)}%`;
+          barProf.style.width = `${((activeAccrued / allocDenom) * 100).toFixed(1)}%`;
+        } else {
+          barEx.style.width = '100%';
+          barOtc.style.width = '0%';
+          barProf.style.width = '0%';
+        }
+      }
+
+      const lastUpd = document.getElementById('last-updated-text');
+      if (lastUpd) {
+        lastUpd.innerText = 'Synced ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      }
+
+      document.getElementById('modal-available-balance').innerText = '$' + exBal.toLocaleString(undefined, { minimumFractionDigits: 2 });
     }
 
     function switchWallet(mode) {
@@ -498,11 +560,11 @@
       const tabOtc = document.getElementById('tab-otc');
 
       if (mode === 'exchange') {
-        tabEx.className = 'px-5 py-2 rounded-full text-xs font-bold transition-all bg-primary text-white shadow-lg shadow-primary/20 flex items-center gap-2';
-        tabOtc.className = 'px-5 py-2 rounded-full text-xs font-bold transition-all bg-[#0c121e] border border-gray-800 text-gray-400 hover:text-white flex items-center gap-2';
+        tabEx.className = 'flex-1 sm:flex-none px-5 py-2.5 rounded-full text-xs font-bold transition-all bg-primary text-white shadow-lg shadow-primary/20 flex items-center justify-center gap-2';
+        tabOtc.className = 'flex-1 sm:flex-none px-5 py-2.5 rounded-full text-xs font-bold transition-all bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center gap-2 shadow-sm';
       } else {
-        tabOtc.className = 'px-5 py-2 rounded-full text-xs font-bold transition-all bg-emerald-600 text-white shadow-lg shadow-emerald-600/20 flex items-center gap-2';
-        tabEx.className = 'px-5 py-2 rounded-full text-xs font-bold transition-all bg-[#0c121e] border border-gray-800 text-gray-400 hover:text-white flex items-center gap-2';
+        tabOtc.className = 'flex-1 sm:flex-none px-5 py-2.5 rounded-full text-xs font-bold transition-all bg-emerald-600 text-white shadow-lg shadow-emerald-600/20 flex items-center justify-center gap-2';
+        tabEx.className = 'flex-1 sm:flex-none px-5 py-2.5 rounded-full text-xs font-bold transition-all bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center gap-2 shadow-sm';
       }
       updateCardDisplay();
     }
@@ -528,7 +590,7 @@
       const roiBadge = document.getElementById('otc-roi-badge');
 
       const activeCapital = liveWalletData.otc_investment_balance || (liveOtcPlan && liveOtcPlan.status === 'active' ? liveOtcPlan.amount : 0);
-      const accruedProfit = liveWalletData.accrued_profit || (liveOtcPlan ? liveOtcPlan.profit_accrued : 0);
+      const accruedProfit = (liveOtcPlan && liveOtcPlan.status === 'active' ? liveOtcPlan.profit_accrued : null) ?? liveWalletData.accrued_profit ?? 0;
 
       capEl.innerText = '$' + parseFloat(activeCapital).toLocaleString(undefined, { minimumFractionDigits: 2 });
       profEl.innerText = '+$' + parseFloat(accruedProfit).toLocaleString(undefined, { minimumFractionDigits: 2 });
@@ -539,7 +601,7 @@
       }
 
       if (activeCapital > 0 && liveOtcPlan && liveOtcPlan.status === 'active') {
-        const daysElapsed = liveOtcPlan.days_elapsed || 1;
+        const daysElapsed = liveOtcPlan.days_elapsed || 0;
         const totalDays = liveOtcPlan.duration_days || 30;
         const daysRemaining = liveOtcPlan.days_remaining !== undefined ? liveOtcPlan.days_remaining : Math.max(0, totalDays - daysElapsed);
         const percent = liveOtcPlan.progress_percent !== undefined ? liveOtcPlan.progress_percent : Math.min(100, Math.round((daysElapsed / totalDays) * 100));
@@ -547,20 +609,20 @@
         progLabel.innerText = `Day ${daysElapsed} of ${totalDays} (${percent}% Complete • ${daysRemaining} Days Left)`;
         progPercent.innerText = `${percent}%`;
         progBar.style.width = `${percent}%`;
-        
+
         if (liveOtcPlan.is_mature || liveOtcPlan.display_status === 'awaiting_settlement') {
           statusPill.innerText = 'Matured / Awaiting Settlement';
-          statusPill.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-500/15 text-amber-500 border border-amber-500/30';
+          statusPill.className = 'vx-badge vx-badge-amber';
         } else {
           statusPill.innerText = 'Active Tranche';
-          statusPill.className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30';
+          statusPill.className = 'vx-badge vx-badge-emerald';
         }
       } else {
         progLabel.innerText = 'No active contract — Allocate capital to begin';
         progPercent.innerText = '0%';
         progBar.style.width = '0%';
         statusPill.innerText = 'Awaiting Capital';
-        statusPill.className = 'px-3 py-1 rounded-full text-xs font-bold bg-gray-800 text-gray-400 border border-gray-700';
+        statusPill.className = 'px-3 py-1 rounded-full text-xs font-bold bg-slate-100 dark:bg-gray-800 text-slate-600 dark:text-gray-300 border border-slate-200 dark:border-gray-700';
       }
     }
 
@@ -572,10 +634,10 @@
       if (!investments || investments.length === 0) {
         badge.innerText = '0 Tranches';
         container.innerHTML = `
-          <div class="col-span-full py-12 text-center text-slate-400 dark:text-gray-500 border border-dashed border-slate-200 dark:border-gray-800 rounded-2xl p-6">
-            <p class="font-bold text-sm text-slate-700 dark:text-gray-300">No investment tranches found.</p>
+          <div class="col-span-full py-12 text-center text-slate-500 dark:text-gray-400 border border-dashed border-slate-200 dark:border-gray-800 rounded-2xl p-6">
+            <p class="font-bold text-sm text-slate-800 dark:text-gray-200">No investment tranches found.</p>
             <p class="text-xs mt-1 text-slate-500 dark:text-gray-400">Allocate liquidity into Short-Term or Long-Term OTC tranches to earn simple interest returns.</p>
-            <a href="invest-otc.html" class="inline-block mt-4 px-4 py-2 bg-primary text-white text-xs font-bold rounded-xl shadow-md hover:bg-[#1332c9] transition-all">Explore Investment Catalogue</a>
+            <a href="invest-otc.html" class="vx-btn-primary inline-flex mt-4 px-5 py-2.5 text-xs rounded-xl">Explore Investment Catalogue</a>
           </div>
         `;
         return;
@@ -596,31 +658,26 @@
         const category = inv.category || (durationDays <= 30 ? 'Short-Term' : 'Long-Term');
         const isShort = category === 'Short-Term';
 
-        // Format dates cleanly
         const startStr = inv.start_date ? new Date(inv.start_date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : 'Active';
         const endStr = inv.end_date ? new Date(inv.end_date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : `${durationDays} Days`;
 
-        // Determine Status Badge & Colors
         let statusBadge = '';
         if (inv.status === 'completed') {
-          statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-blue-500/15 text-blue-500 dark:text-blue-400 border border-blue-500/30 uppercase tracking-wider">Completed</span>`;
+          statusBadge = `<span class="vx-badge vx-badge-primary">Completed</span>`;
         } else if (inv.is_mature || inv.display_status === 'awaiting_settlement') {
-          statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500/15 text-amber-500 dark:text-amber-400 border border-amber-500/30 uppercase tracking-wider">Matured / Awaiting Settlement</span>`;
+          statusBadge = `<span class="vx-badge vx-badge-amber">Matured / Awaiting Settlement</span>`;
         } else {
-          statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/15 text-emerald-500 dark:text-emerald-400 border border-emerald-500/30 uppercase tracking-wider">Active</span>`;
+          statusBadge = `<span class="vx-badge vx-badge-emerald">Active</span>`;
         }
 
         const isCompleted = inv.status === 'completed';
 
         return `
           <div class="bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-2xl p-5 space-y-4 hover:border-primary/40 transition-all shadow-sm">
-            <!-- Header Row -->
             <div class="flex justify-between items-start gap-2">
               <div class="space-y-1">
                 <div class="flex items-center gap-1.5">
-                  <span class="px-2 py-0.5 rounded-md text-[10px] font-extrabold uppercase ${isShort ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30' : 'bg-primary/15 text-primary border border-primary/30'}">
-                    ${category}
-                  </span>
+                  <span class="vx-badge ${isShort ? 'vx-badge-amber' : 'vx-badge-primary'}">${category}</span>
                   <span class="text-xs font-semibold text-slate-500 dark:text-gray-400">• ${durationDays} Days</span>
                 </div>
                 <h4 class="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white">${inv.tranche_name || 'Yield Tranche'}</h4>
@@ -628,7 +685,6 @@
               <div>${statusBadge}</div>
             </div>
 
-            <!-- Financial Metrics Grid -->
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-1">
               <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800/80 rounded-xl p-2.5">
                 <span class="text-[10px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider block">Principal</span>
@@ -639,16 +695,15 @@
                 <span class="text-sm font-black text-emerald-600 dark:text-emerald-400">+${roiPercent}%</span>
               </div>
               <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800/80 rounded-xl p-2.5 col-span-2 sm:col-span-1">
-                <span class="text-[10px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider block">Total Expected Profit</span>
+                <span class="text-[10px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider block">Expected Profit</span>
                 <span class="text-sm font-black text-emerald-600 dark:text-emerald-400">+$${totalProfit.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
               </div>
             </div>
 
-            <!-- Accrual vs Wallet Distinction Box -->
             <div class="p-3 bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 rounded-xl space-y-2">
               <div class="flex justify-between items-center text-xs">
                 <span class="text-slate-500 dark:text-gray-400 font-medium">Accrued Simple Interest:</span>
-                <span class="font-extrabold ${isCompleted ? 'text-blue-500 dark:text-blue-400' : 'text-emerald-600 dark:text-emerald-400'}">
+                <span class="font-extrabold ${isCompleted ? 'text-blue-600 dark:text-blue-400' : 'text-emerald-600 dark:text-emerald-400'}">
                   +$${accruedProfit.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                 </span>
               </div>
@@ -656,22 +711,21 @@
                 <span>Total Maturity Payout:</span>
                 <span class="font-extrabold text-slate-900 dark:text-white">$${grossPayout.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
               </div>
-              <div class="text-[10px] ${isCompleted ? 'text-blue-600 dark:text-blue-400 font-semibold' : 'text-amber-500 dark:text-amber-400 font-medium'} flex items-center gap-1">
+              <div class="text-[10px] ${isCompleted ? 'text-blue-600 dark:text-blue-400 font-semibold' : 'text-amber-600 dark:text-amber-400 font-medium'} flex items-center gap-1">
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
                 <span>${isCompleted ? 'Settled into Exchange Wallet balance.' : 'Accrues on ledger; credited to Exchange Wallet at maturity.'}</span>
               </div>
             </div>
 
-            <!-- Progress Bar & Dates -->
             <div class="space-y-1.5">
               <div class="flex justify-between text-[11px] text-slate-500 dark:text-gray-400 font-medium">
                 <span>Progress (${daysElapsed}/${durationDays} Days)</span>
                 <span class="font-bold text-slate-700 dark:text-gray-300">${progressPercent}% • ${daysRemaining} Days Left</span>
               </div>
               <div class="w-full h-2 bg-slate-200 dark:bg-gray-800 rounded-full overflow-hidden p-0.5">
-                <div class="h-full ${isCompleted ? 'bg-blue-500' : 'bg-gradient-to-r from-amber-500 to-emerald-400'} rounded-full transition-all duration-500" style="width: ${progressPercent}%"></div>
+                <div class="h-full ${isCompleted ? 'bg-primary' : 'bg-gradient-to-r from-amber-500 to-emerald-400'} rounded-full transition-all duration-500" style="width: ${progressPercent}%"></div>
               </div>
-              <div class="flex justify-between text-[10px] text-slate-400 dark:text-gray-500 pt-0.5">
+              <div class="flex justify-between text-[10px] text-slate-500 dark:text-gray-400 pt-0.5">
                 <span>Start: ${startStr}</span>
                 <span>Maturity: ${endStr}</span>
               </div>
@@ -686,7 +740,7 @@
       if (!txList || txList.length === 0) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="5" class="py-8 text-center text-gray-500">
+            <td colspan="5" class="py-8 text-center text-slate-500 dark:text-gray-400">
               No recent transactions recorded. Fund your exchange wallet to get started.
             </td>
           </tr>
@@ -697,24 +751,23 @@
       tbody.innerHTML = txList.slice(0, 5).map(tx => {
         const isDeposit = tx.type === 'deposit';
         const isProfit = tx.type === 'otc_profit';
-        const isWd = tx.type === 'withdrawal';
         const amountPrefix = (isDeposit || isProfit) ? '+' : '-';
-        const amountColor = (isDeposit || isProfit) ? 'text-emerald-400' : 'text-rose-400';
-        
-        let statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30 uppercase">Pending</span>`;
+        const amountColor = (isDeposit || isProfit) ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400';
+
+        let statusBadge = `<span class="vx-badge vx-badge-amber">Pending</span>`;
         if (tx.status === 'completed') {
-          statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 uppercase">Completed</span>`;
+          statusBadge = `<span class="vx-badge vx-badge-emerald">Completed</span>`;
         } else if (tx.status === 'rejected') {
-          statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/15 text-rose-400 border border-rose-500/30 uppercase">Cancelled</span>`;
+          statusBadge = `<span class="vx-badge vx-badge-rose">Cancelled</span>`;
         }
 
         return `
-          <tr class="hover:bg-gray-800/30 transition-colors">
-            <td class="py-3 font-semibold text-gray-300">${tx.tx_ref}</td>
-            <td class="py-3 uppercase text-[11px] font-semibold text-gray-400">${tx.type.replace('_', ' ')}</td>
-            <td class="py-3 text-gray-300 font-medium">${tx.asset}</td>
-            <td class="py-3 text-right font-bold ${amountColor}">${amountPrefix}$${parseFloat(tx.amount).toLocaleString(undefined, { minimumFractionDigits: 2 })}</td>
-            <td class="py-3 text-right">${statusBadge}</td>
+          <tr class="theme-table-row transition-colors">
+            <td class="py-3.5 px-4 font-bold text-slate-800 dark:text-gray-200">${tx.tx_ref}</td>
+            <td class="py-3.5 px-4 uppercase text-[11px] font-semibold text-primary dark:text-blue-400">${tx.type.replace('_', ' ')}</td>
+            <td class="py-3.5 px-4 text-slate-600 dark:text-gray-300 font-medium">${tx.asset}</td>
+            <td class="py-3.5 px-4 text-right font-bold ${amountColor}">${amountPrefix}$${parseFloat(tx.amount).toLocaleString(undefined, { minimumFractionDigits: 2 })}</td>
+            <td class="py-3.5 px-4 text-right">${statusBadge}</td>
           </tr>
         `;
       }).join('');

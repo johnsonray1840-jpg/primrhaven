@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VertexCapitals - Executive Institutional Admin Center</title>
+  <meta name="color-scheme" content="light dark">
+  <title>VertexCapitals — Executive Institutional Admin Center</title>
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/d2685dbffe5d4b04.css">
   <link rel="stylesheet" href="css/theme-engine.css">
@@ -40,10 +41,10 @@
   <script src="js/nav-fix.js"></script>
   <script src="js/app-store.js"></script>
 </head>
-<body class="bg-[#f8fafc] dark:bg-[#070a11] text-slate-800 dark:text-gray-100 min-h-screen flex flex-col font-sans antialiased selection:bg-primary selection:text-white transition-colors duration-300">
+<body class="bg-[#F8FAFC] dark:bg-[#070A11] text-slate-900 dark:text-gray-100 min-h-screen flex flex-col font-sans antialiased selection:bg-primary selection:text-white transition-colors duration-300">
   
   <!-- Admin Top Master Header -->
-  <header class="bg-white/85 dark:bg-[#0c121e]/90 backdrop-blur-md border-b border-slate-200/80 dark:border-gray-800/80 px-4 sm:px-8 py-3.5 flex justify-between items-center sticky top-0 z-40 transition-colors shadow-sm dark:shadow-none">
+  <header class="vx-glass-header px-4 sm:px-8 py-3.5 flex justify-between items-center sticky top-0 z-40 transition-colors">
     <div class="flex items-center gap-3">
       <a href="admin.html" class="flex items-center gap-2">
         <img src="images/navbarlogo.svg" alt="VertexCapitals Logo" class="h-7 sm:h-8 brand-logo-adaptive">
@@ -89,50 +90,50 @@
     
     <!-- Top Executive KPI Stats Row -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 min-w-0">
-      <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800/80 p-5 rounded-3xl space-y-2 shadow-md dark:shadow-xl min-w-0 overflow-hidden">
+      <div class="vx-kpi-card p-5 space-y-2 min-w-0 overflow-hidden">
         <div class="flex justify-between items-center text-[11px] text-slate-500 dark:text-gray-400 font-semibold uppercase tracking-wider">
           <span class="truncate">Registered Investors</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-blue-500 flex-shrink-0"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
         </div>
-        <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white truncate" id="stat-investors-count">0</h3>
+        <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white truncate tabular-nums" id="stat-investors-count">0</h3>
         <p class="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium flex items-center gap-1">
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0"></span> Live Accounts
         </p>
       </div>
 
-      <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800/80 p-5 rounded-3xl space-y-2 shadow-md dark:shadow-xl min-w-0 overflow-hidden">
+      <div class="vx-kpi-card p-5 space-y-2 min-w-0 overflow-hidden">
         <div class="flex justify-between items-center text-[11px] text-slate-500 dark:text-gray-400 font-semibold uppercase tracking-wider min-w-0">
           <span class="truncate">Total Platform AUM</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-amber-500 flex-shrink-0 ml-1"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M6 12h12"/></svg>
         </div>
-        <h3 class="text-lg sm:text-xl font-extrabold text-amber-500 dark:text-amber-400 truncate" id="stat-managed-assets">$0.00</h3>
+        <h3 class="text-lg sm:text-xl font-extrabold text-amber-500 dark:text-amber-400 truncate tabular-nums" id="stat-managed-assets">$0.00</h3>
         <p class="text-[10px] text-slate-400 dark:text-gray-400 font-medium truncate">Liquid Vault + Active OTC</p>
       </div>
 
-      <div onclick="switchAdminTab('deposits')" class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800/80 hover:border-emerald-500/50 p-5 rounded-3xl space-y-2 shadow-md dark:shadow-xl cursor-pointer transition-all">
+      <div onclick="switchAdminTab('deposits')" class="vx-kpi-card hover:border-emerald-500/50 p-5 space-y-2 cursor-pointer transition-all">
         <div class="flex justify-between items-center text-[11px] text-slate-500 dark:text-gray-400 font-semibold uppercase tracking-wider">
           <span>Pending Deposits</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-500"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         </div>
-        <h3 class="text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 " id="stat-pending-deposits">0</h3>
+        <h3 class="text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 tabular-nums" id="stat-pending-deposits">0</h3>
         <p class="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium">Awaiting Settlement Review</p>
       </div>
 
-      <div onclick="switchAdminTab('withdrawals')" class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800/80 hover:border-purple-500/50 p-5 rounded-3xl space-y-2 shadow-md dark:shadow-xl cursor-pointer transition-all">
+      <div onclick="switchAdminTab('withdrawals')" class="vx-kpi-card hover:border-purple-500/50 p-5 space-y-2 cursor-pointer transition-all">
         <div class="flex justify-between items-center text-[11px] text-slate-500 dark:text-gray-400 font-semibold uppercase tracking-wider">
           <span>Pending Payouts</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-purple-500"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
         </div>
-        <h3 class="text-2xl sm:text-3xl font-extrabold text-purple-600 dark:text-purple-400 " id="stat-pending-withdrawals">0</h3>
+        <h3 class="text-2xl sm:text-3xl font-extrabold text-purple-600 dark:text-purple-400 tabular-nums" id="stat-pending-withdrawals">0</h3>
         <p class="text-[10px] text-purple-600 dark:text-purple-400 font-medium">Ready for Blockchain Broadcast</p>
       </div>
 
-      <div onclick="switchAdminTab('otc-plans')" class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800/80 hover:border-blue-500/50 p-5 rounded-3xl space-y-2 shadow-md dark:shadow-xl cursor-pointer transition-all">
+      <div onclick="switchAdminTab('otc-plans')" class="vx-kpi-card hover:border-blue-500/50 p-5 space-y-2 cursor-pointer transition-all">
         <div class="flex justify-between items-center text-[11px] text-slate-500 dark:text-gray-400 font-semibold uppercase tracking-wider">
           <span>Active OTC Tranches</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-blue-500"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
         </div>
-        <h3 class="text-2xl sm:text-3xl font-extrabold text-blue-600 dark:text-blue-400 " id="stat-active-otc-count">0</h3>
+        <h3 class="text-2xl sm:text-3xl font-extrabold text-blue-600 dark:text-blue-400 tabular-nums" id="stat-active-otc-count">0</h3>
         <p class="text-[10px] text-blue-600 dark:text-blue-400 font-medium">Weekly Yield Contracts</p>
       </div>
     </div>
@@ -211,11 +212,11 @@
         </button>
       </div>
 
-      <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800/80 rounded-3xl overflow-hidden shadow-md dark:shadow-2xl">
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs">
+      <div class="vx-card overflow-hidden">
+        <div class="vx-table-wrap" tabindex="0" role="region" aria-label="Registered Investors Directory">
+          <table class="w-full text-left text-xs min-w-[780px]">
             <thead>
-              <tr class="bg-slate-50 dark:bg-[#070a11] text-slate-500 dark:text-gray-400 uppercase tracking-wider border-b border-slate-200 dark:border-gray-800">
+              <tr class="text-slate-500 dark:text-gray-400 uppercase tracking-wider border-b border-slate-200 dark:border-gray-800">
                 <th class="py-4 px-4 w-10">
                   <input type="checkbox" id="select-all-users" onchange="toggleSelectAllUsers(this)" class="w-3.5 h-3.5 rounded accent-rose-500 cursor-pointer">
                 </th>
@@ -299,11 +300,11 @@
         </button>
       </div>
 
-      <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800/80 rounded-3xl overflow-hidden shadow-md dark:shadow-2xl">
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs">
+      <div class="vx-card overflow-hidden">
+        <div class="vx-table-wrap" tabindex="0" role="region" aria-label="Cryptocurrency Deposit Approval Queue">
+          <table class="w-full text-left text-xs min-w-[680px]">
             <thead>
-              <tr class="bg-slate-50 dark:bg-[#070a11] text-slate-500 dark:text-gray-400 uppercase tracking-wider border-b border-slate-200 dark:border-gray-800">
+              <tr class="text-slate-500 dark:text-gray-400 uppercase tracking-wider border-b border-slate-200 dark:border-gray-800">
                 <th class="py-4 px-6">Reference</th>
                 <th class="py-4 px-6">Investor</th>
                 <th class="py-4 px-6">Asset</th>
@@ -335,11 +336,11 @@
         </button>
       </div>
 
-      <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800/80 rounded-3xl overflow-hidden shadow-md dark:shadow-2xl">
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs">
+      <div class="vx-card overflow-hidden">
+        <div class="vx-table-wrap" tabindex="0" role="region" aria-label="Withdrawal and Payout Approval Queue">
+          <table class="w-full text-left text-xs min-w-[680px]">
             <thead>
-              <tr class="bg-slate-50 dark:bg-[#070a11] text-slate-500 dark:text-gray-400 uppercase tracking-wider border-b border-slate-200 dark:border-gray-800">
+              <tr class="text-slate-500 dark:text-gray-400 uppercase tracking-wider border-b border-slate-200 dark:border-gray-800">
                 <th class="py-4 px-6">Reference</th>
                 <th class="py-4 px-6">Investor</th>
                 <th class="py-4 px-6">Asset</th>
@@ -380,11 +381,11 @@
         </div>
       </div>
 
-      <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800/80 rounded-3xl overflow-hidden shadow-md dark:shadow-2xl">
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs">
+      <div class="vx-card overflow-hidden">
+        <div class="vx-table-wrap" tabindex="0" role="region" aria-label="Investment Plan Catalogue">
+          <table class="w-full text-left text-xs min-w-[780px]">
             <thead>
-              <tr class="bg-slate-50 dark:bg-[#070a11] text-slate-500 dark:text-gray-400 uppercase tracking-wider border-b border-slate-200 dark:border-gray-800">
+              <tr class="text-slate-500 dark:text-gray-400 uppercase tracking-wider border-b border-slate-200 dark:border-gray-800">
                 <th class="py-4 px-6">ID</th>
                 <th class="py-4 px-6">Plan Name</th>
                 <th class="py-4 px-6">Category</th>
@@ -419,11 +420,11 @@
         </button>
       </div>
 
-      <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800/80 rounded-3xl overflow-hidden shadow-md dark:shadow-2xl">
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs">
+      <div class="vx-card overflow-hidden">
+        <div class="vx-table-wrap" tabindex="0" role="region" aria-label="Active OTC Investment Contracts">
+          <table class="w-full text-left text-xs min-w-[740px]">
             <thead>
-              <tr class="bg-slate-50 dark:bg-[#070a11] text-slate-500 dark:text-gray-400 uppercase tracking-wider border-b border-slate-200 dark:border-gray-800">
+              <tr class="text-slate-500 dark:text-gray-400 uppercase tracking-wider border-b border-slate-200 dark:border-gray-800">
                 <th class="py-4 px-6">Contract ID</th>
                 <th class="py-4 px-6">Investor</th>
                 <th class="py-4 px-6">Tranche Tier</th>
@@ -478,11 +479,11 @@
         </div>
       </div>
 
-      <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800/80 rounded-3xl overflow-hidden shadow-md dark:shadow-2xl">
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs">
+      <div class="vx-card overflow-hidden">
+        <div class="vx-table-wrap" tabindex="0" role="region" aria-label="Platform Global Ledger">
+          <table class="w-full text-left text-xs min-w-[740px]">
             <thead>
-              <tr class="bg-slate-50 dark:bg-[#070a11] text-slate-500 dark:text-gray-400 uppercase tracking-wider border-b border-slate-200 dark:border-gray-800">
+              <tr class="text-slate-500 dark:text-gray-400 uppercase tracking-wider border-b border-slate-200 dark:border-gray-800">
                 <th class="py-4 px-6">Reference</th>
                 <th class="py-4 px-6">Investor</th>
                 <th class="py-4 px-6">Type</th>
@@ -505,13 +506,13 @@
     <!-- TAB 7: RESEND EMAIL DISPATCHER & AUDIT LOGS -->
     <!-- ========================================================== -->
     <section id="tab-content-emails" class="hidden space-y-8">
-      <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800/80 rounded-3xl p-6 sm:p-8 space-y-6 shadow-md dark:shadow-2xl">
+      <div class="vx-card p-6 sm:p-8 space-y-6">
         <div class="pb-3 border-b border-slate-200 dark:border-gray-800 flex justify-between items-center">
           <div>
-            <h3 class="font-bold text-lg text-slate-900 dark:text-white">Live Resend Email Engine & Announcement Broadcast</h3>
+            <h3 class="font-bold text-lg text-slate-900 dark:text-white">Live Resend Email Engine &amp; Announcement Broadcast</h3>
             <p class="text-xs text-slate-500 dark:text-gray-400">Dispatch branded HTML communications to verified investor email inboxes via Resend API.</p>
           </div>
-          <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 uppercase">Resend API Active</span>
+          <span class="vx-badge vx-badge-emerald uppercase">Resend API Active</span>
         </div>
 
         <form id="admin-email-form" onsubmit="handleSendEmail(event)" class="space-y-4">
@@ -544,15 +545,15 @@
         </form>
       </div>
 
-      <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800/80 rounded-3xl p-6 sm:p-8 space-y-4 shadow-md dark:shadow-2xl">
+      <div class="vx-card p-6 sm:p-8 space-y-4">
         <div class="flex justify-between items-center border-b border-slate-200 dark:border-gray-800 pb-3">
           <h3 class="font-bold text-base text-slate-900 dark:text-white">Dispatched Email Audit Log</h3>
           <button onclick="clearEmailLogs()" class="text-xs text-rose-500 dark:text-rose-400 hover:text-rose-600 dark:hover:text-rose-300 font-semibold">Clear Logs</button>
         </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs">
+        <div class="vx-table-wrap" tabindex="0" role="region" aria-label="Dispatched Email Audit Log">
+          <table class="w-full text-left text-xs min-w-[540px]">
             <thead>
-              <tr class="bg-slate-50 dark:bg-[#070a11] text-slate-500 dark:text-gray-400 uppercase tracking-wider border-b border-slate-200 dark:border-gray-800">
+              <tr class="text-slate-500 dark:text-gray-400 uppercase tracking-wider border-b border-slate-200 dark:border-gray-800">
                 <th class="py-3 px-4">Recipient</th>
                 <th class="py-3 px-4">Subject</th>
                 <th class="py-3 px-4">Event Type</th>
