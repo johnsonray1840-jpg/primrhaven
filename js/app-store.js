@@ -293,19 +293,19 @@
       const currentPath = (window.location.pathname || '').toLowerCase();
       const navItemClass = (slug) => currentPath.includes(slug)
         ? 'vx-sidebar-link bg-primary/10 text-primary dark:text-blue-400 border border-primary/25 font-bold transition-all group'
-        : 'vx-sidebar-link text-slate-700 dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#101726] border border-transparent transition-all group';
+        : 'vx-sidebar-link text-slate-700 dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#243247] border border-transparent transition-all group';
       const navCurrent = (slug) => currentPath.includes(slug) ? 'aria-current="page"' : '';
 
       const navHtml = `
-        <div id="vx-side-nav-backdrop" class="fixed inset-0 bg-slate-900/60 dark:bg-[#070a11]/85 backdrop-blur-xl z-[99998] transition-opacity duration-300 opacity-0 pointer-events-none" onclick="VertexApp.toggleSideNav()"></div>
-        <aside id="vx-side-nav-drawer" class="fixed top-0 left-0 bottom-0 w-72 sm:w-80 bg-white dark:bg-[#0c121e] border-r border-slate-200 dark:border-gray-800/90 z-[99999] flex flex-col justify-between transition-transform duration-300 -translate-x-full shadow-2xl font-sans text-slate-800 dark:text-gray-200">
+        <div id="vx-side-nav-backdrop" class="fixed inset-0 bg-slate-900/60 dark:bg-[#0F172A]/85 backdrop-blur-xl z-[99998] transition-opacity duration-300 opacity-0 pointer-events-none" onclick="VertexApp.toggleSideNav()"></div>
+        <aside id="vx-side-nav-drawer" class="fixed top-0 left-0 bottom-0 w-72 sm:w-80 bg-white dark:bg-[#1E293B] border-r border-slate-200 dark:border-gray-800/90 z-[99999] flex flex-col justify-between transition-transform duration-300 -translate-x-full shadow-2xl font-sans text-slate-800 dark:text-gray-200">
           
           <!-- Drawer Header -->
-          <div class="p-5 border-b border-slate-200 dark:border-gray-800/80 flex justify-between items-center bg-slate-50 dark:bg-[#070a11]/50">
+          <div class="p-5 border-b border-slate-200 dark:border-gray-800/80 flex justify-between items-center bg-slate-50 dark:bg-[#0F172A]/50">
             <a href="dashboard.html" class="flex items-center gap-2">
               <img src="images/navbarlogo.svg" alt="PrimeHavenCapital Logo" class="h-6 brand-logo-adaptive">
             </a>
-            <button onclick="VertexApp.toggleSideNav()" aria-label="Close Navigation" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center transition-colors">
+            <button onclick="VertexApp.toggleSideNav()" aria-label="Close Navigation" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center transition-colors">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
           </div>
@@ -313,7 +313,7 @@
           <!-- Drawer Navigation Links -->
           <div class="flex-1 overflow-y-auto p-4 space-y-5">
             <!-- User Profile Snapshot -->
-            <div class="p-4 bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800/80 rounded-2xl flex items-center gap-3">
+            <div class="p-4 bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800/80 rounded-2xl flex items-center gap-3">
               <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-extrabold text-sm shadow-md shadow-primary/20" id="vx-drawer-avatar">
                 ${initials}
               </div>
@@ -326,9 +326,9 @@
             </div>
 
             <!-- Theme Switcher Pill -->
-            <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800/80 rounded-2xl">
+            <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800/80 rounded-2xl">
               <span class="text-xs font-semibold text-slate-600 dark:text-gray-400">Interface Theme</span>
-              <button onclick="VertexApp.toggleTheme()" id="vx-drawer-theme-pill" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-white dark:bg-[#070a11] border border-slate-200 dark:border-gray-700 shadow-sm text-slate-800 dark:text-gray-200 hover:border-primary transition-all flex items-center gap-1.5">
+              <button onclick="VertexApp.toggleTheme()" id="vx-drawer-theme-pill" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-gray-700 shadow-sm text-slate-800 dark:text-gray-200 hover:border-primary transition-all flex items-center gap-1.5">
                 <span class="w-2 h-2 rounded-full bg-amber-400"></span> Dark Theme
               </button>
             </div>
@@ -376,7 +376,7 @@
               </a>
 
               <div class="pt-2 mt-2 border-t border-slate-200 dark:border-gray-800/80">
-                <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-gray-400 hover:text-primary dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#101726] transition-all group">
+                <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-gray-400 hover:text-primary dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#243247] transition-all group">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400 group-hover:text-primary transition-colors"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                   <span>Public Homepage</span>
                 </a>
@@ -385,7 +385,7 @@
           </div>
 
           <!-- Drawer Footer -->
-          <div class="p-5 border-t border-slate-200 dark:border-gray-800/80 bg-slate-50 dark:bg-[#070a11]/50">
+          <div class="p-5 border-t border-slate-200 dark:border-gray-800/80 bg-slate-50 dark:bg-[#0F172A]/50">
             <button onclick="VertexApp.logout()" class="w-full py-3 bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 border border-rose-500/30 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
               <span>Sign Out</span>

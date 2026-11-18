@@ -32,8 +32,8 @@
           colors: {
             primary: '#183EFA',
             gold: '#F59E0B',
-            dark: '#070A11',
-            cardBg: '#0C121E',
+            dark: '#0F172A',
+            cardBg: '#1E293B',
             cardBorder: '#1E293B'
           }
         }
@@ -43,7 +43,7 @@
   <script src="js/nav-fix.js"></script>
   <script src="js/app-store.js"></script>
 </head>
-<body class="bg-[#F8FAFC] dark:bg-[#070A11] text-slate-900 dark:text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-primary selection:text-white">
+<body class="bg-[#F8FAFC] dark:bg-[#0F172A] text-slate-900 dark:text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-primary selection:text-white">
 
   <!-- Sticky Responsive Navigation -->
   <header class="vx-glass-header sticky top-0 z-50 w-full">
@@ -84,7 +84,7 @@
         </div>
 
         <!-- Mobile Menu Trigger -->
-        <button type="button" id="mobile-menu-btn" onclick="toggleMobileNavDrawer(event)" class="flex xl:hidden flex-col justify-center items-center w-10 h-10 rounded-xl bg-slate-100 dark:bg-[#101726] border border-slate-200 dark:border-gray-800" aria-label="Toggle mobile navigation" aria-expanded="false" aria-controls="mobile-nav-drawer">
+        <button type="button" id="mobile-menu-btn" onclick="toggleMobileNavDrawer(event)" class="flex xl:hidden flex-col justify-center items-center w-10 h-10 rounded-xl bg-slate-100 dark:bg-[#243247] border border-slate-200 dark:border-gray-800" aria-label="Toggle mobile navigation" aria-expanded="false" aria-controls="mobile-nav-drawer">
           <span class="bg-slate-800 dark:bg-slate-200 block h-0.5 w-5 rounded-sm -translate-y-0.5"></span>
           <span class="bg-slate-800 dark:bg-slate-200 block h-0.5 w-5 rounded-sm my-0.5"></span>
           <span class="bg-slate-800 dark:bg-slate-200 block h-0.5 w-5 rounded-sm translate-y-0.5"></span>
@@ -94,7 +94,7 @@
   </header>
 
   <!-- Adaptive Mobile Navigation Drawer (Direct child of body so fixed inset spans full viewport below 76px header) -->
-  <div id="mobile-nav-drawer" style="display: none;" class="xl:hidden fixed inset-x-0 top-[76px] bottom-0 bg-white/95 dark:bg-[#0C121E]/95 backdrop-blur-lg border-t border-slate-200 dark:border-gray-800 z-[998] flex-col p-6 space-y-2 overflow-y-auto text-sm font-semibold">
+  <div id="mobile-nav-drawer" style="display: none;" class="xl:hidden fixed inset-x-0 top-[76px] bottom-0 bg-white/95 dark:bg-[#1E293B]/95 backdrop-blur-lg border-t border-slate-200 dark:border-gray-800 z-[998] flex-col p-6 space-y-2 overflow-y-auto text-sm font-semibold">
     <a href="index.html" aria-current="page" class="px-4 py-3 rounded-xl bg-primary/10 text-primary dark:text-blue-400 border border-primary/20">Home</a>
     <a href="#homepage-plans-section" onclick="closeMobileNavDrawer()" class="px-4 py-3 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5">Investment Plans</a>
     <a href="#how-it-works" onclick="closeMobileNavDrawer()" class="px-4 py-3 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5">How It Works</a>
@@ -115,12 +115,12 @@
     <!-- ================================================================ -->
     <!-- HERO SECTION (4K Blended Architectural Wealth Backdrop)          -->
     <!-- ================================================================ -->
-    <section class="relative pt-14 pb-18 sm:pt-20 sm:pb-24 border-b border-slate-200/80 dark:border-gray-800/80 overflow-hidden bg-[#F8FAFC] dark:bg-[#070A11]">
+    <section class="relative pt-14 pb-18 sm:pt-20 sm:pb-24 border-b border-slate-200/80 dark:border-gray-800/80 overflow-hidden bg-[#F8FAFC] dark:bg-[#0F172A]">
       <!-- 4K Blended Architectural Wealth Backdrop -->
       <div class="pointer-events-none absolute inset-0 overflow-hidden select-none" aria-hidden="true">
         <img src="images/primehaven-hero-4k.jpg" alt="" fetchpriority="high" decoding="async" width="1920" height="1072" class="w-full h-full object-cover object-right opacity-95 dark:opacity-35">
-        <div class="absolute inset-0 bg-gradient-to-r from-[#FFFFFF]/[0.94] via-[#F8FAFC]/[0.84] to-[#F8FAFC]/[0.52] dark:from-[#070A11]/[0.96] dark:via-[#070A11]/[0.88] dark:to-[#070A11]/[0.68]"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-[#F8FAFC] via-transparent to-[#FFFFFF]/70 dark:from-[#070A11] dark:via-transparent dark:to-[#070A11]/60"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-[#FFFFFF]/[0.94] via-[#F8FAFC]/[0.84] to-[#F8FAFC]/[0.52] dark:from-[#0F172A]/[0.96] dark:via-[#0F172A]/[0.88] dark:to-[#0F172A]/[0.68]"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#F8FAFC] via-transparent to-[#FFFFFF]/70 dark:from-[#0F172A] dark:via-transparent dark:to-[#0F172A]/60"></div>
       </div>
 
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -151,22 +151,22 @@
 
             <!-- Factual Platform Architecture Strip (Zero fabricated volume/investor stats) -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-slate-200/80 dark:border-gray-800/80 text-left">
-              <div class="p-3.5 rounded-2xl bg-white/92 dark:bg-[#0C121E]/90 backdrop-blur-md border border-slate-200/90 dark:border-gray-800/80 shadow-sm">
+              <div class="p-3.5 rounded-2xl bg-white/92 dark:bg-[#1E293B]/90 backdrop-blur-md border border-slate-200/90 dark:border-gray-800/80 shadow-sm">
                 <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Interest Model</p>
                 <p class="text-xs font-extrabold text-slate-900 dark:text-white mt-1">Simple Interest</p>
                 <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">P &times; (ROI% / 100)</p>
               </div>
-              <div class="p-3.5 rounded-2xl bg-white/92 dark:bg-[#0C121E]/90 backdrop-blur-md border border-slate-200/90 dark:border-gray-800/80 shadow-sm">
+              <div class="p-3.5 rounded-2xl bg-white/92 dark:bg-[#1E293B]/90 backdrop-blur-md border border-slate-200/90 dark:border-gray-800/80 shadow-sm">
                 <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Plan Categories</p>
                 <p class="text-xs font-extrabold text-slate-900 dark:text-white mt-1">Short &amp; Long Term</p>
                 <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5" id="hero-cat-summary">Live catalogue sync</p>
               </div>
-              <div class="p-3.5 rounded-2xl bg-white/92 dark:bg-[#0C121E]/90 backdrop-blur-md border border-slate-200/90 dark:border-gray-800/80 shadow-sm">
+              <div class="p-3.5 rounded-2xl bg-white/92 dark:bg-[#1E293B]/90 backdrop-blur-md border border-slate-200/90 dark:border-gray-800/80 shadow-sm">
                 <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Account Structure</p>
                 <p class="text-xs font-extrabold text-slate-900 dark:text-white mt-1">Dual-Wallet</p>
                 <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Exchange + OTC Vault</p>
               </div>
-              <div class="p-3.5 rounded-2xl bg-white/92 dark:bg-[#0C121E]/90 backdrop-blur-md border border-slate-200/90 dark:border-gray-800/80 shadow-sm">
+              <div class="p-3.5 rounded-2xl bg-white/92 dark:bg-[#1E293B]/90 backdrop-blur-md border border-slate-200/90 dark:border-gray-800/80 shadow-sm">
                 <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Maturity Payout</p>
                 <p class="text-xs font-extrabold text-emerald-600 dark:text-emerald-400 mt-1">Atomic Credit</p>
                 <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Principal + Profit</p>
@@ -176,7 +176,7 @@
 
           <!-- Right Interactive Return Simulator & Live Catalogue Card -->
           <div class="lg:col-span-6">
-            <div class="vx-card p-6 sm:p-7 space-y-5 bg-white/94 dark:bg-[#0C121E]/92 backdrop-blur-md">
+            <div class="vx-card p-6 sm:p-7 space-y-5 bg-white/94 dark:bg-[#1E293B]/92 backdrop-blur-md">
               <div class="flex items-center justify-between gap-3 border-b border-slate-200/80 dark:border-gray-800/80 pb-4">
                 <div class="flex items-center gap-3">
                   <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary dark:text-blue-400 border border-primary/20 flex items-center justify-center shrink-0">
@@ -192,11 +192,11 @@
 
               <!-- Live Category Breakdown Pills -->
               <div class="grid grid-cols-2 gap-3 text-xs">
-                <div class="p-3 rounded-xl bg-slate-50 dark:bg-[#101726] border border-slate-200/80 dark:border-gray-800 flex items-center justify-between">
+                <div class="p-3 rounded-xl bg-slate-50 dark:bg-[#243247] border border-slate-200/80 dark:border-gray-800 flex items-center justify-between">
                   <span class="font-semibold text-slate-600 dark:text-slate-300">Short-Term Plans</span>
                   <span id="hero-short-count" class="font-extrabold text-amber-600 dark:text-amber-400 stat-number">--</span>
                 </div>
-                <div class="p-3 rounded-xl bg-slate-50 dark:bg-[#101726] border border-slate-200/80 dark:border-gray-800 flex items-center justify-between">
+                <div class="p-3 rounded-xl bg-slate-50 dark:bg-[#243247] border border-slate-200/80 dark:border-gray-800 flex items-center justify-between">
                   <span class="font-semibold text-slate-600 dark:text-slate-300">Long-Term Plans</span>
                   <span id="hero-long-count" class="font-extrabold text-primary dark:text-blue-400 stat-number">--</span>
                 </div>
@@ -206,7 +206,7 @@
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label for="hero-calc-plan" class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">Active Investment Plan</label>
-                  <select id="hero-calc-plan" onchange="onSimulatorPlanChange()" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-primary">
+                  <select id="hero-calc-plan" onchange="onSimulatorPlanChange()" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-primary">
                     <option value="">Loading live plans...</option>
                   </select>
                 </div>
@@ -218,22 +218,22 @@
                   </div>
                   <div class="relative">
                     <span class="absolute left-3.5 top-2.5 text-xs font-bold text-slate-400">$</span>
-                    <input type="number" id="hero-calc-amount" min="0" step="50" value="0" oninput="updateSimulatorOutput()" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl pl-7 pr-3.5 py-2.5 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-primary stat-number">
+                    <input type="number" id="hero-calc-amount" min="0" step="50" value="0" oninput="updateSimulatorOutput()" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl pl-7 pr-3.5 py-2.5 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-primary stat-number">
                   </div>
                 </div>
               </div>
 
               <!-- Projection Output Metrics -->
               <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
-                <div class="p-3 rounded-xl bg-slate-50 dark:bg-[#101726] border border-slate-200/80 dark:border-gray-800">
+                <div class="p-3 rounded-xl bg-slate-50 dark:bg-[#243247] border border-slate-200/80 dark:border-gray-800">
                   <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Term ROI</p>
                   <p id="hero-calc-roi" class="text-sm font-extrabold text-primary dark:text-blue-400 mt-1 stat-number">--</p>
                 </div>
-                <div class="p-3 rounded-xl bg-slate-50 dark:bg-[#101726] border border-slate-200/80 dark:border-gray-800">
+                <div class="p-3 rounded-xl bg-slate-50 dark:bg-[#243247] border border-slate-200/80 dark:border-gray-800">
                   <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Duration</p>
                   <p id="hero-calc-duration" class="text-sm font-extrabold text-slate-900 dark:text-white mt-1 stat-number">--</p>
                 </div>
-                <div class="p-3 rounded-xl bg-slate-50 dark:bg-[#101726] border border-slate-200/80 dark:border-gray-800">
+                <div class="p-3 rounded-xl bg-slate-50 dark:bg-[#243247] border border-slate-200/80 dark:border-gray-800">
                   <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Total Profit</p>
                   <p id="hero-calc-profit" class="text-sm font-extrabold text-emerald-600 dark:text-emerald-400 mt-1 stat-number">--</p>
                 </div>
@@ -244,7 +244,7 @@
               </div>
 
               <!-- Principal vs Return Visual Breakdown -->
-              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-[#101726] border border-slate-200/80 dark:border-gray-800 space-y-2.5">
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-[#243247] border border-slate-200/80 dark:border-gray-800 space-y-2.5">
                 <div class="flex justify-between items-center text-[11px] font-semibold text-slate-600 dark:text-slate-300">
                   <span>Maturity Composition (Principal + Simple Interest)</span>
                   <span id="hero-bar-ratio" class="font-bold text-slate-900 dark:text-white stat-number">--</span>
@@ -273,7 +273,7 @@
     <!-- ================================================================ -->
     <!-- DYNAMIC INVESTMENT PLANS CATALOGUE (Neon PostgreSQL /api/plans/active) -->
     <!-- ================================================================ -->
-    <section id="homepage-plans-section" class="py-16 sm:py-24 bg-slate-100/70 dark:bg-[#0A0F1A] border-b border-slate-200/80 dark:border-gray-800/80">
+    <section id="homepage-plans-section" class="py-16 sm:py-24 bg-slate-100/70 dark:bg-[#131D31] border-b border-slate-200/80 dark:border-gray-800/80">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <div class="max-w-2xl space-y-2.5">
@@ -284,7 +284,7 @@
           </div>
 
           <!-- Category Filter Controls (Preserved IDs) -->
-          <div class="flex flex-wrap items-center gap-1.5 p-1.5 rounded-2xl bg-white dark:bg-[#0C121E] border border-slate-200 dark:border-gray-800 shadow-sm shrink-0" role="tablist" aria-label="Investment plan categories">
+          <div class="flex flex-wrap items-center gap-1.5 p-1.5 rounded-2xl bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-gray-800 shadow-sm shrink-0" role="tablist" aria-label="Investment plan categories">
             <button type="button" onclick="switchHomepageCategory('ALL')" id="home-cat-all" class="px-4 py-2 rounded-xl text-xs font-bold transition-colors bg-primary text-white">All Categories</button>
             <button type="button" onclick="switchHomepageCategory('Short-Term')" id="home-cat-short" class="px-4 py-2 rounded-xl text-xs font-bold transition-colors text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">Short-Term</button>
             <button type="button" onclick="switchHomepageCategory('Long-Term')" id="home-cat-long" class="px-4 py-2 rounded-xl text-xs font-bold transition-colors text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">Long-Term</button>
@@ -372,7 +372,7 @@
     <!-- ================================================================ -->
     <!-- PLATFORM FEATURES SECTION                                        -->
     <!-- ================================================================ -->
-    <section id="platform-features" class="py-16 sm:py-24 bg-slate-100/70 dark:bg-[#0A0F1A] border-b border-slate-200/80 dark:border-gray-800/80">
+    <section id="platform-features" class="py-16 sm:py-24 bg-slate-100/70 dark:bg-[#131D31] border-b border-slate-200/80 dark:border-gray-800/80">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <div class="max-w-2xl space-y-2.5">
           <span class="vx-badge vx-badge-primary">Platform Architecture</span>
@@ -462,7 +462,7 @@
             </div>
 
             <div class="space-y-4">
-              <div class="p-4 rounded-2xl bg-white dark:bg-[#0C121E] border border-slate-200 dark:border-gray-800 flex items-start gap-3.5">
+              <div class="p-4 rounded-2xl bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-gray-800 flex items-start gap-3.5">
                 <div class="w-8 h-8 rounded-lg bg-primary/10 text-primary dark:text-blue-400 flex items-center justify-center shrink-0 mt-0.5">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 </div>
@@ -472,7 +472,7 @@
                 </div>
               </div>
 
-              <div class="p-4 rounded-2xl bg-white dark:bg-[#0C121E] border border-slate-200 dark:border-gray-800 flex items-start gap-3.5">
+              <div class="p-4 rounded-2xl bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-gray-800 flex items-start gap-3.5">
                 <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                 </div>
@@ -482,7 +482,7 @@
                 </div>
               </div>
 
-              <div class="p-4 rounded-2xl bg-white dark:bg-[#0C121E] border border-slate-200 dark:border-gray-800 flex items-start gap-3.5">
+              <div class="p-4 rounded-2xl bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-gray-800 flex items-start gap-3.5">
                 <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 mt-0.5">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
                 </div>
@@ -506,7 +506,7 @@
               </div>
 
               <div class="space-y-3 text-xs">
-                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 space-y-2">
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 space-y-2">
                   <div class="flex items-center justify-between">
                     <span class="font-bold text-slate-900 dark:text-white">1. Allocation Transaction</span>
                     <span class="vx-badge vx-badge-primary">Atomic Lock</span>
@@ -514,20 +514,20 @@
                   <p class="text-slate-600 dark:text-slate-300">Verifies active plan limits, checks liquid balance, debits <code class="px-1.5 py-0.5 rounded bg-slate-200/70 dark:bg-gray-800 text-[11px]">exchange_balance</code>, and inserts an immutable ledger entry.</p>
                 </div>
 
-                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 space-y-2">
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 space-y-2">
                   <div class="flex items-center justify-between">
                     <span class="font-bold text-slate-900 dark:text-white">2. Immutable Contract Snapshot</span>
                     <span class="vx-badge vx-badge-amber">Locked Terms</span>
                   </div>
                   <div class="grid grid-cols-2 gap-2 pt-1 font-mono text-[11px] text-slate-700 dark:text-slate-300">
-                    <div class="px-2.5 py-1.5 rounded-lg bg-white dark:bg-[#070A11] border border-slate-200 dark:border-gray-800">principal_amount</div>
-                    <div class="px-2.5 py-1.5 rounded-lg bg-white dark:bg-[#070A11] border border-slate-200 dark:border-gray-800">roi_percentage</div>
-                    <div class="px-2.5 py-1.5 rounded-lg bg-white dark:bg-[#070A11] border border-slate-200 dark:border-gray-800">duration_days</div>
-                    <div class="px-2.5 py-1.5 rounded-lg bg-white dark:bg-[#070A11] border border-slate-200 dark:border-gray-800">start_at &rarr; matures_at</div>
+                    <div class="px-2.5 py-1.5 rounded-lg bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-gray-800">principal_amount</div>
+                    <div class="px-2.5 py-1.5 rounded-lg bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-gray-800">roi_percentage</div>
+                    <div class="px-2.5 py-1.5 rounded-lg bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-gray-800">duration_days</div>
+                    <div class="px-2.5 py-1.5 rounded-lg bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-gray-800">start_at &rarr; matures_at</div>
                   </div>
                 </div>
 
-                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 space-y-2">
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 space-y-2">
                   <div class="flex items-center justify-between">
                     <span class="font-bold text-slate-900 dark:text-white">3. Automated Maturity Settlement</span>
                     <span class="vx-badge vx-badge-emerald">Idempotent</span>
@@ -544,7 +544,7 @@
     <!-- ================================================================ -->
     <!-- CLIENT TESTIMONIALS & TRUST EXPERIENCES                          -->
     <!-- ================================================================ -->
-    <section id="testimonials" aria-labelledby="testimonials-heading" class="py-16 sm:py-24 bg-white dark:bg-[#070A11] border-b border-slate-200/80 dark:border-gray-800/80">
+    <section id="testimonials" aria-labelledby="testimonials-heading" class="py-16 sm:py-24 bg-white dark:bg-[#0F172A] border-b border-slate-200/80 dark:border-gray-800/80">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <div class="text-center max-w-2xl mx-auto space-y-2.5">
           <span class="vx-badge vx-badge-primary">Client Experiences</span>
@@ -638,7 +638,7 @@
         </div>
 
         <!-- Trust Highlights Banner -->
-        <div class="p-6 sm:p-8 rounded-2xl bg-slate-50 dark:bg-[#0C121E] border border-slate-200 dark:border-gray-800 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div class="p-6 sm:p-8 rounded-2xl bg-slate-50 dark:bg-[#1E293B] border border-slate-200 dark:border-gray-800 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           <div>
             <p class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">100%</p>
             <p class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mt-1">Simple-Interest Accuracy</p>
@@ -662,7 +662,7 @@
     <!-- ================================================================ -->
     <!-- FREQUENTLY ASKED QUESTIONS (Accessible native <details> accordion) -->
     <!-- ================================================================ -->
-    <section id="faq" aria-labelledby="faq-heading" class="py-16 sm:py-24 bg-slate-100/70 dark:bg-[#0A0F1A] border-b border-slate-200/80 dark:border-gray-800/80">
+    <section id="faq" aria-labelledby="faq-heading" class="py-16 sm:py-24 bg-slate-100/70 dark:bg-[#131D31] border-b border-slate-200/80 dark:border-gray-800/80">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         <div class="text-center max-w-2xl mx-auto space-y-2.5">
           <span class="vx-badge vx-badge-primary">Client Information</span>
@@ -747,7 +747,7 @@
   </main>
 
   <!-- Professional Institutional Footer -->
-  <footer class="bg-[#070A11] text-slate-300 border-t border-slate-800/90 py-14">
+  <footer class="bg-[#0F172A] text-slate-300 border-t border-slate-800/90 py-14">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
         <div class="md:col-span-2 space-y-4">
@@ -901,7 +901,7 @@
               <p class="text-xs text-slate-600 dark:text-slate-300 mt-1.5 leading-relaxed min-h-[2.5rem]">${escapePlanHtml(p.description || 'Structured fixed-duration allocation with simple-interest maturity settlement.')}</p>
             </div>
 
-            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-[#101726] border border-slate-200/80 dark:border-gray-800/80 flex items-center justify-between gap-3">
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-[#243247] border border-slate-200/80 dark:border-gray-800/80 flex items-center justify-between gap-3">
               <div>
                 <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Total Simple ROI</p>
                 <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Over ${days}-day cycle</p>

@@ -30,8 +30,8 @@
           colors: {
             primary: '#183EFA',
             gold: '#F59E0B',
-            dark: '#070A11',
-            cardBg: '#0C121E',
+            dark: '#0F172A',
+            cardBg: '#1E293B',
             cardBorder: '#1E293B'
           }
         }
@@ -41,7 +41,7 @@
   <script src="js/nav-fix.js"></script>
   <script src="js/app-store.js"></script>
 </head>
-<body class="bg-[#F8FAFC] dark:bg-[#070A11] text-slate-900 dark:text-gray-100 min-h-screen flex font-sans antialiased selection:bg-primary selection:text-white transition-colors duration-300">
+<body class="bg-[#F8FAFC] dark:bg-[#0F172A] text-slate-900 dark:text-gray-100 min-h-screen flex font-sans antialiased selection:bg-primary selection:text-white transition-colors duration-300">
 
   <!-- Desktop Persistent Admin Sidebar -->
   <aside id="admin-sidebar" aria-label="Admin Sidebar Navigation" class="vx-sidebar hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:left-0 z-40 p-4 justify-between overflow-y-auto">
@@ -123,7 +123,7 @@
   <!-- Mobile Admin Navigation Drawer -->
   <div id="admin-mobile-drawer" class="hidden lg:hidden fixed inset-0 z-50" role="dialog" aria-modal="true" aria-label="Mobile Admin Navigation">
     <div onclick="toggleAdminMobileDrawer(false)" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm"></div>
-    <div class="relative w-72 max-w-[85vw] h-full bg-white dark:bg-[#0c121e] border-r border-slate-200 dark:border-gray-800 p-5 flex flex-col justify-between overflow-y-auto shadow-2xl">
+    <div class="relative w-72 max-w-[85vw] h-full bg-white dark:bg-[#1E293B] border-r border-slate-200 dark:border-gray-800 p-5 flex flex-col justify-between overflow-y-auto shadow-2xl">
       <div class="space-y-5">
         <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-gray-800">
           <img src="images/navbarlogo.svg" alt="PrimeHavenCapital Logo" class="h-6 brand-logo-adaptive">
@@ -153,7 +153,7 @@
   <!-- Admin Top Master Header -->
   <header class="vx-glass-header px-4 sm:px-8 py-3.5 flex justify-between items-center sticky top-0 z-30 transition-colors">
     <div class="flex items-center gap-3">
-      <button type="button" id="admin-mobile-menu-btn" onclick="toggleAdminMobileDrawer()" aria-label="Open admin menu" class="lg:hidden p-2 rounded-xl bg-slate-100 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 text-slate-700 dark:text-gray-200">
+      <button type="button" id="admin-mobile-menu-btn" onclick="toggleAdminMobileDrawer()" aria-label="Open admin menu" class="lg:hidden p-2 rounded-xl bg-slate-100 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 text-slate-700 dark:text-gray-200">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
       <a href="admin.html" class="flex items-center gap-2 lg:hidden">
@@ -175,7 +175,7 @@
         <svg class="moon-icon w-4 h-4 text-slate-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
       </button>
 
-      <a href="dashboard.html" class="px-3.5 py-2 bg-slate-100 dark:bg-[#101726] hover:bg-slate-200 dark:hover:bg-gray-800 text-xs font-bold text-slate-700 dark:text-gray-200 border border-slate-200 dark:border-gray-800 rounded-xl transition-all hidden md:flex items-center gap-1.5">
+      <a href="dashboard.html" class="px-3.5 py-2 bg-slate-100 dark:bg-[#243247] hover:bg-slate-200 dark:hover:bg-gray-800 text-xs font-bold text-slate-700 dark:text-gray-200 border border-slate-200 dark:border-gray-800 rounded-xl transition-all hidden md:flex items-center gap-1.5">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
         <span>Investor Portal View</span>
       </a>
@@ -295,37 +295,37 @@
         <span>Investors & Accounts</span>
       </button>
 
-      <button onclick="switchAdminTab('deposits')" id="tab-btn-deposits" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 shadow-sm">
+      <button onclick="switchAdminTab('deposits')" id="tab-btn-deposits" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 shadow-sm">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         <span>Deposit Queue</span>
       </button>
 
-      <button onclick="switchAdminTab('withdrawals')" id="tab-btn-withdrawals" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 shadow-sm">
+      <button onclick="switchAdminTab('withdrawals')" id="tab-btn-withdrawals" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 shadow-sm">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
         <span>Withdrawal Queue</span>
       </button>
 
-      <button onclick="switchAdminTab('investment-catalog')" id="tab-btn-investment-catalog" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 shadow-sm">
+      <button onclick="switchAdminTab('investment-catalog')" id="tab-btn-investment-catalog" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 shadow-sm">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         <span>Plan Catalogue</span>
       </button>
 
-      <button onclick="switchAdminTab('otc-plans')" id="tab-btn-otc-plans" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 shadow-sm">
+      <button onclick="switchAdminTab('otc-plans')" id="tab-btn-otc-plans" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 shadow-sm">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
         <span>OTC Contracts Desk</span>
       </button>
 
-      <button onclick="switchAdminTab('wallets')" id="tab-btn-wallets" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 shadow-sm">
+      <button onclick="switchAdminTab('wallets')" id="tab-btn-wallets" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 shadow-sm">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 15h0M2 9.5h20"/></svg>
         <span>Company Custody Wallets</span>
       </button>
 
-      <button onclick="switchAdminTab('ledger')" id="tab-btn-ledger" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 shadow-sm">
+      <button onclick="switchAdminTab('ledger')" id="tab-btn-ledger" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 shadow-sm">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
         <span>Master Ledger</span>
       </button>
 
-      <button onclick="switchAdminTab('emails')" id="tab-btn-emails" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 shadow-sm">
+      <button onclick="switchAdminTab('emails')" id="tab-btn-emails" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 shadow-sm">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         <span>Resend Email Dispatcher</span>
       </button>
@@ -341,7 +341,7 @@
           <p class="text-xs text-slate-500 dark:text-gray-400">Live investor database accounts, portfolios, KYC verifications, and balance management.</p>
         </div>
         <div class="flex items-center gap-2 w-full sm:w-auto flex-wrap">
-          <input type="text" id="user-search-input" onkeyup="filterUsersTable()" placeholder="Search name, email, account ID…" class="bg-white dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary w-full sm:w-56 shadow-sm">
+          <input type="text" id="user-search-input" onkeyup="filterUsersTable()" placeholder="Search name, email, account ID…" class="bg-white dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-primary w-full sm:w-56 shadow-sm">
           <button onclick="openCreateUserModal()" class="px-4 py-2.5 bg-primary hover:bg-blue-700 text-white font-black text-xs rounded-xl shadow-lg shadow-primary/20 whitespace-nowrap flex items-center gap-1.5 transition-all">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             <span>+ Add Investor</span>
@@ -392,8 +392,8 @@
     <!-- ============================================================ -->
     <!-- DELETE CONFIRMATION MODAL                                   -->
     <!-- ============================================================ -->
-    <div id="delete-user-modal" class="hidden fixed inset-0 bg-slate-900/60 dark:bg-[#070a11]/90 backdrop-blur-xl z-[9999] flex items-center justify-center p-4">
-      <div class="bg-white dark:bg-[#0c121e] border border-rose-500/30 rounded-3xl p-8 w-full max-w-md shadow-2xl shadow-rose-500/10">
+    <div id="delete-user-modal" class="hidden fixed inset-0 bg-slate-900/60 dark:bg-[#0F172A]/90 backdrop-blur-xl z-[9999] flex items-center justify-center p-4">
+      <div class="bg-white dark:bg-[#1E293B] border border-rose-500/30 rounded-3xl p-8 w-full max-w-md shadow-2xl shadow-rose-500/10">
         <div class="flex items-center gap-3 mb-5">
           <div class="w-10 h-10 rounded-2xl bg-rose-500/15 border border-rose-500/30 flex items-center justify-center flex-shrink-0">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
@@ -408,7 +408,7 @@
           You are about to permanently delete this investor account.
         </p>
 
-        <div class="bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-2xl p-4 mb-6 space-y-1.5 text-xs text-slate-500 dark:text-gray-400">
+        <div class="bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-2xl p-4 mb-6 space-y-1.5 text-xs text-slate-500 dark:text-gray-400">
           <p class="flex items-center gap-2"><span class="text-rose-500 dark:text-rose-400">✕</span> Account profile & credentials</p>
           <p class="flex items-center gap-2"><span class="text-rose-500 dark:text-rose-400">✕</span> Wallet & all balance records</p>
           <p class="flex items-center gap-2"><span class="text-rose-500 dark:text-rose-400">✕</span> All transaction history</p>
@@ -419,7 +419,7 @@
         <div id="delete-confirm-field" class="mb-5">
           <label class="block text-xs font-semibold text-slate-700 dark:text-gray-400 mb-1.5">Type <span class="text-slate-900 dark:text-white font-bold" id="delete-confirm-word">DELETE</span> to confirm:</label>
           <input type="text" id="delete-confirm-input" placeholder="Type DELETE here…"
-            class="w-full bg-slate-50 dark:bg-[#070a11] border border-slate-200 dark:border-gray-800 focus:border-rose-500 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-gray-600 focus:outline-none transition-colors"
+            class="w-full bg-slate-50 dark:bg-[#0F172A] border border-slate-200 dark:border-gray-800 focus:border-rose-500 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-gray-600 focus:outline-none transition-colors"
             oninput="checkDeleteConfirmInput()">
         </div>
 
@@ -445,7 +445,7 @@
           <h3 class="font-bold text-lg text-slate-900 dark:text-white">Cryptocurrency Deposit Approval Queue</h3>
           <p class="text-xs text-slate-500 dark:text-gray-400">Review on-chain TXID transactions submitted by investors to credit their Liquid Exchange Wallet.</p>
         </div>
-        <button onclick="openManualTxModal('deposit')" class="px-4 py-2 bg-white dark:bg-[#101726] hover:bg-slate-50 dark:hover:bg-gray-800 text-xs font-bold text-amber-600 dark:text-amber-400 border border-slate-200 dark:border-gray-800 rounded-xl transition-all shadow-sm">
+        <button onclick="openManualTxModal('deposit')" class="px-4 py-2 bg-white dark:bg-[#243247] hover:bg-slate-50 dark:hover:bg-gray-800 text-xs font-bold text-amber-600 dark:text-amber-400 border border-slate-200 dark:border-gray-800 rounded-xl transition-all shadow-sm">
           + Inject Manual Deposit
         </button>
       </div>
@@ -481,7 +481,7 @@
           <h3 class="font-bold text-lg text-slate-900 dark:text-white">Withdrawal & Payout Approval Desk</h3>
           <p class="text-xs text-slate-500 dark:text-gray-400">Authorize cryptocurrency payouts, record blockchain TXID hashes, or decline with refund.</p>
         </div>
-        <button onclick="openManualTxModal('withdrawal')" class="px-4 py-2 bg-white dark:bg-[#101726] hover:bg-slate-50 dark:hover:bg-gray-800 text-xs font-bold text-rose-600 dark:text-rose-400 border border-slate-200 dark:border-gray-800 rounded-xl transition-all shadow-sm">
+        <button onclick="openManualTxModal('withdrawal')" class="px-4 py-2 bg-white dark:bg-[#243247] hover:bg-slate-50 dark:hover:bg-gray-800 text-xs font-bold text-rose-600 dark:text-rose-400 border border-slate-200 dark:border-gray-800 rounded-xl transition-all shadow-sm">
           + Record External Payout
         </button>
       </div>
@@ -525,7 +525,7 @@
             <button type="button" id="cat-pill-long" aria-pressed="false" onclick="setCatalogCategoryFilter('Long-Term')" class="vx-admin-pill">Long-Term</button>
           </div>
           <!-- Category Filter Select (preserved & synced) -->
-          <select id="catalog-category-filter" onchange="filterCatalogPlans()" aria-label="Plan Category Filter" class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 dark:text-gray-300">
+          <select id="catalog-category-filter" onchange="filterCatalogPlans()" aria-label="Plan Category Filter" class="bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-gray-800 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 dark:text-gray-300">
             <option value="ALL">All Categories</option>
             <option value="Short-Term">Short-Term Only</option>
             <option value="Long-Term">Long-Term Only</option>
@@ -629,7 +629,7 @@
           <p class="text-xs text-slate-500 dark:text-gray-400">Immutable chronological record of all capital movements, yields, deposits, and payouts.</p>
         </div>
         <div class="flex items-center gap-2">
-          <button onclick="openManualTxModal('deposit')" class="px-3.5 py-2 bg-white dark:bg-[#101726] border border-slate-200 dark:border-gray-800 hover:border-amber-500 text-xs font-bold text-slate-700 dark:text-gray-200 rounded-xl transition-all shadow-sm">
+          <button onclick="openManualTxModal('deposit')" class="px-3.5 py-2 bg-white dark:bg-[#243247] border border-slate-200 dark:border-gray-800 hover:border-amber-500 text-xs font-bold text-slate-700 dark:text-gray-200 rounded-xl transition-all shadow-sm">
             + Manual Entry
           </button>
         </div>
@@ -675,7 +675,7 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label class="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1">Target Recipient Email</label>
-              <input type="text" id="email-recipient" placeholder="e.g. investor@domain.com or select broadcast" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-amber-500">
+              <input type="text" id="email-recipient" placeholder="e.g. investor@domain.com or select broadcast" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-amber-500">
             </div>
 
             <div class="flex items-center gap-2 pt-6">
@@ -686,12 +686,12 @@
 
           <div>
             <label class="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1">Email Subject Line</label>
-            <input type="text" id="email-subject" required placeholder="Official Notice from PrimeHavenCapital" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-amber-500">
+            <input type="text" id="email-subject" required placeholder="Official Notice from PrimeHavenCapital" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-amber-500">
           </div>
 
           <div>
             <label class="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1">Email Announcement Body</label>
-            <textarea id="email-body" rows="5" required placeholder="Type your institutional communication here..." class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl p-4 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-amber-500 font-sans"></textarea>
+            <textarea id="email-body" rows="5" required placeholder="Type your institutional communication here..." class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl p-4 text-slate-900 dark:text-white text-xs focus:outline-none focus:border-amber-500 font-sans"></textarea>
           </div>
 
           <button type="submit" id="btn-broadcast-submit" class="py-3.5 px-8 bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs rounded-xl shadow-lg shadow-amber-500/20 transition-all flex items-center gap-2">
@@ -731,7 +731,7 @@
   <!-- MODAL 1: CREATE INVESTOR ACCOUNT -->
   <!-- ========================================================== -->
   <div id="create-user-modal" class="hidden fixed inset-0 bg-slate-900/60 dark:bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-5 shadow-2xl">
+    <div class="bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-gray-800 rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-5 shadow-2xl">
       <div class="flex justify-between items-center pb-3 border-b border-slate-200 dark:border-gray-800">
         <h3 class="font-bold text-slate-900 dark:text-white text-base">Register New Investor Account</h3>
         <button onclick="closeModal('create-user-modal')" class="text-slate-400 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white">✕</button>
@@ -741,40 +741,40 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Full Legal Name</label>
-            <input type="text" id="new-user-name" required placeholder="e.g. Katherine Pierce" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
+            <input type="text" id="new-user-name" required placeholder="e.g. Katherine Pierce" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
           </div>
           <div>
             <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Email Address</label>
-            <input type="email" id="new-user-email" required placeholder="katherine@investments.com" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
+            <input type="email" id="new-user-email" required placeholder="katherine@investments.com" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
           </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Password</label>
-            <input type="password" id="new-user-password" required placeholder="••••••••" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
+            <input type="password" id="new-user-password" required placeholder="••••••••" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
           </div>
           <div>
             <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Country</label>
-            <input type="text" id="new-user-country" value="United States" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
+            <input type="text" id="new-user-country" value="United States" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
           </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Initial Liquid Balance ($)</label>
-            <input type="number" id="new-user-exchange" step="0.01" value="0.00" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-amber-600 dark:text-amber-400 font-bold focus:outline-none focus:border-amber-500">
+            <input type="number" id="new-user-exchange" step="0.01" value="0.00" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-amber-600 dark:text-amber-400 font-bold focus:outline-none focus:border-amber-500">
           </div>
           <div>
             <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Initial OTC Capital ($)</label>
-            <input type="number" id="new-user-otc" step="0.01" value="0.00" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-emerald-600 dark:text-emerald-400 font-bold focus:outline-none focus:border-amber-500">
+            <input type="number" id="new-user-otc" step="0.01" value="0.00" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-emerald-600 dark:text-emerald-400 font-bold focus:outline-none focus:border-amber-500">
           </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">KYC Status</label>
-            <select id="new-user-kyc" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
+            <select id="new-user-kyc" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
               <option value="verified">Verified</option>
               <option value="pending">Pending</option>
               <option value="unverified">Unverified</option>
@@ -782,7 +782,7 @@
           </div>
           <div>
             <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Account Role</label>
-            <select id="new-user-role" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
+            <select id="new-user-role" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
               <option value="user">Investor (Standard)</option>
               <option value="admin">Administrator</option>
             </select>
@@ -800,7 +800,7 @@
   <!-- MODAL 2: EDIT INVESTOR PROFILE & KYC -->
   <!-- ========================================================== -->
   <div id="edit-user-modal" class="hidden fixed inset-0 bg-slate-900/60 dark:bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl">
+    <div class="bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-gray-800 rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl">
       <div class="flex justify-between items-center pb-3 border-b border-slate-200 dark:border-gray-800">
         <h3 class="font-bold text-slate-900 dark:text-white text-base">Edit Investor Profile & KYC</h3>
         <button onclick="closeModal('edit-user-modal')" class="text-slate-400 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white">✕</button>
@@ -811,18 +811,18 @@
 
         <div>
           <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Full Legal Name</label>
-          <input type="text" id="edit-profile-name" required class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
+          <input type="text" id="edit-profile-name" required class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
         </div>
 
         <div>
           <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Email Address</label>
-          <input type="email" id="edit-profile-email" required class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
+          <input type="email" id="edit-profile-email" required class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">KYC Status</label>
-            <select id="edit-profile-kyc" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
+            <select id="edit-profile-kyc" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
               <option value="verified">Verified</option>
               <option value="pending">Pending</option>
               <option value="unverified">Unverified</option>
@@ -830,7 +830,7 @@
           </div>
           <div>
             <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Account Status</label>
-            <select id="edit-profile-status" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
+            <select id="edit-profile-status" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
               <option value="active">Active</option>
               <option value="suspended">Suspended</option>
             </select>
@@ -839,7 +839,7 @@
 
         <div>
           <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Country</label>
-          <input type="text" id="edit-profile-country" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-primary">
+          <input type="text" id="edit-profile-country" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-primary">
         </div>
 
         <button type="submit" class="w-full py-3 bg-primary hover:bg-[#1332c9] text-white font-bold text-xs rounded-xl shadow-lg shadow-primary/20 transition-all mt-2">
@@ -853,7 +853,7 @@
   <!-- MODAL 3: EDIT INVESTOR BALANCES -->
   <!-- ========================================================== -->
   <div id="balance-modal" class="hidden fixed inset-0 bg-slate-900/60 dark:bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-6 shadow-2xl">
+    <div class="bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-gray-800 rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-6 shadow-2xl">
       <div class="flex justify-between items-center pb-3 border-b border-slate-200 dark:border-gray-800">
         <h3 class="font-bold text-slate-900 dark:text-white text-base">Adjust Investor Balances</h3>
         <button onclick="closeModal('balance-modal')" class="text-slate-400 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white">✕</button>
@@ -863,22 +863,22 @@
       <div class="space-y-4 text-xs">
         <div>
           <label class="block font-semibold text-slate-500 dark:text-gray-400 mb-1">Investor Name</label>
-          <input type="text" id="edit-user-name" disabled class="w-full bg-slate-100 dark:bg-[#070a11] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-xs text-slate-800 dark:text-gray-300 font-bold">
+          <input type="text" id="edit-user-name" disabled class="w-full bg-slate-100 dark:bg-[#0F172A] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-xs text-slate-800 dark:text-gray-300 font-bold">
         </div>
 
         <div>
           <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Liquid Exchange Wallet Balance ($)</label>
-          <input type="number" id="edit-exchange-balance" step="0.01" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-xs text-blue-600 dark:text-blue-300 font-bold focus:outline-none focus:border-primary">
+          <input type="number" id="edit-exchange-balance" step="0.01" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-xs text-blue-600 dark:text-blue-300 font-bold focus:outline-none focus:border-primary">
         </div>
 
         <div>
           <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Active OTC Capital ($)</label>
-          <input type="number" id="edit-otc-balance" step="0.01" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-xs text-emerald-600 dark:text-emerald-400 font-bold focus:outline-none focus:border-emerald-500">
+          <input type="number" id="edit-otc-balance" step="0.01" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-xs text-emerald-600 dark:text-emerald-400 font-bold focus:outline-none focus:border-emerald-500">
         </div>
 
         <div>
           <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Accrued Return Profit ($)</label>
-          <input type="number" id="edit-profit-balance" step="0.01" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-xs text-emerald-600 dark:text-emerald-400 font-bold focus:outline-none focus:border-emerald-500">
+          <input type="number" id="edit-profit-balance" step="0.01" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-xs text-emerald-600 dark:text-emerald-400 font-bold focus:outline-none focus:border-emerald-500">
         </div>
 
         <button onclick="saveUserBalances()" class="w-full py-3 bg-primary hover:bg-[#1332c9] text-white font-bold text-xs rounded-xl shadow-lg shadow-primary/20 transition-all">
@@ -892,7 +892,7 @@
   <!-- MODAL 4: CREDIT WEEKLY OTC YIELD -->
   <!-- ========================================================== -->
   <div id="credit-profit-modal" class="hidden fixed inset-0 bg-slate-900/60 dark:bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-6 shadow-2xl">
+    <div class="bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-gray-800 rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-6 shadow-2xl">
       <div class="flex justify-between items-center pb-3 border-b border-slate-200 dark:border-gray-800">
         <div class="flex items-center gap-2">
           <div class="w-8 h-8 rounded-lg bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
@@ -907,7 +907,7 @@
       <div class="space-y-4 text-xs">
         <div>
           <label class="block font-semibold text-slate-500 dark:text-gray-400 mb-1">Investor Name</label>
-          <input type="text" id="profit-user-name" disabled class="w-full bg-slate-100 dark:bg-[#070a11] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-xs text-slate-800 dark:text-gray-300 font-bold">
+          <input type="text" id="profit-user-name" disabled class="w-full bg-slate-100 dark:bg-[#0F172A] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-xs text-slate-800 dark:text-gray-300 font-bold">
         </div>
 
         <div>
@@ -917,12 +917,12 @@
 
         <div>
           <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Weekly Profit Return to Credit ($)</label>
-          <input type="number" id="profit-credit-amount" step="0.01" min="1" placeholder="e.g. 375.00" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-xs text-emerald-600 dark:text-emerald-400 font-bold focus:outline-none focus:border-emerald-500">
+          <input type="number" id="profit-credit-amount" step="0.01" min="1" placeholder="e.g. 375.00" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-xs text-emerald-600 dark:text-emerald-400 font-bold focus:outline-none focus:border-emerald-500">
         </div>
 
         <div>
           <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Audit Ledger Memo / Note</label>
-          <input type="text" id="profit-credit-note" value="Institutional Weekly OTC Yield Settled" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-xs text-slate-800 dark:text-gray-200 focus:outline-none focus:border-emerald-500">
+          <input type="text" id="profit-credit-note" value="Institutional Weekly OTC Yield Settled" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-xs text-slate-800 dark:text-gray-200 focus:outline-none focus:border-emerald-500">
         </div>
 
         <button onclick="submitCreditProfit()" id="btn-submit-profit" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-xs rounded-xl shadow-lg shadow-emerald-500/20 transition-all">
@@ -936,7 +936,7 @@
   <!-- MODAL 4b: CREATE / EDIT PUBLIC INVESTMENT PLAN -->
   <!-- ========================================================== -->
   <div id="catalog-plan-modal" class="hidden fixed inset-0 bg-slate-900/60 dark:bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-5 shadow-2xl">
+    <div class="bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-gray-800 rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-5 shadow-2xl">
       <div class="flex justify-between items-center pb-3 border-b border-slate-200 dark:border-gray-800">
         <h3 class="font-bold text-slate-900 dark:text-white text-base" id="catalog-plan-modal-title">Create Investment Plan</h3>
         <button onclick="closeModal('catalog-plan-modal')" class="text-slate-400 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white">✕</button>
@@ -947,25 +947,25 @@
 
         <div>
           <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Plan Name</label>
-          <input type="text" id="catalog-plan-name" required placeholder="e.g. Starter Alpha Tranche" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
+          <input type="text" id="catalog-plan-name" required placeholder="e.g. Starter Alpha Tranche" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-semibold">
         </div>
 
         <div>
           <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Plan Description</label>
-          <textarea id="catalog-plan-desc" rows="2" placeholder="Brief investment summary for prospective investors..." class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-blue-500"></textarea>
+          <textarea id="catalog-plan-desc" rows="2" placeholder="Brief investment summary for prospective investors..." class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-blue-500"></textarea>
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Category</label>
-            <select id="catalog-plan-category" required class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-bold">
+            <select id="catalog-plan-category" required class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-bold">
               <option value="Short-Term">Short-Term</option>
               <option value="Long-Term">Long-Term</option>
             </select>
           </div>
           <div>
             <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Status</label>
-            <select id="catalog-plan-status" required class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-bold">
+            <select id="catalog-plan-status" required class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-bold">
               <option value="active">Active (Visible Publicly)</option>
               <option value="inactive">Inactive (Hidden)</option>
             </select>
@@ -996,7 +996,7 @@
           </div>
         </div>
 
-        <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 space-y-1">
+        <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 space-y-1">
           <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Simple-Interest Sample Payout (at Min Investment)</p>
           <p id="catalog-plan-preview-text" class="text-xs font-bold text-slate-900 dark:text-white tabular-nums">$500.00 principal &rarr; +$75.00 profit &rarr; $575.00 maturity payout over 14 days</p>
         </div>
@@ -1012,7 +1012,7 @@
   <!-- MODAL 5: ALLOCATE OTC CONTRACT -->
   <!-- ========================================================== -->
   <div id="create-otc-modal" class="hidden fixed inset-0 bg-slate-900/60 dark:bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl">
+    <div class="bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-gray-800 rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl">
       <div class="flex justify-between items-center pb-3 border-b border-slate-200 dark:border-gray-800">
         <h3 class="font-bold text-slate-900 dark:text-white text-base">Assign Institutional OTC Contract</h3>
         <button onclick="closeModal('create-otc-modal')" class="text-slate-400 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white">✕</button>
@@ -1021,14 +1021,14 @@
       <form onsubmit="handleCreateOTCPlanSubmit(event)" class="space-y-4 text-xs">
         <div>
           <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Target Investor</label>
-          <select id="otc-target-user" required class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
+          <select id="otc-target-user" required class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
             <!-- Populated Dynamically -->
           </select>
         </div>
 
         <div>
           <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Tranche Tier</label>
-          <select id="otc-target-tranche" onchange="updateTrancheFormDefaults(this.value)" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
+          <select id="otc-target-tranche" onchange="updateTrancheFormDefaults(this.value)" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
             <option value="Executive Multi-Asset Tranche">Executive Multi-Asset Tranche (7.5% / wk • 30 Days)</option>
             <option value="Starter Institutional Tranche">Starter Institutional Tranche (5.0% / wk • 30 Days)</option>
             <option value="Prime Sovereign Whale Tranche">Prime Sovereign Whale Tranche (10.0% / wk • 60 Days)</option>
@@ -1038,17 +1038,17 @@
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Capital Amount ($)</label>
-            <input type="number" id="otc-target-amount" step="50" min="500" value="5000" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-amber-600 dark:text-amber-400 font-bold focus:outline-none focus:border-amber-500">
+            <input type="number" id="otc-target-amount" step="50" min="500" value="5000" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-amber-600 dark:text-amber-400 font-bold focus:outline-none focus:border-amber-500">
           </div>
           <div>
             <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Weekly ROI (%)</label>
-            <input type="number" id="otc-target-roi" step="0.1" value="7.5" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-emerald-600 dark:text-emerald-400 font-bold focus:outline-none focus:border-amber-500">
+            <input type="number" id="otc-target-roi" step="0.1" value="7.5" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-emerald-600 dark:text-emerald-400 font-bold focus:outline-none focus:border-amber-500">
           </div>
         </div>
 
         <div>
           <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Term Duration (Days)</label>
-          <input type="number" id="otc-target-duration" value="30" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
+          <input type="number" id="otc-target-duration" value="30" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
         </div>
 
         <button type="submit" class="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-black text-xs rounded-xl shadow-lg transition-all mt-2">
@@ -1062,7 +1062,7 @@
   <!-- MODAL 6: ADD / EDIT CUSTODY WALLET -->
   <!-- ========================================================== -->
   <div id="wallet-modal" class="hidden fixed inset-0 bg-slate-900/60 dark:bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl">
+    <div class="bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-gray-800 rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl">
       <div class="flex justify-between items-center pb-3 border-b border-slate-200 dark:border-gray-800">
         <h3 class="font-bold text-slate-900 dark:text-white text-base" id="wallet-modal-title">Add Official Deposit Custody Wallet</h3>
         <button onclick="closeModal('wallet-modal')" class="text-slate-400 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white">✕</button>
@@ -1072,22 +1072,22 @@
         <input type="hidden" id="wallet-orig-symbol" value="">
         <div>
           <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Asset Symbol (e.g. USDT_TRC20, BTC, ETH, SOL)</label>
-          <input type="text" id="wallet-symbol" required placeholder="e.g. USDT_TRC20, BTC, ETH, SOL" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
+          <input type="text" id="wallet-symbol" required placeholder="e.g. USDT_TRC20, BTC, ETH, SOL" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
         </div>
 
         <div>
           <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Display Asset Name</label>
-          <input type="text" id="wallet-name" required placeholder="e.g. Tether USD (TRC20)" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
+          <input type="text" id="wallet-name" required placeholder="e.g. Tether USD (TRC20)" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
         </div>
 
         <div>
           <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Blockchain Network</label>
-          <input type="text" id="wallet-network" required placeholder="e.g. Tron Network (TRC20)" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
+          <input type="text" id="wallet-network" required placeholder="e.g. Tron Network (TRC20)" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
         </div>
 
         <div>
           <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Deposit Wallet Address</label>
-          <input type="text" id="wallet-address" required placeholder="Paste official receiving address..." class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-primary">
+          <input type="text" id="wallet-address" required placeholder="Paste official receiving address..." class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-primary">
         </div>
 
         <div class="flex items-center gap-2 pt-1">
@@ -1106,7 +1106,7 @@
   <!-- MODAL 7: MANUAL TRANSACTION INJECTION -->
   <!-- ========================================================== -->
   <div id="manual-tx-modal" class="hidden fixed inset-0 bg-slate-900/60 dark:bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl">
+    <div class="bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-gray-800 rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl">
       <div class="flex justify-between items-center pb-3 border-b border-slate-200 dark:border-gray-800">
         <h3 class="font-bold text-slate-900 dark:text-white text-base">Inject Manual Ledger Transaction</h3>
         <button onclick="closeModal('manual-tx-modal')" class="text-slate-400 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white">✕</button>
@@ -1115,7 +1115,7 @@
       <form onsubmit="handleManualTxSubmit(event)" class="space-y-4 text-xs">
         <div>
           <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Target Investor</label>
-          <select id="manual-tx-user" required class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
+          <select id="manual-tx-user" required class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
             <!-- Populated Dynamically -->
           </select>
         </div>
@@ -1123,7 +1123,7 @@
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Transaction Type</label>
-            <select id="manual-tx-type" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
+            <select id="manual-tx-type" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
               <option value="deposit">Deposit Credit</option>
               <option value="withdrawal">Withdrawal Debit</option>
               <option value="otc_profit">OTC Profit Return</option>
@@ -1132,18 +1132,18 @@
           </div>
           <div>
             <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Amount (USD)</label>
-            <input type="number" id="manual-tx-amount" step="0.01" min="1" required placeholder="5000.00" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-amber-600 dark:text-amber-400 font-bold focus:outline-none focus:border-amber-500">
+            <input type="number" id="manual-tx-amount" step="0.01" min="1" required placeholder="5000.00" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-amber-600 dark:text-amber-400 font-bold focus:outline-none focus:border-amber-500">
           </div>
         </div>
 
         <div>
           <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Asset Description</label>
-          <input type="text" id="manual-tx-asset" value="USDT (TRC20)" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
+          <input type="text" id="manual-tx-asset" value="USDT (TRC20)" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
         </div>
 
         <div>
           <label class="block font-semibold text-slate-700 dark:text-gray-300 mb-1">Ledger Memo / Note</label>
-          <input type="text" id="manual-tx-note" value="Administrative Ledger Adjustment" class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
+          <input type="text" id="manual-tx-note" value="Administrative Ledger Adjustment" class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
         </div>
 
         <button type="submit" class="w-full py-3 bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-black text-xs rounded-xl shadow-lg transition-all mt-2">
@@ -1156,7 +1156,7 @@
   <!-- ============================================================ -->
   <!-- ADMIN AUTHENTICATION GATE MODAL                             -->
   <!-- ============================================================ -->
-  <div id="admin-login-gate" class="fixed inset-0 bg-slate-900/80 dark:bg-[#070a11] z-[99999] flex items-center justify-center p-4" style="display:none !important;">
+  <div id="admin-login-gate" class="fixed inset-0 bg-slate-900/80 dark:bg-[#0F172A] z-[99999] flex items-center justify-center p-4" style="display:none !important;">
     <div class="w-full max-w-md">
       <!-- Logo -->
       <div class="flex flex-col items-center mb-8">
@@ -1166,7 +1166,7 @@
       </div>
 
       <!-- Login Card -->
-      <div class="bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800/80 rounded-3xl p-8 shadow-2xl">
+      <div class="bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-gray-800/80 rounded-3xl p-8 shadow-2xl">
         <h2 class="text-xl font-extrabold text-slate-900 dark:text-white mb-1">Admin Sign In</h2>
         <p class="text-slate-500 dark:text-gray-500 text-xs mb-6">Enter your administrator credentials to continue.</p>
 
@@ -1178,14 +1178,14 @@
               <label for="admin-email-input" class="block text-xs font-semibold text-slate-600 dark:text-gray-400 mb-1.5 uppercase tracking-wider">Email Address</label>
               <input type="email" id="admin-email-input" required autocomplete="off"
                 placeholder="admin@primehavencapital.ltd"
-                class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 focus:border-primary rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-gray-600 focus:outline-none transition-colors">
+                class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 focus:border-primary rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-gray-600 focus:outline-none transition-colors">
             </div>
             <div>
               <label for="admin-password-input" class="block text-xs font-semibold text-slate-600 dark:text-gray-400 mb-1.5 uppercase tracking-wider">Password</label>
               <div class="relative">
                 <input type="password" id="admin-password-input" required autocomplete="off"
                   placeholder="Enter admin password"
-                  class="w-full bg-slate-50 dark:bg-[#101726] border border-slate-200 dark:border-gray-800 focus:border-primary rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-gray-600 focus:outline-none transition-colors pr-12">
+                  class="w-full bg-slate-50 dark:bg-[#243247] border border-slate-200 dark:border-gray-800 focus:border-primary rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-gray-600 focus:outline-none transition-colors pr-12">
                 <button type="button" id="toggle-admin-password" aria-pressed="false" aria-label="Show password" onclick="toggleAdminPasswordVisibility()" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-gray-500 hover:text-slate-600 dark:hover:text-gray-300 transition-colors">
                   <svg id="pw-eye-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                 </button>
@@ -1755,7 +1755,7 @@
 
       adminOverviewData.companyWallets.forEach(w => {
         const card = document.createElement('div');
-        card.className = 'bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800/80 p-5 rounded-3xl space-y-4 shadow-md dark:shadow-xl';
+        card.className = 'bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-gray-800/80 p-5 rounded-3xl space-y-4 shadow-md dark:shadow-xl';
         card.innerHTML = `
           <div class="flex items-center gap-3">
             <img src="${w.qr_url}" alt="QR" class="w-16 h-16 bg-white p-1 rounded-xl shadow-md border border-slate-100 dark:border-none">
@@ -1768,7 +1768,7 @@
               <span class="inline-block mt-1 px-2 py-0.5 rounded-full text-[9px] font-bold ${w.is_active ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400' : 'bg-slate-100 dark:bg-gray-800 text-slate-500 dark:text-gray-400'} uppercase">${w.is_active ? 'Active' : 'Inactive'}</span>
             </div>
           </div>
-          <p class="text-[10px] text-slate-700 dark:text-gray-300 break-all p-2.5 bg-slate-50 dark:bg-[#101726] rounded-xl border border-slate-200 dark:border-gray-800/80">${w.address}</p>
+          <p class="text-[10px] text-slate-700 dark:text-gray-300 break-all p-2.5 bg-slate-50 dark:bg-[#243247] rounded-xl border border-slate-200 dark:border-gray-800/80">${w.address}</p>
           <div class="flex justify-end gap-2 pt-1 border-t border-slate-100 dark:border-gray-800/60">
             <button onclick="openWalletModal('${escapeQuote(w.symbol)}', '${escapeQuote(w.name)}', '${escapeQuote(w.network)}', '${escapeQuote(w.address)}', ${w.is_active})" class="px-3 py-1 bg-blue-500/10 dark:bg-blue-500/15 text-primary dark:text-blue-400 hover:bg-blue-500/20 rounded-lg text-xs font-bold transition-all">Edit</button>
             <button onclick="deleteCompanyWallet('${w.symbol}')" class="px-3 py-1 bg-rose-500/10 dark:bg-rose-500/15 text-rose-600 dark:text-rose-400 hover:bg-rose-500/20 rounded-lg text-xs font-bold transition-all">Delete</button>
@@ -1870,7 +1870,7 @@
             loadCatalogPlans();
           }
         } else {
-          btn.className = 'px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 shadow-sm';
+          btn.className = 'px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-gray-800 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 shadow-sm';
           btn.removeAttribute('aria-current');
           sec.classList.add('hidden');
         }

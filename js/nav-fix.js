@@ -65,7 +65,7 @@
         drawer = document.createElement('div');
         drawer.id = 'mobile-nav-drawer';
         drawer.style.display = 'none';
-        drawer.className = 'xl:hidden fixed inset-x-0 top-20 bottom-0 bg-white/95 dark:bg-[#0C121E]/95 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800 z-[998] flex-col p-6 space-y-3 text-base font-semibold text-slate-900 dark:text-white shadow-2xl overflow-y-auto';
+        drawer.className = 'xl:hidden fixed inset-x-0 top-20 bottom-0 bg-white/95 dark:bg-[#1E293B]/95 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800 z-[998] flex-col p-6 space-y-3 text-base font-semibold text-slate-900 dark:text-white shadow-2xl overflow-y-auto';
 
         var activeUser = getLoggedInUser();
         var authMobileLinks = '';
