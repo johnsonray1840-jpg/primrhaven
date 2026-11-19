@@ -124,16 +124,16 @@
   // ==========================================================
   var LANG_STORAGE_KEY = 'primehavencapital_lang';
   var SUPPORTED_LANGUAGES = {
-    en: { code: 'en', label: 'EN · English', dir: 'ltr' },
-    es: { code: 'es', label: 'ES · Español', dir: 'ltr' },
-    fr: { code: 'fr', label: 'FR · Français', dir: 'ltr' },
-    de: { code: 'de', label: 'DE · Deutsch', dir: 'ltr' },
-    pt: { code: 'pt', label: 'PT · Português', dir: 'ltr' },
-    ar: { code: 'ar', label: 'AR · العربية', dir: 'rtl' },
-    'zh-CN': { code: 'zh-CN', label: 'ZH · 中文', dir: 'ltr' },
-    ru: { code: 'ru', label: 'RU · Русский', dir: 'ltr' },
-    ja: { code: 'ja', label: 'JA · 日本語', dir: 'ltr' },
-    tr: { code: 'tr', label: 'TR · Türkçe', dir: 'ltr' }
+    en: { code: 'en', shortCode: 'EN', label: 'EN · English', dir: 'ltr' },
+    es: { code: 'es', shortCode: 'ES', label: 'ES · Español', dir: 'ltr' },
+    fr: { code: 'fr', shortCode: 'FR', label: 'FR · Français', dir: 'ltr' },
+    de: { code: 'de', shortCode: 'DE', label: 'DE · Deutsch', dir: 'ltr' },
+    pt: { code: 'pt', shortCode: 'PT', label: 'PT · Português', dir: 'ltr' },
+    ar: { code: 'ar', shortCode: 'AR', label: 'AR · العربية', dir: 'rtl' },
+    'zh-CN': { code: 'zh-CN', shortCode: 'ZH', label: 'ZH · 中文', dir: 'ltr' },
+    ru: { code: 'ru', shortCode: 'RU', label: 'RU · Русский', dir: 'ltr' },
+    ja: { code: 'ja', shortCode: 'JA', label: 'JA · 日本語', dir: 'ltr' },
+    tr: { code: 'tr', shortCode: 'TR', label: 'TR · Türkçe', dir: 'ltr' }
   };
 
   var PHRASE_DICT = {
@@ -626,6 +626,11 @@
 
       var wrapper = document.createElement('div');
       wrapper.className = 'vx-lang-switcher notranslate';
+      var savedLang = getSavedLanguage();
+      var badge = document.createElement('span');
+      badge.className = 'vx-lang-code';
+      badge.textContent = (SUPPORTED_LANGUAGES[savedLang] && SUPPORTED_LANGUAGES[savedLang].shortCode) || 'EN';
+      wrapper.appendChild(badge);
       var select = document.createElement('select');
       select.id = 'vx-lang-select';
       select.className = 'vx-lang-select';
@@ -636,7 +641,7 @@
         opt.textContent = SUPPORTED_LANGUAGES[code].label;
         select.appendChild(opt);
       });
-      select.value = getSavedLanguage();
+      select.value = savedLang;
       select.addEventListener('change', function() {
         window.PrimeHavenTranslator.setLanguage(this.value);
       });
@@ -718,6 +723,10 @@
           var selects = document.querySelectorAll('.vx-lang-select, #vx-lang-select');
           for (var i = 0; i < selects.length; i++) {
             if (selects[i].value !== validLang) selects[i].value = validLang;
+          }
+          var codes = document.querySelectorAll('.vx-lang-code');
+          for (var k = 0; k < codes.length; k++) {
+            codes[k].textContent = langMeta.shortCode || 'EN';
           }
         }
       } catch (e) {}
