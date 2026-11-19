@@ -1221,3 +1221,111 @@ select.vx-input,
     transition: none;
   }
 }
+
+/* ==========================================================
+   LANGUAGE SWITCHER & TRANSLATOR ENGINE UI
+   ========================================================== */
+.vx-lang-switcher {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 2.375rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--vx-border);
+  background-color: var(--vx-bg-card);
+  color: var(--vx-text-primary);
+  box-shadow: var(--vx-shadow-sm);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  flex-shrink: 0;
+}
+
+.vx-lang-switcher:hover {
+  border-color: var(--vx-primary-border);
+  background-color: var(--vx-bg-recessed);
+}
+
+.vx-lang-switcher:focus-within {
+  outline: 2px solid var(--vx-primary);
+  outline-offset: 2px;
+}
+
+.vx-lang-icon {
+  position: absolute;
+  inset-inline-start: 0.625rem;
+  width: 0.9375rem;
+  height: 0.9375rem;
+  color: var(--vx-text-secondary);
+  pointer-events: none;
+}
+
+.vx-lang-select {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 100%;
+  padding-block: 0;
+  padding-inline-start: 1.875rem;
+  padding-inline-end: 1.5rem;
+  border: 0;
+  border-radius: 0.75rem;
+  background-color: transparent;
+  color: var(--vx-text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 0.75rem;
+}
+
+html[dir="rtl"] .vx-lang-select {
+  background-position: left 0.5rem center;
+}
+
+.vx-lang-select:focus {
+  outline: none;
+}
+
+@media (max-width: 639px) {
+  .vx-lang-select {
+    max-width: 5.5rem;
+    padding-inline-start: 1.625rem;
+    padding-inline-end: 1.25rem;
+    text-overflow: ellipsis;
+  }
+  .vx-lang-icon {
+    inset-inline-start: 0.45rem;
+  }
+}
+
+.vx-lang-select option {
+  background-color: var(--vx-bg-card);
+  color: var(--vx-text-primary);
+}
+
+/* Suppress intrusive third-party Google Translate top banner & tooltips */
+iframe.goog-te-banner-frame,
+.goog-te-banner-frame,
+.skiptranslate > iframe,
+#goog-gt-tt,
+.goog-te-balloon-frame,
+.VIpgJd-ZVi9od-ORHb-OEVmcd,
+.VIpgJd-ZVi9od-aZ2wEe-wOHMyf {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+}
+
+#google_translate_element {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
